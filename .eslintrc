@@ -7,7 +7,7 @@
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "globals": {
-    "__DEV__": true
+    "__DEVELOPMENT__": true
   },
   "env": {
     "browser": true,
