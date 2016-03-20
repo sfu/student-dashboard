@@ -18,6 +18,9 @@
     "url": "https://github.com/sfu/student-dashboard/issues"
   },
   "homepage": "https://github.com/sfu/student-dashboard#readme",
+  "babel": {
+    "presets": [ "es2015", "react", "stage-1" ]
+  },
   "devDependencies": {
     "babel-core": "6.7.2",
     "babel-eslint": "6.0.0-beta.6",
