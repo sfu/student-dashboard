@@ -7,6 +7,7 @@ import session from 'express-session'
 import fs from 'fs'
 import http from 'http'
 import https from 'https'
+import helmet from 'helmet'
 import {
   loggedin,
   authenticateUser,
@@ -32,6 +33,8 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 app.use(session(sessionConfig))
+app.use(helmet())
+
 
 app.get('/auth', authenticateUser)
 
