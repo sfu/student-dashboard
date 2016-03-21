@@ -18,6 +18,7 @@ const app = express()
 
 let sessionConfig = {
   secret: process.env.SESSION_SECRET,
+  name: process.env.SESSION_COOKIE_NAME || 'connect.sid',
   cookie: {},
   resave: false,
   saveUninitialized: false
@@ -39,7 +40,6 @@ app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout]
 app.get('*', loggedin, (req, res) => {
   res.send(`<a href="https://cas.sfu.ca/cas/logout">Logout</a>`)
 })
-
 
 if (process.env.EXPRESS_HTTPS) {
   if (process.env.HTTPS_CERT_FILE && process.env.HTTPS_KEY_FILE) {
