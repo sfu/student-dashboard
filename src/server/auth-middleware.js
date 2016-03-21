@@ -1,11 +1,16 @@
 import CAS from 'cas'
 
-const cas = new CAS({
-  base_url: 'https://cas.sfu.ca/cas',
-  service: 'http://home.grahamballantyne.com:3000/auth',
-  version: 2.0,
-  sso_servers: ['142.58.101.11', '::ffff:142.58.101.11']
-})
+const casConfig = {
+  base_url: process.env.CAS_BASE_URL,
+  service: process.env.CAS_SERVICE,
+  version: 2.0
+}
+
+if (process.env.CAS_SSO_SERVERS) {
+  casConfig.sso_servers = process.env.CAS_SSO_SERVERS.split(',')
+}
+
+const cas = new CAS(casConfig)
 
 export function loggedin(req, res, next) {
   if (req.session.auth && req.session.auth.status) {
