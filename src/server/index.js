@@ -17,7 +17,7 @@ let sessionConfig = {
   secret: process.env.SESSION_SECRET,
   cookie: {},
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false
 }
 
 if (process.env.NODE_ENV === 'production') {
