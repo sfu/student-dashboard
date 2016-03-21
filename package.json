@@ -7,7 +7,8 @@
     "start": "node ./bin/server.js",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deps:reinstall": "rimraf node_modules && npm i"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "eslint-plugin-react": "4.2.3",
     "piping": "0.3.0",
     "pre-commit": "1.1.2",
+    "rimraf": "2.5.2",
     "webpack": "1.12.14",
     "webpack-dev-middleware": "1.5.1",
     "webpack-hot-middleware": "2.10.0"
