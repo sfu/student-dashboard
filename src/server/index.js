@@ -20,7 +20,7 @@ app.use(session({
 
 app.get('/auth', authenticateUser)
 
-app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout(store)])
+app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout])
 
 app.get('*', loggedin, (req, res) => {
   res.send(`<a href="https://cas.sfu.ca/cas/logout">Logout</a>`)
