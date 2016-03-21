@@ -2,8 +2,9 @@
   "name": "student-dashboard",
   "version": "1.0.0",
   "description": "SFU Student Dashboard application",
-  "main": "index.js",
+  "main": "bin/server.js",
   "scripts": {
+    "start": "node ./bin/server.js",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
