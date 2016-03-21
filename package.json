@@ -25,6 +25,9 @@
       "stage-1"
     ]
   },
+  "pre-commit": [
+    "lint"
+  ],
   "devDependencies": {
     "babel-core": "6.7.2",
     "babel-eslint": "6.0.0-beta.6",
@@ -36,6 +39,7 @@
     "eslint": "2.4.0",
     "eslint-plugin-react": "4.2.3",
     "piping": "0.3.0",
+    "pre-commit": "1.1.2",
     "webpack": "1.12.14",
     "webpack-dev-middleware": "1.5.1",
     "webpack-hot-middleware": "2.10.0"
