@@ -40,17 +40,15 @@ export function authenticateUser(req, res, next) {
   }
 }
 
-export function handleSingleSignout(sessionStore) {
-  return function(req, res, next) {
-    cas.handleSingleSignout(req, res, next, (ticket) => {
-      // find the session containing the ticket
-      sessionStore.all((err, sessions) => {
-        Object.keys(sessions).forEach((sid) => {
-          if (sessions[sid].auth.extended.ticket === ticket) {
-            sessionStore.destroy(sid, () => {})
-          }
-        })
+export function handleSingleSignout(req, res, next) {
+  cas.handleSingleSignout(req, res, next, (ticket) => {
+    // find the session containing the ticket
+    req.sessionStore.all((err, sessions) => {
+      Object.keys(sessions).forEach((sid) => {
+        if (sessions[sid].auth.extended.ticket === ticket) {
+          req.sessionStore.destroy(sid, () => {})
+        }
       })
     })
-  }
+  })
 }
