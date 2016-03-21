@@ -4,6 +4,9 @@ import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import session from 'express-session'
+import fs from 'fs'
+import http from 'http'
+import https from 'https'
 import {
   loggedin,
   authenticateUser,
@@ -37,6 +40,20 @@ app.get('*', loggedin, (req, res) => {
   res.send(`<a href="https://cas.sfu.ca/cas/logout">Logout</a>`)
 })
 
-app.listen(process.env.EXPRESS_PORT, () => {
-  console.info(`server listening on ${process.env.EXPRESS_PORT}`)
-})
+
+if (process.env.EXPRESS_HTTPS) {
+  if (process.env.HTTPS_CERT_FILE && process.env.HTTPS_KEY_FILE) {
+    https.createServer({
+      cert:fs.readFileSync(process.env.HTTPS_CERT_FILE),
+      key: fs.readFileSync(process.env.HTTPS_KEY_FILE)
+    }, app).listen(process.env.EXPRESS_PORT, () => {
+      console.info(`HTTPS server listening on port ${process.env.EXPRESS_PORT}`)
+    })
+  } else {
+    throw 'EXPRESS_HTTPS was specified in your .env, but no HTTPS_CERT_FILE and/or HTTPS_KEY_FILE was specified.'
+  }
+} else {
+  http.createServer(app).listen(process.env.EXPRESS_PORT, () => {
+    console.info(`HTTP server listening on port ${process.env.EXPRESS_PORT}`)
+  })
+}
