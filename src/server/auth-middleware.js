@@ -1,16 +1,4 @@
-import CAS from 'cas'
-
-const casConfig = {
-  base_url: process.env.CAS_BASE_URL,
-  service: process.env.CAS_SERVICE,
-  version: 2.0
-}
-
-if (process.env.CAS_SSO_SERVERS) {
-  casConfig.sso_servers = process.env.CAS_SSO_SERVERS.split(',')
-}
-
-const cas = new CAS(casConfig)
+import cas from './cas-client'
 
 export function loggedin(req, res, next) {
   if (req.session.auth && req.session.auth.status) {

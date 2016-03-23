@@ -8,6 +8,7 @@ import fs from 'fs'
 import http from 'http'
 import https from 'https'
 import helmet from 'helmet'
+import cas from './cas-client'
 import {
   loggedin,
   authenticateUser,
