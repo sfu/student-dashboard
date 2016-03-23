@@ -39,10 +39,14 @@ let sessionConfig = {
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1)
   sessionConfig.cookie.secure = true
+}
+
+if (process.env.SESSION_STORE_REDIS_URL) {
   sessionConfig.store = new RedisStore({
-    url: process.env.REDIS_URL
+    url: process.env.SESSION_STORE_REDIS_URL
   })
 }
+
 app.use(session(sessionConfig))
 app.use(helmet())
 
