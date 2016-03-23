@@ -20,23 +20,20 @@ export function authenticateUser(req, res, next) {
         res.status(500).send(err)
         return
       }
-      req.session.auth = {status, username, extended}
       const redirectUrl = req.session.redirectAfterLogin || '/'
       delete req.session.redirectAfterLogin
-      res.redirect(redirectUrl)
+      req.session.regenerate(() => {
+        req.session.auth = {status, username, extended}
+        res.redirect(redirectUrl)
+      })
     })
   }
 }
 
 export function handleSingleSignout(req, res, next) {
   cas.handleSingleSignout(req, res, next, (ticket) => {
-    // find the session containing the ticket
-    req.sessionStore.all((err, sessions) => {
-      Object.keys(sessions).forEach((sid) => {
-        if (sessions[sid].auth.extended.ticket === ticket) {
-          req.sessionStore.destroy(sid, () => {})
-        }
-      })
-    })
+    // CAS sessions have the form `cas_session:::{SERVICE_TICKET}`
+    const sid = `cas_session:::${ticket}`
+    req.sessionStore.destroy(sid, () => {})
   })
 }

@@ -23,7 +23,14 @@ let sessionConfig = {
   name: process.env.SESSION_COOKIE_NAME || 'connect.sid',
   cookie: {},
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  genid(req) {
+    if (req.query && req.query.ticket) {
+      return `cas_session:::${req.query.ticket}`
+    } else {
+      return uid(24)
+    }
+  }
 }
 
 if (process.env.NODE_ENV === 'production') {
