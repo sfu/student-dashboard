@@ -17,7 +17,7 @@ export function authenticateUser(req, res, next) {
     // authenticate with CAS
     cas.authenticate(req, res, (err, status, username, extended) => {
       if (err) {
-        res.send(500)
+        res.status(500).send(err)
         return
       }
       req.session.auth = {status, username, extended}
