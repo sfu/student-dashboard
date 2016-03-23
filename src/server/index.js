@@ -12,13 +12,14 @@ import https from 'https'
 import helmet from 'helmet'
 import cas from './cas-client'
 import {sync as uid} from 'uid-safe'
+import ConnectRedis from 'connect-redis'
 import {
   loggedin,
   authenticateUser,
   handleSingleSignout
 } from './auth-middleware'
-const RedisStore = require('connect-redis')(session)
 
+const RedisStore = ConnectRedis(session)
 const app = express()
 
 let sessionConfig = {
