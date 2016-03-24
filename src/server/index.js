@@ -57,7 +57,57 @@ app.get('/auth', authenticateUser)
 app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout])
 
 app.get('*', loggedin, (req, res) => {
-  res.send(`<a href="https://cas.sfu.ca/cas/logout">Logout</a>`)
+  // get a cas proxy ticket, and then just print it out
+  let oAuthCreds
+  cas.getProxyTicket(req.session.auth.extended.PGTIOU, process.env.PORTAL_SERVICE_NAME, (err, pt) => {
+    if (err) {
+      console.log(err)
+      res.status(500).send(err)
+    } else {
+      // now let's get an oAuth token
+      axios({
+        method: 'post',
+        url: process.env.PORTAL_OAUTH_URL,
+        data: {
+          client_id: process.env.PORTAL_OAUTH_CLIENT_ID,
+          client_secret: process.env.PORTAL_OAUTH_SECRET,
+          ticket: pt
+        },
+        transformRequest(data) {
+          return qs.stringify(data)
+        }
+      }).then((response) => {
+        // let's get the user's bio data from the REST server
+        oAuthCreds = response.data
+        axios({
+          method: 'get',
+          url: `https://api.its.sfu.ca/aobrest/v1/datastore2/global/userBio.js?username=${req.session.auth.username}`,
+          headers: {
+            'Authorization': `Bearer ${response.data.access_token}`
+          }
+        }).then((response) => {
+          const bio = response.data
+          res.send(`
+<html><head></head><body><h1>Hello, ${bio.firstnames} ${bio.lastname}</h1>
+<h2>User Bio Data</h2>
+<p>This information was retreived from AOBRestServer via an oAuth-protected service on the API Portal</p>
+<pre>https://api.its.sfu.ca/aobrest/v1/datastore2/global/userBio.js?username=${req.session.auth.username}</pre>
+<pre>${JSON.stringify(oAuthCreds, null, 2)}</pre>
+<pre>${JSON.stringify(bio, null, 2)}</pre>
+<h2>User Session</h2>
+<pre>${JSON.stringify(req.session, null, 2)}</pre>
+</body></html>
+            `)
+        }).catch((response) => {
+          console.log(response)
+          res.status(500).send(response)
+        })
+      }).catch((response) => {
+        console.log(response)
+        res.status(500).send(response)
+      })
+    }
+  })
 })
 
 if (process.env.EXPRESS_HTTPS) {
