@@ -62,15 +62,14 @@ app.get('*', loggedin, (req, res) => {
 
 if (process.env.EXPRESS_HTTPS) {
   if (process.env.HTTPS_CERT_FILE && process.env.HTTPS_KEY_FILE) {
-    https.createServer({
-      cert:fs.readFileSync(process.env.HTTPS_CERT_FILE),
+    let httpsOptions = {
+      cert: fs.readFileSync(process.env.HTTPS_CERT_FILE),
       key: fs.readFileSync(process.env.HTTPS_KEY_FILE),
-      ca: [
-        fs.readFileSync(process.env.HTTPS_INTERMEDIATE_CERT_FILE),
-        fs.readFileSync(process.env.HTTPS_ROOT_CERT_FILE),
-        fs.readFileSync(process.env.HTTPS_THWATE_ROOT_CERT_FILE)
-      ]
-    }, app).listen(process.env.EXPRESS_PORT, () => {
+    }
+    if (process.env.HTTPS_CA_BUNDLE) {
+      httpsOptions.ca = process.env.HTTPS_CA_BUNDLE.split(',').map(cert => fs.readFileSync(cert))
+    }
+    https.createServer(httpsOptions, app).listen(process.env.EXPRESS_PORT, () => {
       console.info(`HTTPS server listening on port ${process.env.EXPRESS_PORT}`)
     })
   } else {

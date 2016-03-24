@@ -15,13 +15,11 @@ if (process.env.CAS_RUN_PGT_SERVER) {
   casConfig.pgt_server = true
   casConfig.pgt_host = process.env.CAS_PGT_SERVER_HOST
   casConfig.pgt_port = process.env.CAS_PGT_SERVER_PORT
-  casConfig.ssl_cert = fs.readFileSync(process.env.HTTPS_CERT_FILE),
-  casConfig.ssl_key = fs.readFileSync(process.env.HTTPS_KEY_FILE),
-  casConfig.ssl_ca = [
-    fs.readFileSync(process.env.HTTPS_INTERMEDIATE_CERT_FILE),
-    fs.readFileSync(process.env.HTTPS_ROOT_CERT_FILE),
-    fs.readFileSync(process.env.HTTPS_THWATE_ROOT_CERT_FILE)
-  ]
+  casConfig.ssl_cert = fs.readFileSync(process.env.HTTPS_CERT_FILE)
+  casConfig.ssl_key = fs.readFileSync(process.env.HTTPS_KEY_FILE)
+  if (process.env.HTTPS_CA_BUNDLE) {
+    casConfig.ca = process.env.HTTPS_CA_BUNDLE.split(',').map(cert => fs.readFileSync(cert))
+  }
 }
 
 export default new CAS(casConfig)
