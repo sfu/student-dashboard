@@ -55,6 +55,6 @@
     "express": "4.13.4",
     "express-session": "1.13.0",
     "react": "0.14.7",
-    "react-dom": "0.14.7"
+    "react-dom": "0.14.8"
   }
 }
