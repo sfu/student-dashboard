@@ -1,4 +1,4 @@
-import cas from './cas-client'
+import cas from '../cas-client'
 
 export function loggedin(req, res, next) {
   if (req.session.auth && req.session.auth.status) {
