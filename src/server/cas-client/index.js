@@ -18,7 +18,7 @@ if (process.env.CAS_RUN_PGT_SERVER) {
   casConfig.ssl_cert = fs.readFileSync(process.env.HTTPS_CERT_FILE)
   casConfig.ssl_key = fs.readFileSync(process.env.HTTPS_KEY_FILE)
   if (process.env.HTTPS_CA_BUNDLE) {
-    casConfig.ca = process.env.HTTPS_CA_BUNDLE.split(',').map(cert => fs.readFileSync(cert))
+    casConfig.ssl_ca = process.env.HTTPS_CA_BUNDLE.split(',').map(cert => fs.readFileSync(cert))
   }
 }
 
