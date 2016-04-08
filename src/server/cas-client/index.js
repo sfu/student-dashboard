@@ -11,6 +11,10 @@ if (process.env.CAS_SSO_SERVERS) {
   casConfig.sso_servers = process.env.CAS_SSO_SERVERS.split(',')
 }
 
+if (process.env.CAS_RUN_PGT_SERVER && process.env.CAS_PGT_URL) {
+  throw new Error('CAS_RUN_PGT_SERVER and CAS_PGT_URL are both set. Pick one.')
+}
+
 if (process.env.CAS_RUN_PGT_SERVER) {
   casConfig.pgt_server = true
   casConfig.pgt_host = process.env.CAS_PGT_SERVER_HOST
@@ -20,6 +24,8 @@ if (process.env.CAS_RUN_PGT_SERVER) {
   if (process.env.HTTPS_CA_BUNDLE) {
     casConfig.ssl_ca = process.env.HTTPS_CA_BUNDLE.split(',').map(cert => fs.readFileSync(cert))
   }
+} else if (process.env.CAS_PGT_URL) {
+  casConfig.external_pgt_url = process.env.CAS_PGT_URL
 }
 
 export default new CAS(casConfig)
