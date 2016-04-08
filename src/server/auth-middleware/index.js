@@ -26,7 +26,7 @@ export function authenticateUser(req, res, next) {
         req.session.auth = {status, username, extended}
         res.redirect(redirectUrl)
       })
-    })
+    }, process.env.CAS_SERVICE)
   }
 }
 
