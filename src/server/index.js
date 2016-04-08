@@ -37,7 +37,8 @@ let sessionConfig = {
   }
 }
 
-if (process.env.NODE_ENV === 'production') {
+// assume that if we're not serving HTTPS, we're behind a proxy
+if (!process.env.EXPRESS_HTTPS) {
   app.set('trust proxy', 1)
   sessionConfig.cookie.secure = true
 }
