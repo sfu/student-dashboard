@@ -19,6 +19,9 @@ import {
   handleSingleSignout
 } from './auth-middleware'
 
+import {MemoryStore as PGTStore} from './pgt-store'
+const pgtStore = new PGTStore()
+
 const RedisStore = ConnectRedis(session)
 const app = express()
 
