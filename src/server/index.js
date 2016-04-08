@@ -52,6 +52,25 @@ if (process.env.SESSION_STORE_REDIS_URL) {
 app.use(session(sessionConfig))
 app.use(helmet())
 
+app.all('/pgt/:pgtcall?', (req, res) => {
+  const {pgtIou, pgtId, pgtiou} = req.query
+  // request is from a CAS client asking for a PGT
+  if (req.params.pgtcall === 'getPGT') {
+    const pgt = pgtStore.get(pgtiou)
+    if (pgt) {
+      res.set('Content-Type', 'text/plain').status(200).send(pgt)
+    } else {
+      res.set('Content-Type', 'text/plain').status(403).send('Invalid PGTIOU supplied')
+    }
+
+  // request is from the CAS server providing a PGTIOU/PGT
+  } else {
+    res.status(200).send('ok')
+    if (pgtIou && pgtId) {
+      pgtStore.set(pgtIou, pgtId)
+    }
+  }
+})
 
 app.get('/auth', authenticateUser)
 
