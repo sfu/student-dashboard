@@ -8,7 +8,7 @@ export default class MemoryStore {
   }
 
   set(pgtiou, pgt) {
-    this.store.set(pgtiou, { pgt })
+    return this.store.set(pgtiou, { pgt })
   }
 
   all() {
