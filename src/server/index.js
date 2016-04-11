@@ -12,6 +12,7 @@ import https from 'https'
 import helmet from 'helmet'
 import cas from './cas-client'
 import {sync as uid} from 'uid-safe'
+import redis from 'redis'
 import ConnectRedis from 'connect-redis'
 import {
   loggedin,
@@ -19,8 +20,8 @@ import {
   handleSingleSignout
 } from './auth-middleware'
 
-import {MemoryStore as PGTStore} from './pgt-store'
-const pgtStore = new PGTStore()
+import {RedisStore as PGTStore} from './pgt-store'
+const pgtStore = new PGTStore(redis.createClient())
 
 const RedisStore = ConnectRedis(session)
 const app = express()
@@ -55,11 +56,11 @@ if (process.env.SESSION_STORE_REDIS_URL) {
 app.use(session(sessionConfig))
 app.use(helmet())
 
-app.all('/pgt/:pgtcall?', (req, res) => {
+app.all('/pgt/:pgtcall?', async (req, res) => {
   const {pgtIou, pgtId, pgtiou} = req.query
   // request is from a CAS client asking for a PGT
   if (req.params.pgtcall === 'getPGT') {
-    const pgt = pgtStore.get(pgtiou)
+    const pgt = await pgtStore.get(pgtiou)
     if (pgt) {
       res.set('Content-Type', 'text/plain').status(200).send(pgt)
     } else {
@@ -70,7 +71,7 @@ app.all('/pgt/:pgtcall?', (req, res) => {
   } else {
     res.status(200).send('ok')
     if (pgtIou && pgtId) {
-      pgtStore.set(pgtIou, pgtId)
+      await pgtStore.set(pgtIou, pgtId)
     }
   }
 })
