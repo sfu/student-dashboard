@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import session from 'express-session'
 import fs from 'fs'
 import axios from 'axios'
-import qs from 'qs'
+import * as oauth from './oauth'
 import http from 'http'
 import https from 'https'
 import helmet from 'helmet'
@@ -91,18 +91,7 @@ app.get('*', loggedin, (req, res) => {
       res.status(500).send(err)
     } else {
       // now let's get an oAuth token
-      axios({
-        method: 'post',
-        url: process.env.PORTAL_OAUTH_URL,
-        data: {
-          client_id: process.env.PORTAL_OAUTH_CLIENT_ID,
-          client_secret: process.env.PORTAL_OAUTH_SECRET,
-          ticket: pt
-        },
-        transformRequest(data) {
-          return qs.stringify(data)
-        }
-      }).then((response) => {
+      oauth.getAccessToken(pt).then((response) => {
         // let's get the user's bio data from the REST server
         oAuthCreds = response.data
         axios({
