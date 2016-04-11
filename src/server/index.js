@@ -87,8 +87,15 @@ app.get('/', loggedin, (req, res) => {
   let oAuthCreds
   cas.getProxyTicket(req.session.auth.extended.PGTIOU, process.env.PORTAL_SERVICE_NAME, (err, pt) => {
     if (err) {
-      console.log(err)
-      res.status(500).send(err)
+      // if the user's PGT is invalid, destroy the session and redirct to /auth
+      if (err.message.includes('INVALID_TICKET')) {
+        req.session.destroy(() => {
+          res.redirect('/auth')
+        })
+      // otherwise, give up
+      } else {
+        res.status(500).send(err)
+      }
     } else {
       // now let's get an oAuth token
       oauth.getAccessToken(pt).then((response) => {
