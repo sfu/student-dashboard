@@ -21,7 +21,9 @@ import {
 } from './auth-middleware'
 
 import {RedisStore as PGTStore} from './pgt-store'
-const pgtStore = new PGTStore(redis.createClient())
+const pgtStore = new PGTStore(redis.createClient({
+  url: process.env.CAS_PGT_REDIS_URL
+}))
 
 const RedisStore = ConnectRedis(session)
 const app = express()
