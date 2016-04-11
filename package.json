@@ -7,8 +7,9 @@
     "start": "node ./bin/server.js",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint:changed": "./scripts/lint-changed.sh",
+    "test": "node_modules/.bin/ava -v --require babel-register src/**/__test__/*.js",
+    "test:watch": "npm run test -- -w",
     "deps:reinstall": "rimraf node_modules && npm i"
   },
   "repository": {
