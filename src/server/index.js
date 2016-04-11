@@ -82,7 +82,7 @@ app.get('/auth', authenticateUser)
 
 app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout])
 
-app.get('*', loggedin, (req, res) => {
+app.get('/', loggedin, (req, res) => {
   // get a cas proxy ticket, and then just print it out
   let oAuthCreds
   cas.getProxyTicket(req.session.auth.extended.PGTIOU, process.env.PORTAL_SERVICE_NAME, (err, pt) => {
