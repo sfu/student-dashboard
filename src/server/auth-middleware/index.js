@@ -3,7 +3,7 @@ import {getAccessToken} from '../oauth'
 import {User} from '../models'
 import axios from 'axios'
 
-export function loggedin(req, res, next) {
+function loggedin(req, res, next) {
   if (req.session.auth && req.session.auth.status) {
     next()
   } else {
@@ -12,7 +12,7 @@ export function loggedin(req, res, next) {
   }
 }
 
-export function authenticateUser(req, res, next) {
+function authenticateUser(req, res, next) {
   // user is logged in, goto next
   if (req.session.auth && req.session.auth.status) {
     next()
@@ -33,7 +33,7 @@ export function authenticateUser(req, res, next) {
   }
 }
 
-export function handleSingleSignout(req, res, next) {
+function handleSingleSignout(req, res, next) {
   cas.handleSingleSignout(req, res, next, (ticket) => {
     // CAS sessions have the form `cas_session:::{SERVICE_TICKET}`
     const sid = `cas_session:::${ticket}`
@@ -118,4 +118,14 @@ async function getOauthCredentials(req, res, next) {
   } catch (e) {
     next(e)
   }
+}
+
+export {
+  loggedin,
+  authenticateUser,
+  handleSingleSignout,
+  getUser,
+  provisionOrUpdateUser,
+  getProxyTicket,
+  getOauthCredentials
 }
