@@ -50,6 +50,8 @@
   "dependencies": {
     "axios": "0.9.1",
     "body-parser": "1.15.0",
+    "bookshelf": "0.9.4",
+    "bookshelf-modelbase": "2.9.0",
     "cas": "grahamb/node-cas",
     "connect-redis": "3.0.2",
     "cookie-parser": "1.4.1",
@@ -58,6 +60,8 @@
     "express": "4.13.4",
     "express-session": "1.13.0",
     "helmet": "1.3.0",
+    "knex": "0.10.0",
+    "pg": "4.5.3",
     "qs": "6.1.0",
     "react": "0.14.7",
     "react-dom": "0.14.7",
