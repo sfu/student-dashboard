@@ -59,7 +59,7 @@ if (process.env.SESSION_STORE_REDIS_URL) {
 app.use(session(sessionConfig))
 app.use(helmet())
 
-app.all('/pgt/:pgtcall?', async (req, res) => {
+app.get('/pgt/:pgtcall?', async (req, res) => {
   const {pgtIou, pgtId, pgtiou} = req.query
   // request is from a CAS client asking for a PGT
   if (req.params.pgtcall === 'getPGT') {
