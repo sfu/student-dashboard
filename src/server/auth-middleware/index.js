@@ -20,15 +20,16 @@ function authenticateUser(req, res, next) {
     // authenticate with CAS
     cas.authenticate(req, res, (err, status, username, extended) => {
       if (err) {
-        res.status(500).send(err)
-        return
+        next(err)
+      } else {
+        const redirectUrl = req.session.redirectAfterLogin || '/'
+        delete req.session.redirectAfterLogin
+        req.session.regenerate(() => {
+          req.session.auth = {status, username, extended}
+          req.REDIRECT_AFTER_LOGIN = redirectUrl
+          next()
+        })
       }
-      const redirectUrl = req.session.redirectAfterLogin || '/'
-      delete req.session.redirectAfterLogin
-      req.session.regenerate(() => {
-        req.session.auth = {status, username, extended}
-        res.redirect(redirectUrl)
-      })
     }, process.env.CAS_SERVICE)
   }
 }
