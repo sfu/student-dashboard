@@ -5,19 +5,20 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import session from 'express-session'
 import fs from 'fs'
-import axios from 'axios'
-import * as oauth from './oauth'
 import http from 'http'
 import https from 'https'
 import helmet from 'helmet'
-import cas from './cas-client'
 import {sync as uid} from 'uid-safe'
 import redis from 'redis'
 import ConnectRedis from 'connect-redis'
 import {
   loggedin,
   authenticateUser,
-  handleSingleSignout
+  handleSingleSignout,
+  getUser,
+  getProxyTicket,
+  getOauthCredentials,
+  provisionOrUpdateUser
 } from './auth-middleware'
 
 import {RedisStore as PGTStore} from './pgt-store'
@@ -78,7 +79,16 @@ app.all('/pgt/:pgtcall?', async (req, res) => {
   }
 })
 
-app.get('/auth', authenticateUser)
+app.get('/auth',
+  authenticateUser,
+  getUser,
+  getProxyTicket,
+  getOauthCredentials,
+  provisionOrUpdateUser,
+  (req, res) => {
+    res.redirect(req.REDIRECT_AFTER_LOGIN)
+  }
+)
 
 app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout])
 
