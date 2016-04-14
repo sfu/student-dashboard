@@ -1,6 +1,18 @@
 import CAS from 'cas'
 import fs from 'fs'
 
+CAS.prototype.getProxyTicketAsync = function(pgtiou, service) {
+  return new Promise((resolve, reject) => {
+    this.getProxyTicket(pgtiou, service, (err, proxyticket) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(proxyticket)
+      }
+    })
+  })
+}
+
 const casConfig = {
   base_url: process.env.CAS_BASE_URL,
   service: process.env.CAS_SERVICE,
