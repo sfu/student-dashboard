@@ -1,4 +1,7 @@
 import cas from '../cas-client'
+import {getAccessToken} from '../oauth'
+import {User} from '../models'
+import axios from 'axios'
 
 export function loggedin(req, res, next) {
   if (req.session.auth && req.session.auth.status) {
