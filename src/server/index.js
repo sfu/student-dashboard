@@ -140,6 +140,10 @@ app.get('/', loggedin, (req, res) => {
       })
     }
   })
+
+app.use((err, req, res) => {
+  console.error(err.stack)
+  res.status(500).send(err)
 })
 
 if (process.env.EXPRESS_HTTPS) {
