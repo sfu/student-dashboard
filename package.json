@@ -4,7 +4,7 @@
   "description": "SFU Student Dashboard application",
   "main": "bin/server.js",
   "scripts": {
-    "start": "node ./bin/server.js",
+    "start": "node -r dotenv/config ./bin/server.js",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
     "lint:changed": "./scripts/lint-changed.sh",

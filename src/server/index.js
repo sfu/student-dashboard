@@ -1,6 +1,5 @@
 /* eslint no-console: 0 */
 
-import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import session from 'express-session'
