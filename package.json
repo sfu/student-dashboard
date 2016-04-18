@@ -11,7 +11,7 @@
     "test": "node_modules/.bin/ava -v --require babel-register src/**/__test__/*.js",
     "test:watch": "npm run test -- -w",
     "deps:reinstall": "rimraf node_modules && npm i",
-    "db": "knex --knexfile ./src/server/db/knexfile.js --",
+    "db": "node -r dotenv/config node_modules/.bin/knex --knexfile ./src/server/db/knexfile.js --",
     "db:migrate": "npm run db migrate:latest",
     "db:migrate:rollback": "npm run db migrate:rollback",
     "db:migrate:make": "npm run db migrate:make"
