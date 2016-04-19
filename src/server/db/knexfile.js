@@ -1,3 +1,5 @@
+const path = require('path')
+
 if (!(process.env.PG_HOST || process.env.PG_USER || process.env.PG_PASS || process.env.PG_DATABASE)) {
   throw new Error('Required DB options not set in .env')
 }
@@ -11,7 +13,7 @@ module.exports = {
     database: process.env.PG_DATABASE
   },
   migrations: {
-    directory: './migrations',
+    directory: path.resolve(__dirname, './migrations'),
     tableName: 'schema_migrations'
   }
 }
