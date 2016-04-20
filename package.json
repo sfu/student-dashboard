@@ -18,6 +18,13 @@
     "db:init": "node -r babel-polyfill -r babel-register -r dotenv/config /Users/grahamb/sfuvault/source/student-dashboard/src/server/db/init.js",
     "db:init:test": "node -r babel-polyfill -r babel-register -r dotenv/config /Users/grahamb/sfuvault/source/student-dashboard/src/server/db/init.js dotenv_config_path=./.env.test"
   },
+  "ava": {
+    "files": [ "src/**/__test__/*.js" ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sfu/student-dashboard.git"
