@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:changed": "./scripts/lint-changed.sh",
 
-    "test": ". ./scripts/sourceenv.sh .env.test && ava -v", 
+    "test": ". ./scripts/sourceenv.sh .env.test && NODE_ENV=test ava -v",
     "test:watch": "npm run test -- -w",
 
     "deps:reinstall": "rimraf node_modules && npm i",
