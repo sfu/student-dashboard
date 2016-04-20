@@ -8,15 +8,15 @@
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
     "lint:changed": "./scripts/lint-changed.sh",
-    "test": "node_modules/.bin/ava -v --require babel-register src/**/__test__/*.js",
+    "test": ". ./scripts/sourceenv.sh .env.test && ava -v", 
     "test:watch": "npm run test -- -w",
     "deps:reinstall": "rimraf node_modules && npm i",
     "db": "node -r dotenv/config node_modules/.bin/knex --knexfile ./src/server/db/knexfile.js --",
     "db:migrate": "npm run db migrate:latest",
     "db:migrate:rollback": "npm run db migrate:rollback",
     "db:migrate:make": "npm run db migrate:make",
-    "db:init": "node -r babel-polyfill -r babel-register -r dotenv/config /Users/grahamb/sfuvault/source/student-dashboard/src/server/db/init.js",
-    "db:init:test": "node -r babel-polyfill -r babel-register -r dotenv/config /Users/grahamb/sfuvault/source/student-dashboard/src/server/db/init.js dotenv_config_path=./.env.test"
+    "db:init": "node -r babel-polyfill -r babel-register -r dotenv/config ./src/server/db/init.js",
+    "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test"
   },
   "ava": {
     "files": [ "src/**/__test__/*.js" ],
