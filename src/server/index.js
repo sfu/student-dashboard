@@ -1,29 +1,13 @@
 /* eslint no-console: 0 */
-
 import express from 'express'
-import bodyParser from 'body-parser'
 import session from 'express-session'
 import fs from 'fs'
 import http from 'http'
 import https from 'https'
 import helmet from 'helmet'
 import {sync as uid} from 'uid-safe'
-import redis from 'redis'
 import ConnectRedis from 'connect-redis'
-import {
-  loggedin,
-  authenticateUser,
-  handleSingleSignout,
-  getUser,
-  getProxyTicket,
-  getOauthCredentials,
-  provisionOrUpdateUser
-} from './auth-middleware'
-
-import {RedisStore as PGTStore} from './pgt-store'
-const pgtStore = new PGTStore(redis.createClient({
-  url: process.env.CAS_PGT_REDIS_URL
-}))
+import * as routes from './routes'
 
 const RedisStore = ConnectRedis(session)
 const app = express()
@@ -58,43 +42,10 @@ if (process.env.SESSION_STORE_REDIS_URL) {
 app.use(session(sessionConfig))
 app.use(helmet())
 
-app.get('/pgt/:pgtcall?', async (req, res) => {
-  const {pgtIou, pgtId, pgtiou} = req.query
-  // request is from a CAS client asking for a PGT
-  if (req.params.pgtcall === 'getPGT') {
-    const pgt = await pgtStore.get(pgtiou)
-    if (pgt) {
-      res.set('Content-Type', 'text/plain').status(200).send(pgt)
-    } else {
-      res.set('Content-Type', 'text/plain').status(403).send('Invalid PGTIOU supplied')
-    }
-
-  // request is from the CAS server providing a PGTIOU/PGT
-  } else {
-    res.status(200).send('ok')
-    if (pgtIou && pgtId) {
-      await pgtStore.set(pgtIou, pgtId)
-    }
-  }
-})
-
-app.get('/auth',
-  authenticateUser,
-  getUser,
-  getProxyTicket,
-  getOauthCredentials,
-  provisionOrUpdateUser,
-  (req, res) => {
-    res.redirect(req.REDIRECT_AFTER_LOGIN)
-  }
-)
-
-app.post('/auth', [bodyParser.urlencoded({extended:false}), handleSingleSignout])
-
-app.get('/', loggedin, (req, res) => {
-  res.status(200).send('OK')
-})
-
+// mount routes
+app.use('/pgt', routes.pgt)
+app.use('/auth', routes.auth)
+app.use('/', routes.app)
 
 app.use((err, req, res, next) => {  // eslint-disable-line no-unused-vars
   console.error(err.stack)
