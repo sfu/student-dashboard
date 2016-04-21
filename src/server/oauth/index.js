@@ -4,7 +4,7 @@ import qs from 'qs'
 export function getAccessToken(ticket) {
   return axios({
     method: 'post',
-    url: process.env.PORTAL_OAUTH_URL,
+    url: process.env.PORTAL_OAUTH_CAS_GRANT_URL,
     data: {
       client_id: process.env.PORTAL_OAUTH_CLIENT_ID,
       client_secret: process.env.PORTAL_OAUTH_SECRET,
@@ -19,7 +19,7 @@ export function getAccessToken(ticket) {
 export function refreshAccessToken(refresh_token) {
   return axios({
     method: 'post',
-    url: process.env.PORTAL_OAUTH_URL,
+    url: process.env.PORTAL_OAUTH_REFRESH_GRANT_URL,
     data: {
       client_id: process.env.PORTAL_OAUTH_CLIENT_ID,
       client_secret: process.env.PORTAL_OAUTH_SECRET,
