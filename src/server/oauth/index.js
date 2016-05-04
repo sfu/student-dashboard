@@ -31,3 +31,23 @@ export function refreshAccessToken(refresh_token) {
     }
   })
 }
+
+export function validateAccessToken(token) {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: 'get',
+      url: process.env.PORTAL_OAUTH_VALIDATE_ACCESS_TOKEN_URL,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((response) => {
+      if (response.status === 200) {
+        resolve(true)
+      } else {
+        reject(false)
+      }
+    }).catch(() => {
+      reject(false)
+    })
+  })
+}
