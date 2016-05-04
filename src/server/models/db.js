@@ -1,10 +1,12 @@
 const knexfile = require('../db/knexfile')
 const knex = require('knex')(knexfile)
 const bookshelf = require('bookshelf')(knex)
-let ModelBase = require('bookshelf-modelbase')(bookshelf)
+let Model = bookshelf.Model
+
 if (process.env.NODE_ENV === 'test') {
-  ModelBase = ModelBase.extend({}, {
+  module.exports =  Model.extend({}, {
     _knex: bookshelf.knex
   })
+} else {
+  module.exports = bookshelf
 }
-module.exports = ModelBase
