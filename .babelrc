@@ -4,5 +4,13 @@
     "react",
     "stage-1"
   ],
-  "plugins": ["transform-runtime"]
+  "plugins": ["transform-runtime"],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-runtime",
+        "rewire"
+      ]
+    }
+  }
 }
