@@ -67,7 +67,7 @@
     "axios": "0.11.0",
     "babel-eslint": "6.0.4",
     "babel-runtime": "6.6.1",
-    "body-parser": "1.15.0",
+    "body-parser": "1.15.1",
     "bookshelf": "0.9.4",
     "cas": "github:grahamb/node-cas",
     "connect-redis": "3.0.2",
