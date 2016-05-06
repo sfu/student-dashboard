@@ -1,6 +1,6 @@
 import cas from '../cas-client'
 import {getAccessToken} from '../oauth'
-import {User} from '../models'
+import db from '../db'
 import axios from 'axios'
 
 function loggedin(req, res, next) {
@@ -43,8 +43,10 @@ function handleSingleSignout(req, res, next) {
 }
 
 async function getUser(req, res, next) {
+  const {username} = req.session.auth
   try {
-    req.USER_RECORD = await User.findByUsername(req.session.auth.username)
+    const result = await db('users').where({username}).limit(1)
+    req.USER_RECORD = result.length ? result[0] : null
     next()
   } catch(e) {
     next(e)
