@@ -72,8 +72,9 @@ async function provisionOrUpdateUser(req, res, next) {
   if (req.USER_RECORD) {
     try {
       const {access_token, refresh_token} = req.OAUTH_CREDENTIALS
-      await req.USER_RECORD.set({access_token, refresh_token}).save()
-      req.session.user = req.USER_RECORD
+      const {username} = req.USER_RECORD
+      const user = await db('users').where({username}).update({access_token, refresh_token}).returning('*')
+      req.session.user = user ? user[0] : null
       next()
     } catch(e) {
       next(e)
@@ -84,7 +85,7 @@ async function provisionOrUpdateUser(req, res, next) {
       const bio = await getUserBio(req.session.auth.username, access_token)
       const {username, lastname, firstnames, commonname, barcode} = bio
       try {
-        req.USER_RECORD = await User.forge({
+        const user =await db('users').insert({
           username,
           lastname,
           firstnames,
@@ -92,8 +93,8 @@ async function provisionOrUpdateUser(req, res, next) {
           barcode,
           access_token,
           refresh_token
-        }).save()
-        req.session.user = req.USER_RECORD
+        }).returning('*')
+        req.session.user = user ? user[0] : null
         next()
       } catch(e) {
         next(e)
