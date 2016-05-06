@@ -9,7 +9,7 @@ exports.up = (knex) => {
     t.text('barcode').nullable().comment(`The user''s SFU Library barcode number`)
     t.text('access_token').nullable().comment(`The user''s oAuth access token`)
     t.text('refresh_token').nullable().comment(`The user''s oAuth refresh token`)
-    t.dateTime('created_at').notNull()
+    t.dateTime('created_at').notNull().defaultTo(knex.raw('now()'))
     t.dateTime('updated_at').notNull()
   })
 }
