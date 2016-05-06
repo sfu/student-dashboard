@@ -9,9 +9,9 @@ $$ language 'plpgsql';
 `
 
 exports.up = (knex) => {
-  knex.schema.raw(sql)
+  return knex.schema.raw(sql)
 }
 
 exports.down = (knex) => {
-  knex.schema.raw('DROP FUNCTION IF EXISTS update_updated_at_column()')
+  return knex.schema.raw('DROP FUNCTION update_updated_at_column()')
 }
