@@ -59,6 +59,7 @@
     "pre-commit": "1.1.2",
     "rimraf": "2.5.2",
     "sinon": "1.17.3",
+    "sinon-express-mock": "1.2.4",
     "webpack": "1.13.0",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.10.0"
