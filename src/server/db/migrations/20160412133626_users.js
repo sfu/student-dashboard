@@ -2,7 +2,6 @@ exports.up = (knex) => {
   return knex.schema.createTable('users', (t) => {
     t.comment('A SFU User')
     t.increments().primary()
-    t.text('uuid').nullable()
     t.text('username').notNull().comment(`The user''s unique SFU Computing ID`)
     t.text('lastname').notNull().comment(`The user''s last name, as defined in Amaint`)
     t.text('firstnames').notNull().comment(`The user''s legal given names, as defined in Amaint`)

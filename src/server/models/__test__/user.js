@@ -20,5 +20,4 @@ test.serial('A user should be created', async t => {
     refresh_token: '1234'
   }).save()
   t.is(user.get('username'), 'testuser')
-  t.not(user.has('uuid'), null)
 })
