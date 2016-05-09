@@ -5,8 +5,4 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c 'create database student_dashboard_test;' -U postgres
-env:
-  - NODE_ENV=test
-  - DATABASE_URL=postgres://localhost/student_dashboard_test
-  - CAS_BASE_URL=https://cas
+  - touch .env.test && psql -c 'create database student_dashboard_test;' -U postgres
