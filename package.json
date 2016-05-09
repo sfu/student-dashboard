@@ -4,7 +4,7 @@
   "description": "SFU Student Dashboard application",
   "main": "bin/server.js",
   "scripts": {
-    "start": "node -r dotenv/config ./bin/server.js",
+    "start": "node -r ./environment.js ./bin/server.js",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
     "lint:changed": "./scripts/lint-changed.sh",
@@ -23,6 +23,7 @@
       "src/**/__test__/*.js"
     ],
     "require": [
+      "./environment.js",
       "babel-register"
     ],
     "babel": "inherit"
