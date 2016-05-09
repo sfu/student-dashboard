@@ -5,4 +5,4 @@ node_js:
 services:
   - postgresql
 before_script:
-  - touch .env.test && psql -c 'create database student_dashboard_test;' -U postgres
+  - psql -c 'create database student_dashboard_test;' -U postgres
