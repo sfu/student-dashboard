@@ -75,7 +75,7 @@
     "connect-redis": "3.0.2",
     "cookie-parser": "1.4.1",
     "dotenv": "2.0.0",
-    "eslint": "2.10.0",
+    "eslint": "2.10.1",
     "eslint-plugin-react": "5.1.1",
     "express": "4.13.4",
     "express-session": "1.13.0",
