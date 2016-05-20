@@ -1,2 +1,2 @@
-export MemoryStore from './memory'
-export RedisStore from './redis'
+export {default as MemoryStore} from './memory'
+export {default as RedisStore} from './redis'
