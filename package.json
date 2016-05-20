@@ -5,6 +5,9 @@
   "main": "bin/server.js",
   "scripts": {
     "start": "node -r ./environment.js ./bin/server.js",
+    "prebuild": "rimraf build",
+    "build": "npm run build:server",
+    "build:server": "babel src --out-dir build --ignore **/__test__/* --copy-files",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
     "lint:changed": "./scripts/lint-changed.sh",
@@ -43,6 +46,7 @@
   ],
   "devDependencies": {
     "ava": "0.14.0",
+    "babel-cli": "6.9.0",
     "babel-core": "6.9.0",
     "babel-eslint": "6.0.4",
     "babel-loader": "6.2.4",
