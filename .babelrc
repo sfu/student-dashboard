@@ -4,6 +4,7 @@
     "react"
   ],
   "plugins": [
+    "dedent",
     "syntax-async-functions",
     "transform-async-to-generator"
   ],
