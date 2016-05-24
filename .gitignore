@@ -6,3 +6,6 @@ Thumbs.db
 
 .env*
 !.env.example
+stats.json
+public/assets
+build
