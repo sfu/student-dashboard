@@ -5,6 +5,7 @@ import fs from 'fs'
 import http from 'http'
 import https from 'https'
 import helmet from 'helmet'
+import path from 'path'
 import {sync as uid} from 'uid-safe'
 import ConnectRedis from 'connect-redis'
 import * as routes from './routes'
@@ -41,6 +42,7 @@ if (process.env.SESSION_STORE_REDIS_URL) {
 
 app.use(session(sessionConfig))
 app.use(helmet())
+app.use(express.static(path.resolve(__dirname, '../../public')))
 
 // mount routes
 app.use('/pgt', routes.pgt)
