@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node -r ./environment.js ./bin/server.js",
     "prebuild": "rimraf build",
-    "build": "npm run build:server",
+    "build": "npm run build:assets && npm run build:server",
+    "build:assets": "NODE_ENV=production webpack -p",
     "build:server": "babel src --out-dir build --ignore **/__test__/* --copy-files",
     "lint": "eslint -c .eslintrc . bin src",
     "lint:fix": "npm run lint -- --fix",
