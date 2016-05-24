@@ -70,7 +70,7 @@
     "body-parser": "1.15.1",
     "cas": "github:grahamb/node-cas",
     "connect-redis": "3.0.2",
-    "cookie-parser": "1.4.1",
+    "cookie-parser": "1.4.2",
     "dotenv": "2.0.0",
     "eslint": "2.10.2",
     "express": "4.13.4",
