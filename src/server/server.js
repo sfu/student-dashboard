@@ -38,7 +38,8 @@ export const createDevServer = () => {
   const app = new WebpackDevServer(compiler, {
 
     // webpack-dev-middleware options.
-    publicPath: `https://icat-graham.its.sfu.ca${webpackConfig.output.publicPath}`,
+    publicPath: webpackConfig.output.publicPath,
+    // publicPath: `https://icat-graham.its.sfu.ca${webpackConfig.output.publicPath}`,
     hot: true,
     quiet: false,
     noInfo: false,
