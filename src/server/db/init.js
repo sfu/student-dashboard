@@ -3,34 +3,39 @@
 const cloneDeep = require('lodash').cloneDeep
 const path = require('path')
 const chalk = require('chalk')
+const parse = require('pg-connection-string').parse
+
+process.on('unhandledRejection', function(reason, p){
+    console.log("Possibly Unhandled Rejection at: Promise ", p, " reason: ", reason)
+    // application specific logging here
+})
 
 ;(async function() {
-
-  const DROP_DB = `DROP DATABASE IF EXISTS ${process.env.PG_DATABASE};`
-  const CREATE_DB = `CREATE DATABASE ${process.env.PG_DATABASE};`
-
-  const migrationConfig = require('./knexfile')
-  const initConfig = cloneDeep(migrationConfig)
-  initConfig.connection.database = process.env.PG_DEFAULT_DB || 'postgres'
-
-  const initKnex = require('knex')(initConfig)
-  let migrationKnex = null
   let code = 0
-
-  const {host, user, database} = migrationConfig.connection
-
-  process.stdout.write('\n')
-  console.log(`${chalk.yellow.bold('Host:')} ${host}`)
-  console.log(`${chalk.yellow.bold('User:')} ${user}`)
-  console.log(`${chalk.yellow.bold('Database:')} ${database}`)
-  process.stdout.write('\n')
   try {
+    const PG_CONNECTION = parse(process.env.DATABASE_URL)
+    const DROP_DB = `DROP DATABASE IF EXISTS ${PG_CONNECTION.database};`
+    const CREATE_DB = `CREATE DATABASE ${PG_CONNECTION.database};`
 
-    process.stdout.write(chalk.cyan(`Attempting to drop DB ${process.env.PG_DATABASE}... `))
+    const migrationConfig = require('./knexfile')
+    const initConfig = cloneDeep(migrationConfig)
+    initConfig.connection = cloneDeep(PG_CONNECTION)
+    initConfig.connection.database = process.env.PG_DEFAULT_DB || 'postgres'
+
+    const initKnex = require('knex')(initConfig)
+    let migrationKnex = null
+
+    process.stdout.write('\n')
+    console.log(`${chalk.yellow.bold('Host:')} ${PG_CONNECTION.host}`)
+    console.log(`${chalk.yellow.bold('User:')} ${PG_CONNECTION.user}`)
+    console.log(`${chalk.yellow.bold('Database:')} ${PG_CONNECTION.database}`)
+    process.stdout.write('\n')
+
+    process.stdout.write(chalk.cyan(`Attempting to drop DB ${PG_CONNECTION.database}... `))
     await initKnex.raw(DROP_DB)
     process.stdout.write(chalk.green('✓\n'))
 
-    process.stdout.write(chalk.cyan(`Attempting to create DB ${process.env.PG_DATABASE}... `))
+    process.stdout.write(chalk.cyan(`Attempting to create DB ${PG_CONNECTION.database}... `))
     await initKnex.raw(CREATE_DB)
     process.stdout.write(chalk.green('✓\n'))
 
