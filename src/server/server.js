@@ -54,10 +54,6 @@ export const createDevServer = (app) => {
   return app
 }
 
-export const createProductionServer = (app) => {
-  return app
-}
-
 const productionErrorHandler = (err, req, res, next) => {
   res.status(500).send('<p>Internal Server Error</p>')
   console.error(err.stack) // eslint-disable-line no-console
