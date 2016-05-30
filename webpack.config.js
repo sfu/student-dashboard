@@ -1,11 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
-const os = require('os')
 
 module.exports = {
   entry: [
+    `webpack-hot-middleware/client?path=/__webpack_hmr`,
     'webpack/hot/dev-server',
-    `webpack-dev-server/client?https://${os.hostname()}`,
     path.resolve(__dirname, 'src/client/home.js')
   ],
   output: {

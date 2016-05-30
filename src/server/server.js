@@ -4,8 +4,9 @@ import {sync as uid} from 'uid-safe'
 import helmet from 'helmet'
 import path from 'path'
 import * as routes from './routes'
-import WebpackDevServer from 'webpack-dev-server'
 import webpack from 'webpack'
+import WebpackDevMiddleware from 'webpack-dev-middleware'
+import WebpackHotMiddleware from 'webpack-hot-middleware'
 import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 const RedisStore = ConnectRedis(session)
@@ -32,17 +33,14 @@ const sessionConfig = {
   }
 }
 
-export const createDevServer = () => {
+export const createDevServer = (app) => {
   const webpackConfig = require('../../webpack.config.js')
   const compiler = webpack(webpackConfig)
-  const app = new WebpackDevServer(compiler, {
-
-    // webpack-dev-middleware options.
+  app.use(WebpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
-    // publicPath: `https://icat-graham.its.sfu.ca${webpackConfig.output.publicPath}`,
     hot: true,
     quiet: false,
-    noInfo: false,
+    noInfo: true,
     stats: {
       assets: true,
       colors: true,
@@ -50,24 +48,15 @@ export const createDevServer = () => {
       hash: true,
       timings: true,
       chunk: false
-    },
-
-    // webpack-dev-server options
-    filename: "bundle.js",
-    contentBase: false,
-    setup(app) {
-      app.set('trust proxy', 1)
     }
-  })
+  }))
+  app.use(WebpackHotMiddleware(compiler))
   return app
 }
 
-export const createProductionServer = () => {
-  const app = express()
-  app.set('trust proxy', 1)
+export const createProductionServer = (app) => {
   return app
 }
-
 
 const productionErrorHandler = (err, req, res, next) => {
   res.status(500).send('<p>Internal Server Error</p>')
@@ -75,8 +64,10 @@ const productionErrorHandler = (err, req, res, next) => {
   next(err)
 }
 
-export const createServer = () => {
-  const app = PRODUCTION ? createProductionServer() : createDevServer()
+export const createServer = (app) => {
+  if (!PRODUCTION) {
+    app = createDevServer(app)
+  }
   app.use(session(sessionConfig))
   app.use(helmet())
   app.use(express.static(path.resolve(__dirname, '../../public')))
@@ -88,6 +79,5 @@ export const createServer = () => {
 
   // error handler
   app.use(PRODUCTION ? productionErrorHandler : devErrorHandler)
-
   return app
 }
