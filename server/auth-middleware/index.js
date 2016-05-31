@@ -2,6 +2,7 @@ import cas from '../cas-client'
 import {getAccessToken} from '../oauth'
 import db from '../db'
 import axios from 'axios'
+import uuid from 'node-uuid'
 
 function loggedin(req, res, next) {
   if (req.session.auth && req.session.auth.status) {
@@ -91,6 +92,7 @@ async function provisionOrUpdateUser(req, res, next) {
           firstnames,
           commonname,
           barcode,
+          uid: uuid.v4(),
           access_token,
           refresh_token
         }).returning('*')

@@ -38,6 +38,7 @@ test('Provision a user when none exists', async t => {
   const next = sinon.spy()
   await provisionOrUpdateUser(req, res, next)
   t.is(req.session.user.username, 'fakeuser')
+  t.truthy(req.session.user.uid)
 })
 
 test('Update a user when one exists', async t => {
