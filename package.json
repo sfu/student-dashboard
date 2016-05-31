@@ -47,12 +47,12 @@
     "lint:changed"
   ],
   "devDependencies": {
-    "ava": "0.15.1",
+    "ava": "0.14.0",
     "babel-cli": "6.9.0",
     "babel-core": "6.9.1",
     "babel-eslint": "6.0.4",
-    "babel-loader": "6.2.4",
     "babel-plugin-dedent": "2.0.0",
+    "babel-loader": "6.2.4",
     "babel-plugin-rewire": "1.0.0-rc-2",
     "babel-preset-node6": "11.0.0",
     "babel-preset-react": "6.5.0",
