@@ -34,7 +34,7 @@ const sessionConfig = {
 }
 
 export const createDevServer = (app) => {
-  const webpackConfig = require('../../webpack.config.js')
+  const webpackConfig = require('../webpack.config.js')
   const compiler = webpack(webpackConfig)
   app.use(WebpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -66,7 +66,7 @@ export const createServer = (app) => {
   }
   app.use(session(sessionConfig))
   app.use(helmet())
-  app.use(express.static(path.resolve(__dirname, '../../public')))
+  app.use(express.static(path.resolve(__dirname, '../public')))
 
   // mount routes
   app.use('/pgt', routes.pgt)

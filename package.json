@@ -4,28 +4,28 @@
   "description": "SFU Student Dashboard application",
   "main": "build/server/index.js",
   "scripts": {
-    "start": "NODE_ENV=development DEBUG='express:*' nodemon --watch src/server -r babel-register -r ./environment.js src/server/index.js",
-    "start:production": "NODE_ENV=production node -r ./environment.js build/server/index.js",
+    "start": "NODE_ENV=development DEBUG='express:*' nodemon --watch server -r babel-register -r ./environment.js server/index.js",
+    "start:production": "NODE_ENV=production node -r ./environment.js build/index.js",
     "prebuild": "rimraf build",
-    "build": "npm run build:assets && npm run build:server",
+    "build": "npm run lint && npm run build:assets && npm run build:server",
     "build:assets": "NODE_ENV=production webpack -p --config webpack.production.config.js",
-    "build:server": "babel src --out-dir build --ignore **/__test__/* --copy-files",
-    "lint": "eslint -c .eslintrc . bin src",
+    "build:server": "babel server --out-dir build --ignore **/__test__/* --copy-files",
+    "lint": "eslint -c .eslintrc --ignore-pattern=build --ignore-pattern=public  .",
     "lint:fix": "npm run lint -- --fix",
     "lint:changed": "./scripts/lint-changed.sh",
     "test": "NODE_ENV=test ava -v -s",
     "test:watch": "npm run test -- -w",
     "deps:reinstall": "rimraf node_modules && npm i",
-    "db": "node -r ./environment.js node_modules/.bin/knex --knexfile ./src/server/db/knexfile.js --",
+    "db": "node -r ./environment.js node_modules/.bin/knex --knexfile ./server/db/knexfile.js --",
     "db:migrate": "npm run db migrate:latest",
     "db:migrate:rollback": "npm run db migrate:rollback",
     "db:migrate:make": "npm run db migrate:make",
-    "db:init": "node -r babel-register -r ./environment.js ./src/server/db/init.js",
+    "db:init": "node -r babel-register -r ./environment.js ./server/db/init.js",
     "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test"
   },
   "ava": {
     "files": [
-      "src/**/__test__/*.js"
+      "**/__test__/*.js"
     ],
     "require": [
       "./environment.js",

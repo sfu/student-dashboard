@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: [
-    path.resolve(__dirname, 'src/client/home.js')
+    path.resolve(__dirname, 'client/home.js')
   ],
   output: {
     filename: 'app.js',

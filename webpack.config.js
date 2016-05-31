@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     `webpack-hot-middleware/client?path=/__webpack_hmr`,
     'webpack/hot/dev-server',
-    path.resolve(__dirname, 'src/client/home.js')
+    path.resolve(__dirname, 'client/home.js')
   ],
   output: {
     filename: 'app.js',
