@@ -73,7 +73,7 @@
     "webpack-hot-middleware": "2.10.0"
   },
   "dependencies": {
-    "axios": "0.11.1",
+    "axios": "0.12.0",
     "body-parser": "1.15.1",
     "cas": "github:grahamb/node-cas",
     "connect-redis": "3.0.2",
