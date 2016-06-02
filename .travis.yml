@@ -1,10 +1,13 @@
 language: node_js
 node_js:
-- '6'
+  - '6'
+branches:
+  except:
+    - /^greenkeeper-.*$/
 services:
-- postgresql
+  - postgresql
 before_script:
-- psql -c 'create database student_dashboard_test;' -U postgres
+  - psql -c 'create database student_dashboard_test;' -U postgres
 notifications:
   slack:
     on_pull_requests: false
