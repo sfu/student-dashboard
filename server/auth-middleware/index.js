@@ -13,7 +13,7 @@ function loggedin(req, res, next) {
   }
 }
 
-function authenticateUser(req, res, next) {
+function authenticateCasUser(req, res, next) {
   // user is logged in, goto next
   if (req.session.auth && req.session.auth.status) {
     next()
@@ -128,7 +128,7 @@ async function getOauthCredentials(req, res, next) {
 
 export {
   loggedin,
-  authenticateUser,
+  authenticateCasUser,
   handleSingleSignout,
   getUser,
   provisionOrUpdateUser,
