@@ -2,7 +2,7 @@ import {Router} from 'express'
 import bodyParser from 'body-parser'
 
 import {
-  authenticateUser,
+  authenticateCasUser,
   handleSingleSignout,
   getUser,
   getProxyTicket,
@@ -12,8 +12,8 @@ import {
 
 const router = Router()
 
-router.get('/',
-  authenticateUser,
+router.get('/login/cas',
+  authenticateCasUser,
   getUser,
   getProxyTicket,
   getOauthCredentials,
