@@ -3,6 +3,7 @@ import session from 'express-session'
 import {sync as uid} from 'uid-safe'
 import helmet from 'helmet'
 import path from 'path'
+import fs from 'fs'
 import * as routes from './routes'
 import webpack from 'webpack'
 import WebpackDevMiddleware from 'webpack-dev-middleware'
@@ -64,6 +65,8 @@ export const createServer = (app) => {
   if (!PRODUCTION) {
     app = createDevServer(app)
   }
+  app.set('JWT_SIGNING_CERTIFICATE', fs.readFileSync(process.env.JWT_SIGNING_CERTIFICATE))
+  app.set('JWT_SIGNING_ALG', 'RS512')
   app.use(session(sessionConfig))
   app.use(helmet())
   app.use(express.static(path.resolve(__dirname, '../public')))
