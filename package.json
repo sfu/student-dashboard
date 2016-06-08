@@ -4,7 +4,7 @@
   "description": "SFU Student Dashboard application",
   "main": "build/server/index.js",
   "scripts": {
-    "start": "NODE_ENV=development DEBUG='express:*' nodemon --watch server -r babel-register -r ./environment.js server/index.js",
+    "start": "NODE_ENV=development nodemon --watch server -r babel-register -r ./environment.js server/index.js",
     "start:production": "NODE_ENV=production node -r ./environment.js build/index.js",
     "prebuild": "rimraf build",
     "build": "npm run lint && npm run build:assets && npm run build:server",
@@ -84,6 +84,7 @@
     "express": "4.13.4",
     "express-session": "1.13.0",
     "helmet": "2.1.0",
+    "jsonwebtoken": "7.0.0",
     "knex": "0.11.5",
     "lodash": "4.13.1",
     "node-uuid": "1.4.7",
