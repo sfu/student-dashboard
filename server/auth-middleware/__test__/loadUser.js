@@ -23,3 +23,11 @@ test.serial('loadUser returns a user when one is found', async t => {
   const user = await loadUser('fakeuser')
   t.is(user.username, 'fakeuser')
 })
+
+test.serial('loadUser returns a user with only specified fields', async t => {
+  const user = await loadUser('fakeuser', ['id', 'username'])
+  const keys = Object.keys(user)
+  t.true(keys.includes('id'))
+  t.true(keys.includes('username'))
+  t.false(keys.includes('lastname'))
+})
