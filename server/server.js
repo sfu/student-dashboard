@@ -74,6 +74,6 @@ export const createServer = (app) => {
   app.use('/', routes.app)
 
   // error handler
-  app.use(PRODUCTION ? productionErrorHandler : devErrorHandler)
+  app.use(PRODUCTION ? productionErrorHandler : devErrorHandler())
   return app
 }
