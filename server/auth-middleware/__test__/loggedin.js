@@ -47,6 +47,7 @@ test('Calling `loggedin` as an API req and with a JWT should call `next` with no
   }
   await loggedin(req, {}, next)
   t.true(next.calledOnce)
+  t.is(req.username, 'fakeymcfakeuser')
   t.is(next.getCall(0).args.length, 0)
   AsyncLoggedinAPI.__ResetDependency__('verifyJwt')
 })
