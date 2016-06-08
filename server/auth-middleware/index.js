@@ -24,7 +24,6 @@ async function loadUser(username, fields = '*') {
   return result.length ? result[0] : null
 }
 
-
 // Determine if a user is logged in
 // If the user has a valid session, then they're logged in
 // If the request is an API request, and a Bearer token is present, then they're logged in
@@ -44,7 +43,7 @@ async function loggedin(req, res, next) {
       } else {
         try {
           const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
-          req.user = payload.sub
+          req.username = payload.sub
           next()
         } catch(e) {
           next(e)
@@ -71,6 +70,7 @@ function authenticateCasUser(req, res, next) {
         delete req.session.redirectAfterLogin
         req.session.regenerate(() => {
           req.session.auth = {status, username, extended}
+          req.username = username
           req.REDIRECT_AFTER_LOGIN = redirectUrl
           next()
         })
@@ -88,7 +88,7 @@ function handleSingleSignout(req, res, next) {
 }
 
 async function getUser(req, res, next) {
-  const {username} = req.session.auth
+  const username = req.username
   try {
     const result = await db('users').where({username}).limit(1)
     req.USER_RECORD = result.length ? result[0] : null
