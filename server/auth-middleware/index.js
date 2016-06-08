@@ -113,7 +113,9 @@ async function getUserBio(username, token) {
 }
 
 async function provisionOrUpdateUser(req, res, next) {
-  if (req.USER_RECORD) {
+  if (req.user && req.isApiRequest) {
+    next()
+  } else if (req.user && !req.isApiRequest) {
     try {
       const {access_token, refresh_token} = req.OAUTH_CREDENTIALS
       const {username} = req.user
@@ -129,17 +131,22 @@ async function provisionOrUpdateUser(req, res, next) {
       const bio = await getUserBio(req.username, access_token)
       const {username, lastname, firstnames, commonname, barcode} = bio
       try {
-        const user =await db('users').insert({
+        const payload = {
           username,
           lastname,
           firstnames,
           commonname,
           barcode,
-          uid: uuid.v4(),
-          access_token,
-          refresh_token
-        }).returning('*')
-        req.session.user = user ? user[0] : null
+          uid: uuid.v4()
+        }
+
+        if (!req.isApiRequest) {
+          payload.access_token = access_token
+          payload.refresh_token = refresh_token
+        }
+
+        const user = await db('users').insert(payload).returning('*')
+        req.user = user ? user[0] : null
         next()
       } catch(e) {
         next(e)
