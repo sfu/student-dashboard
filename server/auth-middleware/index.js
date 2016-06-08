@@ -90,8 +90,7 @@ function handleSingleSignout(req, res, next) {
 async function getUser(req, res, next) {
   const username = req.username
   try {
-    const result = await db('users').where({username}).limit(1)
-    req.USER_RECORD = result.length ? result[0] : null
+    req.user = await loadUser(username)
     next()
   } catch(e) {
     next(e)
