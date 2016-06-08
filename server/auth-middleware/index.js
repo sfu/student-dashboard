@@ -5,6 +5,13 @@ import axios from 'axios'
 import uuid from 'node-uuid'
 
 function loggedin(req, res, next) {
+
+async function loadUser(username, fields = '*') {
+  const result = await db('users').select(fields).where({username})
+  return result.length ? result[0] : null
+}
+
+
   if (req.session.auth && req.session.auth.status) {
     next()
   } else {
