@@ -74,6 +74,7 @@ export const createServer = (app) => {
   // mount routes
   app.use('/pgt', routes.pgt)
   app.use('/auth', routes.auth)
+  app.use('/api', routes.api)
   app.use('/', routes.app)
 
   // error handler
