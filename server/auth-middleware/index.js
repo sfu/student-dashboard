@@ -55,8 +55,12 @@ async function loggedin(req, res, next) {
       }
     }
   } else {
-    req.session.redirectAfterLogin = req.originalUrl
-    res.redirect('/auth/login/cas')
+    if (req.isApiRequest) {
+      res.boom.unauthorized()
+    } else {
+      req.session.redirectAfterLogin = req.originalUrl
+      res.redirect('/auth/login/cas')
+    }
   }
 }
 
