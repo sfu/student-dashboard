@@ -135,8 +135,13 @@ async function provisionOrUpdateUser(req, res, next) {
     }
   } else {
     try {
-      const {access_token, refresh_token} = req.OAUTH_CREDENTIALS
-      const bio = await getUserBio(req.username, access_token)
+      let access_token, refresh_token
+      if (req.OAUTH_CREDENTIALS) {
+        access_token = req.OAUTH_CREDENTIALS.access_token
+        refresh_token = req.OAUTH_CREDENTIALS.refresh_token
+      }
+
+      const bio = await getUserBio(req.username, access_token, req)
       const {username, lastname, firstnames, commonname, barcode} = bio
       try {
         const payload = {
