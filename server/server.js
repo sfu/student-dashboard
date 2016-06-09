@@ -10,8 +10,9 @@ import WebpackDevMiddleware from 'webpack-dev-middleware'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
 import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
-const RedisStore = ConnectRedis(session)
+import boom from 'express-boom'
 
+const RedisStore = ConnectRedis(session)
 const PRODUCTION = process.env.NODE_ENV === 'production'
 
 const sessionConfig = {
@@ -70,6 +71,7 @@ export const createServer = (app) => {
   app.use(session(sessionConfig))
   app.use(helmet())
   app.use(express.static(path.resolve(__dirname, '../public')))
+  app.use(boom())
 
   // mount routes
   app.use('/pgt', routes.pgt)
