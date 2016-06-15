@@ -5,8 +5,6 @@ import axios from 'axios'
 import uuid from 'node-uuid'
 import {verify, decode} from 'jsonwebtoken'
 
-const UNAUTHENTICATED = {"status":"unauthenticated","errors":[{"message":"user authorization required"}]}
-
 function verifyJwt(token, key) {
   if (process.env.JWT_MODE === 'decode') {
     return decode(token)
@@ -33,35 +31,31 @@ async function loadUser(username, fields = '*') {
 // If the request is an API request, and a Bearer token is present, then they're logged in
 // If they're not logged in, then they get a JSON 401 or redirected to CAS, as appropriate
 async function loggedin(req, res, next) {
+
+  // session
   if (req.session.auth && req.session.auth.status) {
-    next()
-  } else if (req.isApiRequest) {
+    return next()
+  }
+
+  // api request
+  if (req.isApiRequest) {
     let token = req.headers.authorization
-    // is it a Bearer token?
-    if (!token) {
-      res.status(401).send(UNAUTHENTICATED)
-    } else {
-      token = token.split(' ')
-      if (token[0].toLowerCase() !== 'bearer') {
-        res.status(401).send(UNAUTHENTICATED)
-      } else {
-        try {
-          const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
-          req.username = payload.sub
-          next()
-        } catch(e) {
-          next(e)
-        }
-      }
+    token = token ? token.split(' ') : undefined
+
+    if (!token || (token && token[0].toLowerCase() !== 'bearer')) {
+      return res.redirectToLogin()
     }
-  } else {
-    if (req.isApiRequest) {
-      res.boom.unauthorized()
-    } else {
-      req.session.redirectAfterLogin = req.originalUrl
-      res.redirect('/auth/login/cas')
+
+    try {
+      const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
+      req.username = payload.sub
+      return next()
+    } catch(e) {
+      return next(e)
     }
   }
+
+  res.redirectToLogin()
 }
 
 function authenticateCasUser(req, res, next) {
