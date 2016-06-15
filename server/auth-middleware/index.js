@@ -50,8 +50,8 @@ function authenticateCasUser(req, res, next) {
       if (err) {
         next(err)
       } else {
-        const redirectUrl = req.session.redirectAfterLogin || '/'
-        delete req.session.redirectAfterLogin
+        const redirectUrl = req.session.redirectTo || '/'
+        delete req.session.redirectTo
         req.session.regenerate(() => {
           req.session.auth = {status, username, extended}
           req.username = username

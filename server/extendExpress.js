@@ -10,7 +10,7 @@ export function extendResponse() {
       if (this.req.isApiRequest) {
         this.boom.unauthorized(message)
       } else {
-        this.req.session.redirectAfterLogin = this.req.originalUrl
+        this.req.session.redirectTo = this.req.originalUrl
         this.redirect('/auth/login/cas')
       }
     }
