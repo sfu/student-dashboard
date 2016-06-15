@@ -173,7 +173,6 @@ export {
   loggedin,
   authenticateCasUser,
   handleSingleSignout,
-  loadUser,
   getUser,
   provisionOrUpdateUser,
   getProxyTicket,
