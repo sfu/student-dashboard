@@ -57,7 +57,11 @@ export const createDevServer = (app) => {
 }
 
 const productionErrorHandler = (err, req, res, next) => {
-  res.status(500).send('<p>Internal Server Error</p>')
+  if (req.isApiRequest || req.headers.accept === 'application/json') {
+    res.boom.badImplementation()
+  } else {
+    res.status(500).send('<p>Internal Server Error</p>')
+  }
   console.error(err.stack) // eslint-disable-line no-console
   next(err)
 }
