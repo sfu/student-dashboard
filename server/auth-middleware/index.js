@@ -3,28 +3,10 @@ import {getAccessToken} from '../oauth'
 import db from '../db'
 import axios from 'axios'
 import uuid from 'node-uuid'
-import {verify, decode} from 'jsonwebtoken'
-
-function verifyJwt(token, key) {
-  if (process.env.JWT_MODE === 'decode') {
-    return decode(token)
-  }
-
-  return new Promise((resolve, reject) => {
-    verify(token, key, {}, (err, payload) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(payload)
-      }
-    })
-  })
-}
-
-async function loadUser(username, fields = '*') {
-  const result = await db('users').select(fields).where({username})
-  return result.length ? result[0] : null
-}
+import {
+  verifyJwt,
+  loadUser
+} from '../lib/'
 
 // Determine if a user is logged in
 // If the user has a valid session, then they're logged in

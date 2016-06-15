@@ -1,5 +1,5 @@
 import test from 'ava'
-import {loadUser} from '../index'
+import loadUser from '../loadUser'
 import db from '../../db'
 
 test.before('Reset the database', async () => {
