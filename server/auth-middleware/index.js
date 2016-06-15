@@ -55,7 +55,7 @@ function authenticateCasUser(req, res, next) {
         req.session.regenerate(() => {
           req.session.auth = {status, username, extended}
           req.username = username
-          req.REDIRECT_AFTER_LOGIN = redirectUrl
+          req.session.redirectTo = redirectUrl
           next()
         })
       }

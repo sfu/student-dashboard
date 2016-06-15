@@ -19,7 +19,7 @@ router.get('/login/cas',
   getOauthCredentials,
   provisionOrUpdateUser,
   (req, res) => {
-    res.redirect(req.REDIRECT_AFTER_LOGIN)
+    res.redirect(req.session.redirectTo)
   }
 )
 
