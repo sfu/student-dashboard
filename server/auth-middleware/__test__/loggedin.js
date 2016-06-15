@@ -8,9 +8,9 @@ import {loggedin, __RewireAPI__ as AsyncLoggedinAPI} from '../index'
 test('Calling `loggedin` with no session should redirect', t => {
   const next = sinon.spy()
   const req = mockReq()
-  const res = mockRes()
+  const res = mockRes({ redirectToLogin: sinon.spy() })
   loggedin(req, res, next)
-  t.true(res.redirect.calledOnce)
+  t.true(res.redirectToLogin.calledOnce)
   t.false(next.calledOnce)
 })
 
@@ -71,7 +71,7 @@ test('Calling `loggedin` as an API req and with an invalid JWT should call `next
   t.is(next.getCall(0).args.length, 1)
 })
 
-test('Calling `loggedin` as an API req without a token should return a 401', async t => {
+test('Calling `loggedin` as an API req without a token should call res.redirectToLogin', async t => {
   const req = mockReq({
     isApiRequest: true,
     session: {},
@@ -79,15 +79,14 @@ test('Calling `loggedin` as an API req without a token should return a 401', asy
   })
   const res = mockRes({
     status: sinon.spy(function() { return this }),
-    send: sinon.spy(function() { return this })
+    send: sinon.spy(function() { return this }),
+    redirectToLogin: sinon.spy()
   })
   await loggedin(req, res, () => {})
-  t.true(res.status.calledOnce)
-  t.is(res.status.getCall(0).args[0], 401)
-  t.is(res.send.getCall(0).args[0].status, 'unauthenticated')
+  t.true(res.redirectToLogin.calledOnce)
 })
 
-test('Calling `loggedin` as an API req with a non-bearer token should return a 401', async t => {
+test('Calling `loggedin` as an API req with a non-bearer token should call res.redirectToLogin', async t => {
   const req = mockReq({
     isApiRequest: true,
     session: {},
@@ -97,10 +96,9 @@ test('Calling `loggedin` as an API req with a non-bearer token should return a 4
   })
   const res = mockRes({
     status: sinon.spy(function() { return this }),
-    send: sinon.spy(function() { return this })
+    send: sinon.spy(function() { return this }),
+    redirectToLogin: sinon.spy()
   })
   await loggedin(req, res, () => {})
-  t.true(res.status.calledOnce)
-  t.is(res.status.getCall(0).args[0], 401)
-  t.is(res.send.getCall(0).args[0].status, 'unauthenticated')
+  t.true(res.redirectToLogin.calledOnce)
 })
