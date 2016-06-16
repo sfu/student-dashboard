@@ -36,31 +36,25 @@ async function loggedin(req, res, next) {
       return next(e)
     }
   }
-
   res.redirectToLogin()
 }
 
 function authenticateCasUser(req, res, next) {
-  // user is logged in, goto next
-  if (req.session.auth && req.session.auth.status) {
-    next()
-  } else {
-    // authenticate with CAS
-    cas.authenticate(req, res, (err, status, username, extended) => {
-      if (err) {
-        next(err)
-      } else {
-        const redirectUrl = req.session.redirectTo || '/'
-        delete req.session.redirectTo
-        req.session.regenerate(() => {
-          req.session.auth = {status, username, extended}
-          req.username = username
-          req.session.redirectTo = redirectUrl
-          next()
-        })
-      }
-    }, process.env.CAS_SERVICE)
-  }
+
+  cas.authenticate(req, res, (err, status, username, extended) => {
+    if (err) {
+      next(err)
+    } else {
+      const redirectUrl = req.session.redirectTo || '/'
+      delete req.session.redirectTo
+      req.session.regenerate(() => {
+        req.session.auth = {status, username, extended}
+        req.username = username
+        req.session.redirectTo = redirectUrl
+        next()
+      })
+    }
+  }, process.env.CAS_SERVICE)
 }
 
 function handleSingleSignout(req, res, next) {
