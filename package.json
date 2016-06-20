@@ -81,7 +81,7 @@
     "dotenv": "2.0.0",
     "errorhandler": "1.4.3",
     "eslint": "2.10.2",
-    "express": "4.13.4",
+    "express": "4.14.0",
     "express-boom": "1.0.0",
     "express-session": "1.13.0",
     "helmet": "2.1.1",
