@@ -1,10 +1,9 @@
 import {Router} from 'express'
 import db from '../../../db'
-import {loggedin, getUser, provisionOrUpdateUser} from '../../../auth-middleware'
 
 const router = Router()
 
-router.get('/:username', loggedin, getUser, provisionOrUpdateUser, async (req, res) => {
+router.get('/:username', async (req, res) => {
   let {username} = req.params
   if (username === 'self') {
     username = req.user.username
