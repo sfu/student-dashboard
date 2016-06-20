@@ -11,6 +11,7 @@ import WebpackHotMiddleware from 'webpack-hot-middleware'
 import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
+import enforceSSL from 'express-enforces-ssl'
 
 const RedisStore = ConnectRedis(session)
 const PRODUCTION = process.env.NODE_ENV === 'production'
@@ -76,6 +77,10 @@ export const createServer = (app) => {
   app.use(helmet())
   app.use(express.static(path.resolve(__dirname, '../public')))
   app.use(boom())
+
+  if (PRODUCTION) {
+    app.use(enforceSSL())
+  }
 
   // mount routes
   app.use('/pgt', routes.pgt)
