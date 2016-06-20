@@ -54,6 +54,7 @@
     "babel-loader": "6.2.4",
     "babel-plugin-dedent": "2.0.0",
     "babel-plugin-rewire": "1.0.0-rc-2",
+    "babel-plugin-transform-async-to-generator": "6.8.0",
     "babel-preset-node6": "11.0.0",
     "babel-preset-react": "6.5.0",
     "babel-preset-react-hmre": "1.1.1",
@@ -93,6 +94,7 @@
     "pg": "5.1.0",
     "qs": "6.2.0",
     "react": "15.1.0",
-    "react-dom": "15.1.0"
+    "react-dom": "15.1.0",
+    "redis": "2.6.2"
   }
 }
