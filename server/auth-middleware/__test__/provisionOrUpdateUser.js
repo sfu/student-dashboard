@@ -1,7 +1,7 @@
 import test from 'ava'
 import {mockReq, mockRes} from 'sinon-express-mock'
 import sinon from 'sinon'
-import {provisionOrUpdateUser, __RewireAPI__ as AsyncGetUserBioRewireAPI} from '../index'
+import {provisionOrUpdateUser, __RewireAPI__ as AsyncGetUserBioRewireAPI} from '../index' // eslint-disable-line
 import db from '../../db'
 
 const FAKEUSERBIO = {

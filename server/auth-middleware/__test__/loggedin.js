@@ -2,7 +2,7 @@ import test from 'ava'
 import sinon from 'sinon'
 import {mockReq, mockRes} from 'sinon-express-mock'
 
-import {loggedin, __RewireAPI__ as AsyncLoggedinAPI} from '../index'
+import {loggedin, __RewireAPI__ as AsyncLoggedinAPI} from '../index' // eslint-disable-line
 
 // Session tests
 test('Calling `loggedin` with no session should redirect', t => {
