@@ -1,6 +1,6 @@
 import express from 'express'
 import session from 'express-session'
-import {sync as uid} from 'uid-safe'
+import uuid from 'node-uuid'
 import helmet from 'helmet'
 import path from 'path'
 import fs from 'fs'
@@ -30,7 +30,7 @@ const sessionConfig = {
     if (req.query && req.query.ticket) {
       return `cas_session:::${req.query.ticket}`
     } else {
-      return uid(24)
+      return uuid.v4()
     }
   }
 }
