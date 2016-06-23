@@ -37,7 +37,7 @@ const sessionConfig = {
 }
 
 export const createDevServer = (app) => {
-  const webpackConfig = require('../webpack.config.js')
+  const webpackConfig = require('../webpack.config.js')()
   const compiler = webpack(webpackConfig)
   app.use(WebpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
