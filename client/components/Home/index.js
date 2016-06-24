@@ -24,6 +24,7 @@ const Home = React.createClass({
         <div className={styles.hello}>Hello <span className={styles.hmr}>HMR</span> it worked!@!</div>
         <div>COUNTER: {this.state.counter}</div>
         <p>{process.env.NODE_ENV}</p>
+	<img src="http://i.imgur.com/c4jt321.png" />
       </div>
     )
   }
