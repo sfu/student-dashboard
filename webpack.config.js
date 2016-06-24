@@ -36,6 +36,11 @@ module.exports = (env = {}) => {
               ifDev('react-hmre')
             ])
           }
+        },
+        {
+          test: /\.scss$/,
+          exclude: /node_modules/,
+          loaders: ['style', 'css?modules', 'sass']
         }
       ]
     },

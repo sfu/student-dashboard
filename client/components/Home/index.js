@@ -1,5 +1,5 @@
-/* eslint react/display-name: 0 */
 import React from 'react'
+import styles from './style.scss'
 
 const Home = React.createClass({
   getInitialState() {
@@ -21,7 +21,7 @@ const Home = React.createClass({
   render() {
     return (
       <div>
-        <div>Hello HMR it worked!@!</div>
+        <div className={styles.hello}>Hello <span className={styles.hmr}>HMR</span> it worked!@!</div>
         <div>COUNTER: {this.state.counter}</div>
         <p>{process.env.NODE_ENV}</p>
       </div>

@@ -1,0 +1,9 @@
+$hellocolour: rebeccapurple;
+
+.hello {
+  color: $hellocolour;
+  font-size: 2em;
+  .hmr {
+    color: green;
+  }
+}
