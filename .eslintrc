@@ -28,5 +28,8 @@
   },
   "plugins": [
     "react"
-  ]
+  ],
+  "settings": {
+    "import/ignore": ["node_modules", ".(scss|less|css)$"]
+  }
 }
