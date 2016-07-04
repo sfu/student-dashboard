@@ -92,7 +92,7 @@
     "cookie-parser": "1.4.3",
     "dotenv": "2.0.0",
     "errorhandler": "1.4.3",
-    "eslint": "2.13.1",
+    "eslint": "3.0.0",
     "express": "4.14.0",
     "express-boom": "1.0.0",
     "express-enforces-ssl": "1.1.0",
