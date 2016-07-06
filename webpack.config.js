@@ -1,5 +1,6 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = (env = {}) => {
   const addItem = (add, item) => add ? item : undefined
@@ -23,7 +24,7 @@ module.exports = (env = {}) => {
     devtool: env.prod ? 'source-map' : 'eval',
 
     module: {
-      loaders: [
+      loaders: removeEmpty([
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -37,12 +38,23 @@ module.exports = (env = {}) => {
             ])
           }
         },
-        {
+
+        ifProd({
           test: /\.scss$/,
           exclude: /node_modules/,
-          loaders: ['style', 'css?modules', 'sass']
-        }
-      ]
+          loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass')
+        }),
+
+        ifDev({
+          test: /\.scss$/,
+          exclude: /node_modules/,
+          loaders: [
+            'style?sourceMap',
+            'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'
+          ]
+        })
+
+      ])
     },
 
     plugins: removeEmpty([
@@ -64,6 +76,10 @@ module.exports = (env = {}) => {
           screw_ie8: true
         }
       })),
+
+      ifProd(new ExtractTextPlugin('styles.css'), {
+        allChunks: true
+      }),
 
       new webpack.DefinePlugin({
         'process.env': {
