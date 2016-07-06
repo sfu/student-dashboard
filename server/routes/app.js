@@ -12,12 +12,18 @@ router.get('/', loggedin, (req, res) => {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
       <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0,width=device-width"/>
       <meta name="timestamp" content="${(new Date).toISOString()}"/>
+      ${process.env.NODE_ENV === 'production' ? '<link rel="stylesheet" href="assets/styles.css">' : ''}
       <title>{title}</title>
     </head>
 
     <body>
       <h1>Hello Static</h1>
       <div id="app"/>
+      <script>
+        window.MYSFU = {
+          user: ${JSON.stringify(req.user)}
+        }
+      </script>
       <script src="assets/app.js"></script>
     </body>
   </html>
