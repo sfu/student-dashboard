@@ -19,7 +19,7 @@
     "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
     "test": "NODE_ENV=test ava -v -s",
     "test:watch": "npm run test -- -w",
-    "deps:reinstall": "rimraf node_modules && npm i",
+    "deps:reinstall": "rimraf node_modules && npm i --no-optional",
     "db": "node -r ./environment.js node_modules/.bin/knex --knexfile ./server/db/knexfile.js --",
     "db:migrate": "npm run db migrate:latest",
     "db:migrate:rollback": "npm run db migrate:rollback",
