@@ -4,7 +4,7 @@ if (!process.env.DATABASE_URL) {
   throw new Error('Required DB options not set in .env')
 }
 
-export default {
+const config = {
   client: 'postgresql',
   connection: process.env.DATABASE_URL,
   migrations: {
@@ -12,3 +12,6 @@ export default {
     tableName: 'schema_migrations'
   }
 }
+
+module.exports = config
+export default config
