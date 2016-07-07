@@ -70,6 +70,9 @@ async function getUser(req, res, next) {
   const username = req.username
   try {
     req.user = await loadUser(username)
+    if (req.session) {
+      req.session.user = req.user
+    }
     next()
   } catch(e) {
     next(e)
@@ -83,12 +86,7 @@ async function provisionOrUpdateUser(req, res, next) {
     next()
   } else {
     try {
-      let access_token, refresh_token
-      if (req.OAUTH_CREDENTIALS) {
-        access_token = req.OAUTH_CREDENTIALS.access_token
-        refresh_token = req.OAUTH_CREDENTIALS.refresh_token
-      }
-
+      const access_token = req.session && req.session.oAuth ? req.session.oAuth.access_token : undefined
       const bio = await getUserBio(req.username, access_token, req)
       const {username, lastname, firstnames, commonname, barcode} = bio
       try {
@@ -100,12 +98,6 @@ async function provisionOrUpdateUser(req, res, next) {
           barcode,
           uid: uuid.v4()
         }
-
-        if (!req.isApiRequest) {
-          payload.access_token = access_token
-          payload.refresh_token = refresh_token
-        }
-
         const user = await db('users').insert(payload).returning('*')
         req.user = user ? user[0] : null
         next()
@@ -120,7 +112,7 @@ async function provisionOrUpdateUser(req, res, next) {
 
 async function getProxyTicket(req, res, next) {
   try {
-     req.PROXY_TICKET = await cas.getProxyTicketAsync(req.session.auth.extended.PGTIOU, process.env.PORTAL_SERVICE_NAME)
+     req.PROXY_TICKET = await cas.getProxyTicketAsync(req.session.casAttributes.PGTIOU, process.env.PORTAL_SERVICE_NAME)
      next()
   } catch (e) {
     next(e)
@@ -130,7 +122,7 @@ async function getProxyTicket(req, res, next) {
 async function getOauthCredentials(req, res, next) {
   try {
     const response = await getAccessToken(req.PROXY_TICKET)
-    req.OAUTH_CREDENTIALS = response.data
+    req.session.oAuth = response.data
     next()
   } catch (e) {
     next(e)
