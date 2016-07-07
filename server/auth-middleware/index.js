@@ -45,12 +45,13 @@ function authenticateCasUser(req, res, next) {
     if (err) {
       next(err)
     } else {
-      const redirectUrl = req.session.redirectTo || '/'
+      const {redirectTo} = req.session || '/'
       delete req.session.redirectTo
       req.session.regenerate(() => {
         req.session.auth = {status, username, extended}
         req.username = username
         req.session.redirectTo = redirectUrl
+        req.session.redirectTo = redirectTo
         next()
       })
     }
