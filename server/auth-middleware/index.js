@@ -15,7 +15,7 @@ import {
 async function loggedin(req, res, next) {
 
   // session
-  if (req.session.auth && req.session.auth.status) {
+  if (req.session.auth) {
     return next()
   }
 
@@ -48,9 +48,9 @@ function authenticateCasUser(req, res, next) {
       const {redirectTo} = req.session || '/'
       delete req.session.redirectTo
       req.session.regenerate(() => {
-        req.session.auth = {status, username, extended}
-        req.username = username
-        req.session.redirectTo = redirectUrl
+        req.session.auth = status
+        req.session.username = req.username = username
+        req.session.casAttributes = extended
         req.session.redirectTo = redirectTo
         next()
       })
