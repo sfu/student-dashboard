@@ -79,15 +79,7 @@ async function provisionOrUpdateUser(req, res, next) {
   if (req.user && req.isApiRequest) {
     next()
   } else if (req.user && !req.isApiRequest) {
-    try {
-      const {access_token, refresh_token} = req.OAUTH_CREDENTIALS
-      const {username} = req.user
-      const user = await db('users').where({username}).update({access_token, refresh_token}).returning('*')
-      req.user = user ? user[0] : null
-      next()
-    } catch(e) {
-      next(e)
-    }
+    next()
   } else {
     try {
       let access_token, refresh_token

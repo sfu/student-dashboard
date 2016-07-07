@@ -54,7 +54,7 @@ test('Provision a user when none exists', async t => {
   t.truthy(req.user.uid)
 })
 
-test('Update a user when one exists and not try to update user', async t => {
+test('Call next() when a user already exists, do not update', async t => {
   const fakeUser = await insertFakeUser()
   const req = mockReq({
     user: fakeUser,
@@ -63,8 +63,7 @@ test('Update a user when one exists and not try to update user', async t => {
   const res = mockRes()
   const next = sinon.spy()
   await provisionOrUpdateUser(req, res, next)
-  t.not(next.getCall(0).args.length > 0) // next should not have been called with an error
-  t.is(req.user.access_token, 'updated')
+  t.true(next.calledOnce)
 })
 
 test('Should call next when is an API request', async t => {
