@@ -1,7 +1,7 @@
 import test from 'ava'
 import {mockReq, mockRes} from 'sinon-express-mock'
 import sinon from 'sinon'
-import {provisionOrUpdateUser, __RewireAPI__ as AsyncGetUserBioRewireAPI} from '../index' // eslint-disable-line
+import {provisionUser, __RewireAPI__ as AsyncGetUserBioRewireAPI} from '../index' // eslint-disable-line
 import db from '../../db'
 
 const FAKEUSERBIO = {
@@ -36,7 +36,7 @@ test.beforeEach('Reset the database', async () => {
   await db.migrate.rollback()
   await db.migrate.latest()
 
-  // rewire the getUserBio function called by provisionOrUpdateUser
+  // rewire the getUserBio function called by provisionUser
   AsyncGetUserBioRewireAPI.__Rewire__('getUserBio', function() {
     return Promise.resolve(FAKEUSERBIO)
   })
@@ -49,7 +49,7 @@ test('Provision a user when none exists', async t => {
   })
   const res = mockRes()
   const next = sinon.spy()
-  await provisionOrUpdateUser(req, res, next)
+  await provisionUser(req, res, next)
   t.is(req.user.username, 'fakeuser')
   t.truthy(req.user.uid)
 })
@@ -62,7 +62,7 @@ test('Call next() when a user already exists, do not update', async t => {
   })
   const res = mockRes()
   const next = sinon.spy()
-  await provisionOrUpdateUser(req, res, next)
+  await provisionUser(req, res, next)
   t.true(next.calledOnce)
 })
 
@@ -75,6 +75,6 @@ test('Should call next when is an API request', async t => {
   })
   const res = mockRes()
   const next = sinon.spy()
-  await provisionOrUpdateUser(req, res, next)
+  await provisionUser(req, res, next)
   t.true(next.calledOnce)
 })

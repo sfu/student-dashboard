@@ -79,35 +79,33 @@ async function getUser(req, res, next) {
   }
 }
 
-async function provisionOrUpdateUser(req, res, next) {
-  if (req.user && req.isApiRequest) {
-    next()
-  } else if (req.user && !req.isApiRequest) {
-    next()
-  } else {
+async function provisionUser(req, res, next) {
+  if (req.user || (req.session && req.session.auth && req.session.user)) {
+    return next()
+  }
+  try {
+    const access_token = req.session && req.session.oAuth ? req.session.oAuth.access_token : undefined
+    const bio = await getUserBio(req.username, access_token, req)
+    const {username, lastname, firstnames, commonname, barcode} = bio
     try {
-      const access_token = req.session && req.session.oAuth ? req.session.oAuth.access_token : undefined
-      const bio = await getUserBio(req.username, access_token, req)
-      const {username, lastname, firstnames, commonname, barcode} = bio
-      try {
-        const payload = {
-          username,
-          lastname,
-          firstnames,
-          commonname,
-          barcode,
-          uid: uuid.v4()
-        }
-        const user = await db('users').insert(payload).returning('*')
-        req.user = user ? user[0] : null
-        next()
-      } catch(e) {
-        next(e)
+      const payload = {
+        username,
+        lastname,
+        firstnames,
+        commonname,
+        barcode,
+        uid: uuid.v4()
       }
-    } catch (e) {
+      const user = await db('users').insert(payload).returning('*')
+      req.user = user ? user[0] : null
+      next()
+    } catch(e) {
       next(e)
     }
+  } catch (e) {
+    next(e)
   }
+
 }
 
 async function getProxyTicket(req, res, next) {
@@ -134,7 +132,7 @@ export {
   authenticateCasUser,
   handleSingleSignout,
   getUser,
-  provisionOrUpdateUser,
+  provisionUser,
   getProxyTicket,
   getOauthCredentials
 }

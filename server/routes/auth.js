@@ -7,7 +7,7 @@ import {
   getUser,
   getProxyTicket,
   getOauthCredentials,
-  provisionOrUpdateUser
+  provisionUser
 } from '../auth-middleware'
 
 const router = Router()
@@ -17,7 +17,7 @@ router.get('/login/cas',
   getUser,
   getProxyTicket,
   getOauthCredentials,
-  provisionOrUpdateUser,
+  provisionUser,
   (req, res) => {
     res.redirect(req.session.redirectTo)
   }
