@@ -80,7 +80,7 @@ async function getUser(req, res, next) {
 }
 
 async function provisionUser(req, res, next) {
-  if (req.user || (req.session && req.session.auth && req.session.user)) {
+  if (req.user || req.session.user) {
     return next()
   }
   try {
