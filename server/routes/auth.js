@@ -23,7 +23,7 @@ router.get('/login/cas',
   }
 )
 
-router.post('/',
+router.post('/login/cas',
   bodyParser.urlencoded({extended:false}),
   handleSingleSignout
 )
