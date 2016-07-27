@@ -87,7 +87,7 @@
     "webpack-validator": "2.2.2"
   },
   "dependencies": {
-    "axios": "0.12.0",
+    "axios": "0.13.1",
     "body-parser": "1.15.2",
     "cas": "github:grahamb/node-cas",
     "connect-redis": "3.1.0",
