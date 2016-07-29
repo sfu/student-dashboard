@@ -19,8 +19,8 @@ router.get('/', loggedin, (req, res) => {
     <body>
       <div id="app"/>
       <script>
-        window.MYSFU = {
-          user: ${JSON.stringify(req.user)}
+        window.ENV = {
+          CURRENT_USER: ${JSON.stringify(req.session.user)}
         }
       </script>
       <script src="assets/app.js"></script>
