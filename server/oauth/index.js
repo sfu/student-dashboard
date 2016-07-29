@@ -40,14 +40,14 @@ export function validateAccessToken(token) {
       headers: {
         'Authorization': `Bearer ${token}`
       }
-    }).then((response) => {
-      if (response.status === 200) {
-        resolve(true)
+    }).then(() => {
+      resolve(true)
+    }).catch((err) => {
+      if (err.response.status === 401) {
+        resolve(false)
       } else {
-        reject(false)
+        reject(err)
       }
-    }).catch(() => {
-      reject(false)
     })
   })
 }
