@@ -12,7 +12,7 @@ module.exports = (env = {}) => {
     entry: removeEmpty([
       ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
       ifDev('webpack/hot/dev-server'),
-      resolve(__dirname, 'client/home.js')
+      resolve(__dirname, 'client/index.js')
     ]),
 
     output: {
