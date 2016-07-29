@@ -17,7 +17,6 @@ router.get('/', loggedin, (req, res) => {
     </head>
 
     <body>
-      <h1>Hello Static</h1>
       <div id="app"/>
       <script>
         window.MYSFU = {
