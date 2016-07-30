@@ -31,6 +31,7 @@ module.exports = (env = {}) => {
           loader: 'babel',
           query: {
             plugins: [
+              'transform-class-properties',
               '../babelRelayPlugin'
             ],
             presets:
