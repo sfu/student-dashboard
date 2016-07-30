@@ -19,6 +19,7 @@ router.get('/login/cas',
   getOauthCredentials,
   provisionUser,
   (req, res) => {
+    req.session.user = req.user
     res.redirect(req.session.redirectTo)
   }
 )
