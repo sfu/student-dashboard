@@ -30,6 +30,9 @@ module.exports = (env = {}) => {
           exclude: /node_modules/,
           loader: 'babel',
           query: {
+            plugins: [
+              '../babelRelayPlugin'
+            ],
             presets:
             removeEmpty([
               'babel-preset-es2015-native-modules',
