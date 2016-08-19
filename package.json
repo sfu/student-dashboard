@@ -4,11 +4,11 @@
   "description": "SFU Student Dashboard application",
   "main": "build/server/index.js",
   "scripts": {
-    "prestart": "npm run prebuild",
+    "prestart": "npm run prebuild && npm run generate-schema",
     "start": "NODE_ENV=development nodemon --watch server -r babel-register -r ./environment.js server/index.js",
     "start:production": "NODE_ENV=production node -r ./environment.js build/index.js",
     "prebuild": "rimraf build public/assets",
-    "build": "npm run lint && npm run build:assets && npm run build:server",
+    "build": "npm run lint && npm run generate-schema && npm run build:assets && npm run build:server",
     "build:assets": "NODE_ENV=production webpack --env.prod",
     "build:server": "babel server --out-dir build --ignore **/__test__/* --copy-files",
     "lint": "eslint -c .eslintrc --ignore-pattern=build --ignore-pattern=public  .",
@@ -25,7 +25,8 @@
     "db:migrate:rollback": "npm run db migrate:rollback",
     "db:migrate:make": "npm run db migrate:make",
     "db:init": "node -r babel-register -r ./environment.js ./server/db/init.js",
-    "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test"
+    "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test",
+    "generate-schema": "node -r ./environment.js ./scripts/buildSchema.js"
   },
   "ava": {
     "files": [
