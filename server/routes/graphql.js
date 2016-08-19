@@ -13,6 +13,7 @@ router.all('/', loggedin, bodyParser.json(), async (req, res) => {
     variables: req.query.variables || null,
     operationName: req.query.operationName || null
   }
+
   oAuthenticatedRequest(req, res, {
     method: 'post',
     url: process.env.GRAPHQL_SERVER,
@@ -20,6 +21,7 @@ router.all('/', loggedin, bodyParser.json(), async (req, res) => {
   }).then(response => {
     res.send(response.data)
   }).catch(graphqlErr => {
+    console.log(graphqlErr)
     if (graphqlErr.message === 'ERR_CREDENTIALS_INVALID') {
       return res.boom.unauthorized('ERR_CREDENTIALS_INVALID')
     }

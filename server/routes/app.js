@@ -17,7 +17,7 @@ router.get('/', loggedin, (req, res) => {
     </head>
 
     <body>
-      <div id="app"/>
+      <div id="sorry"/>
       <script>
         window.ENV = {
           CURRENT_USER: ${JSON.stringify(req.session.user)}
