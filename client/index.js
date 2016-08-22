@@ -25,5 +25,14 @@ const queries = {
 const RootComponent = (<Relay.RootContainer
                         Component={App}
                         route={queries}
+                        renderLoading={() => <div>Loading&hellip;</div>}
+                        renderFailure={(error, retry) => { // eslint-disable-line
+                          return (
+                            <div>
+                              <p>{error.message}</p>
+                              <p><button onClick={retry}>Retry></button></p>
+                            </div>
+                          )
+                        }}
                       />)
 render(RootComponent, document.getElementById('sorry'))
