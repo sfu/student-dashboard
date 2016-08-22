@@ -1,7 +1,7 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
-import UserBio from 'components/UserBio'
-import CampusConditions from 'components/CampusConditions'
+import UserBio from 'components/UserBio'  // eslint-disable-line
+import CampusConditions from 'components/CampusConditions'  // eslint-disable-line
 
 const appStyle = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
