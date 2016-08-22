@@ -1,8 +1,6 @@
-import {validateAccessToken, refreshAccessToken} from '../oauth'
+import {validateAccessToken, refreshAccessToken, getAccessToken} from '../oauth'
 import axios from 'axios'
 import cas from '../cas-client'
-import {getAccessToken} from '../oauth'
-
 
 export default async function(req, res, config) {
   const accessTokenValid = await validateAccessToken(req.session.oAuth.access_token)
