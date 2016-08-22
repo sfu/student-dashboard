@@ -23,6 +23,13 @@ module.exports = (env = {}) => {
 
     devtool: env.prod ? 'source-map' : 'eval',
 
+    resolve: {
+      modules: [
+        resolve('./client'),
+        resolve('./node_modules')
+      ]
+    },
+
     module: {
       loaders: removeEmpty([
         {

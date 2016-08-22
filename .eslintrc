@@ -9,6 +9,7 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/errors",
+    "plugin:import/warnings",
     "plugin:jsx-a11y/recommended"
     ],
   "globals": {
@@ -32,6 +33,7 @@
     "jsx-a11y"
   ],
   "settings": {
-    "import/ignore": ["node_modules", ".(scss|less|css)$"]
+    "import/resolver": "webpack",
+    "import/ignore": ["node_modules", ".(scss|less|css)$"],
   }
 }
