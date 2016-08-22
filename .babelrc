@@ -4,7 +4,6 @@
     "react"
   ],
   "plugins": [
-    "./babelRelayPlugin",
     "dedent",
     "transform-async-to-generator"
   ],
