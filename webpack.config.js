@@ -49,6 +49,11 @@ module.exports = (env = {}) => {
           }
         },
 
+        {
+          test: /\.(png|svg)$/,
+          loader: 'url'
+        },
+
         ifProd({
           test: /\.scss$/,
           exclude: /node_modules/,
