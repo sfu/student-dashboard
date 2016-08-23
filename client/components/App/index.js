@@ -1,27 +1,28 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
-import UserBio from 'components/UserBio'  // eslint-disable-line
-import CampusConditions from 'components/CampusConditions'  // eslint-disable-line
+import {Header} from 'components/Header' // eslint-disable-line
+import {UserBio} from 'components/UserBio'  // eslint-disable-line
+import {CampusConditions} from 'components/CampusConditions'  // eslint-disable-line
 
 const appStyle = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 }
 
-const App = ({viewer}) => {
+export const _App = ({viewer}) => {
   return (
   <div style={appStyle}>
-    <h1>SFU SNAP</h1>
+    <Header />
     <UserBio userBio={viewer.userBio} />
     <CampusConditions conditions={viewer.campusConditions} />
   </div>
   )
 }
 
-App.propTypes = {
+_App.propTypes = {
   viewer: PropTypes.object
 }
 
-export default Relay.createContainer(App, {
+export const App = Relay.createContainer(_App, {
   initialVariables: {
     userid: window.ENV.CURRENT_USER.username
   },

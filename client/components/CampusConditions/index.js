@@ -8,7 +8,7 @@ const widgetStyle = {
   marginBottom: '10px'
 }
 
-const CampusConditions = React.createClass({
+export const _CampusConditions = React.createClass({
   propTypes: {
     conditions: PropTypes.object.isRequired
   },
@@ -46,7 +46,7 @@ const StatusFragment = Relay.QL`
   }
 `
 
-export default Relay.createContainer(CampusConditions, {
+export const CampusConditions = Relay.createContainer(_CampusConditions, {
   fragments: {
     conditions: () => {
       return Relay.QL`

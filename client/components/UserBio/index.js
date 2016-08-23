@@ -8,7 +8,7 @@ const widgetStyle = {
 }
 
 
-const UserBio = React.createClass({
+export const _UserBio = React.createClass({
   propTypes: {
     userBio: PropTypes.object.isRequired
   },
@@ -31,7 +31,7 @@ const UserBio = React.createClass({
   }
 })
 
-export default Relay.createContainer(UserBio, {
+export const UserBio = Relay.createContainer(_UserBio, {
   fragments: {
     userBio: () => Relay.QL`
       fragment on UserBioType {
