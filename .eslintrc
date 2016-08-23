@@ -34,6 +34,6 @@
   ],
   "settings": {
     "import/resolver": "webpack",
-    "import/ignore": ["node_modules", ".(scss|less|css)$"],
+    "import/extensions": [".js", ".jsx"]
   }
 }
