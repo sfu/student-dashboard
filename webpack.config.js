@@ -10,8 +10,8 @@ module.exports = (env = {}) => {
 
   return {
     entry: removeEmpty([
+      ifDev('react-hot-loader/patch'),
       ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
-      ifDev('webpack/hot/dev-server'),
       resolve(__dirname, 'client/index.js')
     ]),
 
@@ -38,6 +38,7 @@ module.exports = (env = {}) => {
           loader: 'babel',
           query: {
             plugins: [
+              ifDev('react-hot-loader/babel'),
               resolve(__dirname, './babelRelayPlugin.js'),
               'transform-class-properties'
             ],
