@@ -43,8 +43,7 @@ module.exports = (env = {}) => {
             ],
             presets: removeEmpty([
               ['es2015', {modules: false}],
-              'react',
-              ifDev('react-hmre')
+              'react'
             ])
           }
         },
