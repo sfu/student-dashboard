@@ -41,9 +41,8 @@ module.exports = (env = {}) => {
               resolve(__dirname, './babelRelayPlugin.js'),
               'transform-class-properties'
             ],
-            presets:
-            removeEmpty([
-              'babel-preset-es2015-native-modules',
+            presets: removeEmpty([
+              ['es2015', {modules: false}],
               'react',
               ifDev('react-hmre')
             ])
