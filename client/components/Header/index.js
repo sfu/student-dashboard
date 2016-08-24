@@ -8,11 +8,13 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottom: '2px solid #A6192E'
+    borderBottom: '2px solid #A6192E',
+    marginBottom: '1em'
   },
   h1: {
     color: '#A6192E',
-    fontWeight: '300'
+    fontWeight: '300',
+    fontSize: '1.5em'
   }
 }
 
