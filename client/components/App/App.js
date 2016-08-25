@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 import {Header} from 'components/Header' // eslint-disable-line
 import {HelloTile} from 'components/HelloTile'  // eslint-disable-line
 import 'normalize.css/normalize.css'
-import styles from './app.css'
+import styles from './App.css'
 
 export const _App = ({viewer}) => {
   return (

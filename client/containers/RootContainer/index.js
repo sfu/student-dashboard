@@ -1,7 +1,7 @@
 import React from 'react'
 import Relay from 'react-relay'
-import {App} from '../../components/App'
-import {Splash} from '../../components/Splash'
+import {App} from 'components/App'
+import {Splash} from 'components/Splash'
 
 const queries = {
   name: 'AppQueries',

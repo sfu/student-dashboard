@@ -1,6 +1,7 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ComponentDirectoryPlugin = require('component-directory-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const values = require('postcss-modules-values')
 
@@ -26,6 +27,8 @@ module.exports = (env = {}) => {
     devtool: env.prod ? 'source-map' : 'eval',
 
     resolve: {
+      plugins: [new ComponentDirectoryPlugin()],
+      extensions: ['', '.js', '.jsx'],
       modules: [
         resolve('./client'),
         resolve('./node_modules')

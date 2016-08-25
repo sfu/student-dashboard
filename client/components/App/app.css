@@ -1,7 +1,7 @@
 .app {
   background-color: #EEEEEE;
   height: 100vh;
-  composes: systemFont from '../../styles/type.css'
+  composes: systemFont from 'styles/type.css'
 }
 
 .widgets {
