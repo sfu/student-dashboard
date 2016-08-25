@@ -1,0 +1,18 @@
+@value sfured from '../../styles/color.css';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid sfured;
+  margin-bottom: 1em;
+  background-color: #fff;
+  padding: .75em 1em
+}
+
+.title {
+  color: #A6192E;
+  font-weight: 300;
+  fontSize: 1.5em;
+}
