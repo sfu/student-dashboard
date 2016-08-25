@@ -7,6 +7,7 @@ const appStyle = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
   WebkitFontSmoothing: 'antialiased'
 }
+import 'normalize.css/normalize.css'
 
 export const _App = ({viewer}) => {
   return (
