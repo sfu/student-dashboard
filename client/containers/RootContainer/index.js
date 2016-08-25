@@ -1,6 +1,7 @@
 import React from 'react'
 import Relay from 'react-relay'
 import {App} from '../../components/App'
+import {Splash} from '../../components/Splash'
 
 const queries = {
   name: 'AppQueries',
@@ -18,13 +19,14 @@ export const RootContainer = (
   <Relay.RootContainer
     Component={App}
     route={queries}
-    renderLoading={() => <div>Loading&hellip;</div>}
+    renderLoading={() => <Splash />}
     renderFailure={(error, retry) => { // eslint-disable-line
       return (
-        <div>
-          <p>{error.message}</p>
-          <p><button onClick={retry}>Retry></button></p>
-        </div>
+        <Splash>
+          <p>An error occurred feching your information.</p>
+          <button onClick={retry}>Retry?</button>
+          <a href="/auth/logout">Re-Login</a>
+        </Splash>
       )
     }}
   />
