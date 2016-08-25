@@ -1,6 +1,8 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer')
+const values = require('postcss-modules-values')
 
 module.exports = (env = {}) => {
   const addItem = (add, item) => add ? item : undefined
@@ -29,6 +31,9 @@ module.exports = (env = {}) => {
         resolve('./node_modules')
       ]
     },
+    postcss() {
+      return [values, autoprefixer]
+    },
 
     module: {
       loaders: removeEmpty([
@@ -55,17 +60,19 @@ module.exports = (env = {}) => {
         },
 
         ifProd({
-          test: /\.scss$/,
-          exclude: /node_modules/,
-          loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass')
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({
+            fallbackLoader: 'style-loader',
+            loader: 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!'
+          })
         }),
 
         ifDev({
-          test: /\.scss$/,
-          exclude: /node_modules/,
+          test: /\.css$/,
           loaders: [
             'style?sourceMap',
-            'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'
+            'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+            'postcss-loader'
           ]
         })
 
