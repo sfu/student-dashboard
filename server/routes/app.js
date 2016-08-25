@@ -13,7 +13,7 @@ router.get('/', loggedin, (req, res) => {
       <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0,width=device-width"/>
       <meta name="timestamp" content="${(new Date).toISOString()}"/>
       ${process.env.NODE_ENV === 'production' ? '<link rel="stylesheet" href="assets/styles.css">' : ''}
-      <title>{title}</title>
+      <title>SFU Snap</title>
     </head>
 
     <body>
