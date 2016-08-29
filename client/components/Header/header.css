@@ -1,4 +1,4 @@
-@value sfured from '../../styles/color.css';
+@value sfured from 'styles/color.css';
 
 .header {
   display: flex;
