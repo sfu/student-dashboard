@@ -28,8 +28,8 @@ module.exports = (env = {}) => {
     resolve: {
       extensions: ['', '.js', '.jsx'],
       modules: [
-        resolve('./client'),
-        resolve('./node_modules')
+        resolve(__dirname, 'client'),
+        resolve(__dirname, 'node_modules')
       ]
     },
     postcss() {
