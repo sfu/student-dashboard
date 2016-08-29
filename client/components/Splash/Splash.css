@@ -1,0 +1,22 @@
+@value sfured from 'styles/color.css';
+@value systemFont from 'styles/type.css';
+
+.splash {
+  background-color: sfured;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  font-family: systemFont;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.logo {
+  border-radius: 5px;
+  width: 150px;
+  height: 150px;
+}
