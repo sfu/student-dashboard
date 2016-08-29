@@ -1,7 +1,7 @@
 import React from 'react'
 import snapLogo from './sfusnap.png'
 import menu from './menu.svg'
-import styles from './header.css'
+import styles from './Header.css'
 
 export const Header = () => {
   return (
