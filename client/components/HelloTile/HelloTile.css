@@ -1,0 +1,27 @@
+@value sfublue, sfured from '../../styles/color.css';
+
+.helloTile {
+  background-color: sfublue;
+  color: #FFFFFF;
+  padding: 25px;
+}
+
+.p {
+  margin: 0 0 1em 0;
+  font-size: 1.25em;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.button {
+  background-color: sfured;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-weight: 500;
+  padding: .25em 1em;
+}
