@@ -10,7 +10,7 @@ module.exports = (env = {}) => {
   const ifDev = item => addItem(!env.prod, item)
   const removeEmpty = array => array.filter(i => !!i)
 
-  return {
+  const config = {
     entry: removeEmpty([
       ifDev('react-hot-loader/patch'),
       ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
@@ -110,6 +110,6 @@ module.exports = (env = {}) => {
         }
       })
     ])
-
   }
+  return config
 }
