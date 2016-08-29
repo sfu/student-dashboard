@@ -1,7 +1,6 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const ComponentDirectoryPlugin = require('component-directory-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const values = require('postcss-modules-values')
 
@@ -27,7 +26,6 @@ module.exports = (env = {}) => {
     devtool: env.prod ? 'source-map' : 'eval',
 
     resolve: {
-      plugins: [new ComponentDirectoryPlugin()],
       extensions: ['', '.js', '.jsx'],
       modules: [
         resolve('./client'),
@@ -66,7 +64,7 @@ module.exports = (env = {}) => {
           test: /\.css$/,
           loader: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
-            loader: 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!'
+            loader: 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
           })
         }),
 
