@@ -1,7 +1,7 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
-import {Header} from 'components/Header' // eslint-disable-line
-import {HelloTile} from 'components/HelloTile'  // eslint-disable-line
+import {Header} from 'components/Header'
+import {HelloTile} from 'components/HelloTile'
 import 'normalize.css/normalize.css'
 import styles from './App.css'
 
