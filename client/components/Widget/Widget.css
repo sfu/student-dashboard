@@ -1,0 +1,17 @@
+@value sfured, sfublack from 'styles/color.css';
+
+.container {
+  margin-top: 2em;
+}
+
+.title {
+  color: sfured;
+  font-weight: 300;
+  font-size: 1.75em;
+  margin-bottom: .3em;
+}
+
+.widget {
+  background-color: #FFFFFF;
+  border: 1px solid #D8D8D8;
+}
