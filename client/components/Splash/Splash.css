@@ -1,14 +1,13 @@
 @value sfured from 'styles/color.css';
-@value systemFont from 'styles/type.css';
 
 .splash {
+  composes: systemFont from 'styles/type.css';
   background-color: sfured;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   height: 100vh;
-  font-family: systemFont;
   -webkit-font-smoothing: antialiased;
   color: #fff;
   font-size: 1.5em;
