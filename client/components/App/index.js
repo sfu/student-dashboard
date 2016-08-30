@@ -3,6 +3,7 @@ import Relay from 'react-relay'
 import {Header} from 'components/Header'
 import {HelloTile} from 'components/HelloTile'
 import 'normalize.css/normalize.css'
+import 'styles/global.css'
 import styles from './App.css'
 
 export const _App = ({viewer}) => {
