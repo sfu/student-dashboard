@@ -10,3 +10,4 @@ stats.json
 public/assets
 build
 data/schema.json
+tmp/*
