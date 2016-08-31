@@ -3,6 +3,7 @@
 .app {
   composes: systemFont from 'styles/type.css';
   color: blacktext;
+  margin-bottom: 2em;
 }
 
 .widgets {
