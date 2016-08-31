@@ -1,5 +1,4 @@
 .app {
-  background-color: #EEEEEE;
   composes: systemFont from 'styles/type.css'
 }
 
