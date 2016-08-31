@@ -1,5 +1,8 @@
+@value blacktext from 'styles/color.css';
+
 .app {
-  composes: systemFont from 'styles/type.css'
+  composes: systemFont from 'styles/type.css';
+  color: blacktext;
 }
 
 .widgets {
