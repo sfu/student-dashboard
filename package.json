@@ -72,7 +72,7 @@
     "eslint": "3.4.0",
     "eslint-import-resolver-webpack": "0.5.1",
     "eslint-plugin-import": "1.14.0",
-    "eslint-plugin-jsx-a11y": "2.1.0",
+    "eslint-plugin-jsx-a11y": "2.2.0",
     "eslint-plugin-react": "6.1.2",
     "extract-text-webpack-plugin": "2.0.0-beta.3",
     "fakeredis": "1.0.3",
