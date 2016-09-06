@@ -29,6 +29,7 @@ module.exports = (env = {}) => {
       extensions: ['', '.js', '.jsx'],
       modules: [
         resolve(__dirname, 'client'),
+        resolve(__dirname, 'utils'),
         resolve(__dirname, 'node_modules')
       ]
     },
