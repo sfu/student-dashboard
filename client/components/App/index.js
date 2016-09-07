@@ -1,17 +1,25 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
 import {Header} from 'components/Header'
+import {Widget} from 'components/Widget'
 import {HelloTile} from 'components/HelloTile'
+import {WeekAtAGlance} from 'components/WeekAtAGlance'
 import 'normalize.css/normalize.css'
 import 'styles/global.css'
 import styles from './App.css'
+
+// temp
+import weekAtAGlanceData from '../../../tmp/weekataglance'
 
 export const _App = ({viewer}) => {
   return (
   <div className={styles.app}>
     <Header />
     <div className={styles.widgets}>
-      <HelloTile names={viewer.names} />
+      <HelloTile schedule={weekAtAGlanceData} names={viewer.names} />
+      <Widget title="My Week at a Glance">
+        <WeekAtAGlance schedule={weekAtAGlanceData} />
+      </Widget>
     </div>
   </div>
   )
