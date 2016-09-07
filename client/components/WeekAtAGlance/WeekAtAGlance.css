@@ -1,0 +1,77 @@
+@value sfured from 'styles/color.css';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+
+  border-bottom: 2px solid #EEEEEE;
+  margin: .5em auto 1.5em auto;
+
+  text-transform: uppercase;
+}
+
+.date {
+  font-size: .75em;
+}
+
+.dateButton {
+  background: none;
+  border: none;
+  height: 44px;
+  width: 44px;
+  color: sfured;
+}
+
+.dateButton:disabled {
+  color: #CCC;
+}
+
+.caption,
+.thead {
+  composes: screenreader-only from 'styles/screenreaderOnly.css'
+}
+
+.scheduleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1em;
+}
+
+.schedule {
+  border-collapse: collapse;
+  font-size: .75em;
+}
+
+.activityItem > td {
+  vertical-align: top;
+  padding-bottom: 2em;
+}
+
+.activityTime {
+  white-space: nowrap;
+  padding-right: 2em;
+}
+
+.activityName {
+  display: block;
+  font-weight: bold;
+  padding-bottom: .6em;
+  text-transform: uppercase;
+}
+
+.activityDetails {}
+
+.dots {}
+
+.dot {
+  margin: 0 .25em;
+  font-size: 2.5em;
+}
+
+.dot-active {
+  color: sfured;
+}
