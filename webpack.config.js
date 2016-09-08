@@ -52,7 +52,8 @@ module.exports = (env = {}) => {
             presets: [
               ['es2015', {modules: false}],
               'react'
-            ]
+            ],
+            babelrc: false
           }
         },
 
