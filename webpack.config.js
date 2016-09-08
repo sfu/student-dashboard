@@ -44,15 +44,15 @@ module.exports = (env = {}) => {
           exclude: /node_modules/,
           loader: 'babel',
           query: {
-            plugins: [
+            plugins: removeEmpty([
               ifDev('react-hot-loader/babel'),
               resolve(__dirname, './babelRelayPlugin.js'),
               'transform-class-properties'
-            ],
-            presets: removeEmpty([
+            ]),
+            presets: [
               ['es2015', {modules: false}],
               'react'
-            ])
+            ]
           }
         },
 
