@@ -11,6 +11,13 @@ export const App = ({children}) => {
   return (
   <div className={styles.app}>
     <Header />
+    <ul>
+      <li><Link to="/">Dashboard</Link></li>
+      <li><Link to="/courses">Courses</Link></li>
+      <li><Link to="/transit">Transit</Link></li>
+      <li><Link to="/library">Library</Link></li>
+      <li><Link to="/room_finder">Room Finder</Link></li>
+    </ul>
     {children}
   </div>
   )
