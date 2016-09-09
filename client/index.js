@@ -1,25 +1,24 @@
 import 'babel-polyfill'
-
-import React from 'react'
+import './routerHotLoadPatch'
 import Relay from 'react-relay'
-import {render} from 'react-dom'
-// import {Router, Route, browserHistory, applyRouteMiddleware} from 'react-router'
-// import useRelay from 'react-router-relay'
-import Renderer from './renderer'
+import React from 'react'
 import {AppContainer} from 'react-hot-loader'
+import ReactDOM from 'react-dom'
+import Renderer from './renderer'
 
 const RootElement = document.getElementById('sorry')
+
 Relay.injectNetworkLayer(
   new Relay.DefaultNetworkLayer('/graphql', {
     credentials: 'same-origin'
   })
 )
 
-render(
-  <AppContainer>
-    {Renderer}
-  </AppContainer>,
-RootElement)
+const render = () => {
+  ReactDOM.render(<AppContainer>{Renderer}</AppContainer>, RootElement)
+}
+
+render()
 
 if (module.hot) {
   module.hot.accept('./renderer', () => {
