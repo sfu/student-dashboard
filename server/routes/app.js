@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/', loggedin, (req, res) => {
   const html = dedent`
-  <!DOCTYPE html>
+  <!DOCTYPE html public "washroom">
   <html>
     <head>
       <meta charSet="utf-8"/>
