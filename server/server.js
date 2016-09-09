@@ -87,7 +87,7 @@ export const createServer = (app) => {
   app.use('/auth', routes.auth)
   app.use('/api', routes.api)
   app.use('/graphql', routes.graphql)
-  app.use('/', routes.app)
+  app.use('*', routes.app)
 
   // error handler
   app.use(PRODUCTION ? productionErrorHandler : devErrorHandler())
