@@ -47,7 +47,7 @@ export const _HelloTile = React.createClass({
 
     return this.state.hide ? null : (
       <div className={styles.helloTile}>
-        <p className={styles.p}>Hello, <b>{name}</b>!</p>
+        <p className={styles.p}>Hello, <b>{name}</b>.</p>
         <p className={styles.p}>{this.youHave(schedule.edges.nodes)}</p>
         <div className={styles.buttonContainer}>
         <button
