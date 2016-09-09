@@ -5,14 +5,12 @@ import {Widget} from 'components/Widget'
 import {HelloTile} from 'components/HelloTile'
 import {WeekAtAGlance} from 'components/WeekAtAGlance'
 
-import styles from 'components/App/App.css'
-
 // temp
 import weekAtAGlanceData from '../../../tmp/weekataglance'
 
 const _Dashboard = ({viewer}) => {
   return (
-    <div className={styles.widgets}>
+    <div>
       <HelloTile schedule={weekAtAGlanceData} names={viewer.names} />
       <Widget title="My Week at a Glance">
         <WeekAtAGlance schedule={weekAtAGlanceData} />

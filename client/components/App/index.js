@@ -18,7 +18,9 @@ export const App = ({children}) => {
       <li><Link to="/library">Library</Link></li>
       <li><Link to="/room_finder">Room Finder</Link></li>
     </ul>
-    {children}
+    <div className={styles.widgets}>
+      {children}
+    </div>
   </div>
   )
 }
