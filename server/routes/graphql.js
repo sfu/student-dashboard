@@ -1,3 +1,4 @@
+import path from 'path'
 import {Router} from 'express'
 import {loggedin} from '../auth-middleware'
 import bodyParser from 'body-parser'
@@ -26,6 +27,10 @@ router.all('/', loggedin, bodyParser.json(), async (req, res) => {
     }
     res.boom.badImplementation(graphqlErr.message)
   })
+})
+
+router.get('/graphiql', loggedin, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../public/graphiql.html'))
 })
 
 export default router
