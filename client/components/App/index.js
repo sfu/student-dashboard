@@ -8,13 +8,14 @@ import 'styles/global.css'
 import styles from './App.css'
 
 
-export const App = (props) => {
+export const App = ({children}) => {
+  const childProps = children.props.routerProps || children.props
   return (
     <div>
       <div className={styles.app}>
-        <Header />
+        <Header title={childProps.route.title} />
         <div className={styles.widgets}>
-          {props.children}
+          {children}
         </div>
       </div>
       <NavBar />
