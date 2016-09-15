@@ -2,8 +2,9 @@
 
 import { default as React, PropTypes } from 'react'
 import { Link } from 'react-router'
+import styles from './NavLink.css'
 
-export const NavLink = (props) => <Link {...props} activeClassName="active" />
+export const NavLink = (props) => <Link {...props} activeClassName={styles.active} />
 
 NavLink.propTypes = {
   props: PropTypes.object
