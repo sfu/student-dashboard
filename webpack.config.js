@@ -47,7 +47,8 @@ module.exports = (env = {}) => {
             plugins: removeEmpty([
               ifDev('react-hot-loader/babel'),
               resolve(__dirname, './babelRelayPlugin.js'),
-              'transform-class-properties'
+              'transform-class-properties',
+              'transform-object-rest-spread'
             ]),
             presets: [
               ['es2015', {modules: false}],
