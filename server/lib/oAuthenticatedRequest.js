@@ -3,8 +3,7 @@ import axios from 'axios'
 import cas from '../cas-client'
 
 export default async function(req, res, config) {
-  const accessTokenValid = await validateAccessToken(req.session.oAuth.access_token)
-
+  const accessTokenValid = await validateAccessToken(req.session.oAuth.access_token, req.session.oAuth.valid_until)
   if (!accessTokenValid) {
     // attempt to refresh the token using the refresh_token
     try {
