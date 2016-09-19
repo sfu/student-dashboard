@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/', loggedin, (req, res) => {
   const html = dedent`
-  <!DOCTYPE html public "washroom">
+  <!DOCTYPE html public "transit">
   <html>
     <head>
       <meta charSet="utf-8"/>
@@ -23,7 +23,7 @@ router.get('/', loggedin, (req, res) => {
           CURRENT_USER: ${JSON.stringify(req.session.user)}
         }
       </script>
-      <script src="assets/app.js"></script>
+      <script src="/assets/app.js"></script>
     </body>
   </html>
   `
