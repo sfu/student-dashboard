@@ -10,15 +10,16 @@ import styles from './App.css'
 
 export const App = ({children}) => {
   const childProps = children.props.routerProps || children.props
+  const { fullScreen } = childProps.route
   return (
     <div>
       <div className={styles.app}>
-        <Header title={childProps.route.title} />
-        <div className={styles.widgets}>
+        { fullScreen ? null : <Header title={childProps.route.title} /> }
+        <div className={fullScreen ? '' : styles.widgets}>
           {children}
         </div>
       </div>
-      <NavBar />
+      { fullScreen ? null : <NavBar /> }
     </div>
   )
 }
