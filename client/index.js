@@ -14,6 +14,11 @@ Relay.injectNetworkLayer(
   })
 )
 
+if (process.env.NODE_ENV !== 'production') {
+  const RelayNetworkDebug = require('react-relay/lib/RelayNetworkDebug')
+  RelayNetworkDebug.init()
+}
+
 const render = () => {
   ReactDOM.render(<AppContainer>{Renderer}</AppContainer>, RootElement)
 }
