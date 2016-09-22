@@ -1,0 +1,15 @@
+@value sfured from 'styles/color.css';
+
+.h3 {
+  color: sfured;
+  font-weight: 300;
+  margin-bottom: 0.5em;
+}
+
+.p {
+  margin: 0;
+}
+
+.myLibrary {
+  margin: 1em;
+}
