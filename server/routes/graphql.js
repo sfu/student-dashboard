@@ -6,14 +6,18 @@ import {oAuthenticatedRequest} from '../lib'
 
 const router = Router()
 
-router.all('/', loggedin, bodyParser.json(), async (req, res) => {
-  const {method} = req
+router.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../public/graphql_docs.html'))
+})
 
+router.post('/', loggedin, bodyParser.json(), async (req, res) => {
+  const {method} = req
   const payload = method === 'POST' ? req.body : {
     query: req.query.query || null,
     variables: req.query.variables || null,
     operationName: req.query.operationName || null
   }
+
 
   oAuthenticatedRequest(req, res, {
     method: 'post',
