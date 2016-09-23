@@ -11,14 +11,17 @@ module.exports = (env = {}) => {
   const removeEmpty = array => array.filter(i => !!i)
 
   const config = {
-    entry: removeEmpty([
-      ifDev('react-hot-loader/patch'),
-      ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
-      resolve(__dirname, 'client/index.js')
-    ]),
+    entry: {
+      app: removeEmpty([
+        ifDev('react-hot-loader/patch'),
+        ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
+        resolve(__dirname, 'client/index.js')
+      ]),
+      graphql_docs: resolve(__dirname, 'graphql_docs/index.js')
+    },
 
     output: {
-      filename: 'app.js',
+      filename: '[name].js',
       path: resolve(__dirname, 'public/assets'),
       publicPath: '/assets/'
     },
@@ -109,7 +112,8 @@ module.exports = (env = {}) => {
 
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: env.prod ? '"production"' : '"development"'
+          NODE_ENV: env.prod ? '"production"' : '"development"',
+          GRAPHQL_SERVER: JSON.stringify(process.env.GRAPHQL_SERVER)
         }
       })
     ])
