@@ -48,6 +48,7 @@ function authenticateCasUser(req, res, next) {
       const {redirectTo} = req.session || '/'
       delete req.session.redirectTo
       req.session.regenerate(() => {
+        req.session.createdAt = new Date().toLocaleString()
         req.session.auth = status
         req.session.username = req.username = username
         req.session.casAttributes = extended
