@@ -10,7 +10,7 @@ const _Library = React.createClass({
   },
 
   render() {
-    const { library } = this.props.viewer
+    const { barcode, library } = this.props.viewer
     return (
       <div>
         <Widget title="Library Hours">
@@ -18,7 +18,7 @@ const _Library = React.createClass({
         </Widget>
         <Widget title="My Library">
           <MyLibrary
-            barcode={window.ENV.CURRENT_USER.barcode}
+            barcode={barcode}
             fines={library.fines}
             checkedOut={library.checked_out}
             holds={library.holds}
@@ -37,7 +37,8 @@ export const Library = Relay.createContainer(_Library, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on ViewerType {
-        library(barcode: $barcode) {
+        barcode
+        library {
           fines
           checked_out {
             title
