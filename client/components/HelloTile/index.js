@@ -63,7 +63,7 @@ export const _HelloTile = React.createClass({
 export const HelloTile = Relay.createContainer(_HelloTile, {
   fragments: {
     names: () => Relay.QL`
-      fragment on UserBioType {
+      fragment on ViewerType {
         firstnames
         commonname
       }

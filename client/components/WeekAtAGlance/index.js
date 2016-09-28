@@ -1,6 +1,7 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
 import moment from 'moment'
+import calcTerm from 'utils/calcTerm'
 import styles from './WeekAtAGlance.css'
 import ScheduleTable from './ScheduleTable'
 import ScheduleItem from './ScheduleItem'
@@ -74,5 +75,18 @@ export const _WeekAtAGlance = React.createClass({
 })
 
 export const WeekAtAGlance = Relay.createContainer(_WeekAtAGlance, {
-  fragments: {}
+  initialVariables: {
+    term: calcTerm(),
+    scheduleStartAt: moment().startOf('week').toISOString(),
+    scheduleEndAt: moment().endOf('week').toISOString()
+  },
+  fragments: {
+    schedule: () => Relay.QL`
+      fragment on ViewerType {
+        scheduleItems(term: $term, start_at: $scheduleStartAt, end_at: $scheduleEndAt) {
+          dept
+        }
+      }
+    `
+  }
 })

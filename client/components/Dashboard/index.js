@@ -1,6 +1,5 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
-
 import {Widget} from 'components/Widget'
 import {HelloTile} from 'components/HelloTile'
 import {WeekAtAGlance} from 'components/WeekAtAGlance'
@@ -11,7 +10,7 @@ import weekAtAGlanceData from '../../../tmp/weekataglance'
 const _Dashboard = ({viewer}) => {
   return (
     <div>
-      <HelloTile schedule={weekAtAGlanceData} names={viewer.names} />
+      <HelloTile schedule={weekAtAGlanceData} names={viewer} />
       <Widget title="My Week at a Glance">
         <WeekAtAGlance schedule={weekAtAGlanceData} />
       </Widget>
@@ -24,15 +23,11 @@ _Dashboard.propTypes = {
 }
 
 export const Dashboard = Relay.createContainer(_Dashboard, {
-  initialVariables: {
-    userid: window.ENV.CURRENT_USER.username
-  },
   fragments: {
     viewer: () => Relay.QL`
-      fragment on ViewerType {
-        names:userBio(userid: $userid) {
-          ${HelloTile.getFragment('names')}
-        }
+      fragment viewer on ViewerType {
+        ${HelloTile.getFragment('names')}
+        ${WeekAtAGlance.getFragment('schedule')}
       }
     `
   }
