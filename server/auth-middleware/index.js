@@ -59,14 +59,6 @@ function authenticateCasUser(req, res, next) {
   }, process.env.CAS_SERVICE)
 }
 
-function handleSingleSignout(req, res, next) {
-  cas.handleSingleSignout(req, res, next, (ticket) => {
-    // CAS sessions have the form `cas_session:::{SERVICE_TICKET}`
-    const sid = `cas_session:::${ticket}`
-    req.sessionStore.destroy(sid, () => {})
-  })
-}
-
 async function getUser(req, res, next) {
   const username = req.username
   try {
@@ -76,6 +68,25 @@ async function getUser(req, res, next) {
     }
     next()
   } catch(e) {
+    next(e)
+  }
+}
+
+async function getProxyTicket(req, res, next) {
+  try {
+     req.PROXY_TICKET = await cas.getProxyTicketAsync(req.session.casAttributes.PGTIOU, process.env.PORTAL_SERVICE_NAME)
+     next()
+  } catch (e) {
+    next(e)
+  }
+}
+
+async function getOauthCredentials(req, res, next) {
+  try {
+    const response = await getAccessToken(req.PROXY_TICKET)
+    req.session.oAuth = response.data
+    next()
+  } catch (e) {
     next(e)
   }
 }
@@ -109,24 +120,14 @@ async function provisionUser(req, res, next) {
 
 }
 
-async function getProxyTicket(req, res, next) {
-  try {
-     req.PROXY_TICKET = await cas.getProxyTicketAsync(req.session.casAttributes.PGTIOU, process.env.PORTAL_SERVICE_NAME)
-     next()
-  } catch (e) {
-    next(e)
-  }
+function handleSingleSignout(req, res, next) {
+  cas.handleSingleSignout(req, res, next, (ticket) => {
+    // CAS sessions have the form `cas_session:::{SERVICE_TICKET}`
+    const sid = `cas_session:::${ticket}`
+    req.sessionStore.destroy(sid, () => {})
+  })
 }
 
-async function getOauthCredentials(req, res, next) {
-  try {
-    const response = await getAccessToken(req.PROXY_TICKET)
-    req.session.oAuth = response.data
-    next()
-  } catch (e) {
-    next(e)
-  }
-}
 
 export {
   loggedin,
