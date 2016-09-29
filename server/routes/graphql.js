@@ -4,6 +4,8 @@ import {loggedin} from '../auth-middleware'
 import bodyParser from 'body-parser'
 import {oAuthenticatedRequest} from '../lib'
 
+const debug = require('debug')('snap:server:routes:graphql')
+
 const router = Router()
 
 router.get('/', (req, res) => {
@@ -26,6 +28,7 @@ router.post('/', loggedin, bodyParser.json(), async (req, res) => {
   }).then(response => {
     res.send(response.data)
   }).catch(graphqlErr => {
+    debug('Caught GraphQL error: %s', graphqlErr.message)
     if (graphqlErr.message === 'ERR_CREDENTIALS_INVALID') {
       return res.boom.unauthorized('ERR_CREDENTIALS_INVALID')
     }
