@@ -1,6 +1,8 @@
 import {Router} from 'express'
 import db from '../../../db'
 
+const debug = require('debug')('snap:server:routes:api/v1/users')
+
 const router = Router()
 
 router.get('/:username', async (req, res) => {
@@ -8,6 +10,7 @@ router.get('/:username', async (req, res) => {
   if (username === 'self') {
     username = req.user.username
   }
+  debug('Getting user profile for %s', username)
   if (username !== req.user.username) {
     res.boom.unauthorized()
     return
