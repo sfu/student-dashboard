@@ -18,8 +18,7 @@ router.get('/:username', async (req, res) => {
 
   const user = (await db('users').where({username}))[0]
   if (user) {
-    delete user.access_token
-    delete user.refresh_token
+    Object.keys(user).filter(k => k.indexOf('oauth_') === 0).forEach(k => { delete user[k] })
     res.send(user)
   } else {
     res.boom.notFound()
