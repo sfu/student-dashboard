@@ -8,7 +8,6 @@ const debug = require('debug')('snap:server:oAuthenticatedRequest')
 export default async function(req, res, config) {
 
   const { username } = req.session.user
-  const { user } = req.session
 
   // get oauth credentials for user from database
   const oauthCredentials = await loadUser(username, ['oauth_access_token', 'oauth_refresh_token', 'oauth_valid_until'])
@@ -17,7 +16,7 @@ export default async function(req, res, config) {
     oauth_refresh_token: refresh_token,
     oauth_valid_until: valid_until
   } = oauthCredentials
-  console.log({access_token, refresh_token, valid_until})
+
   let updateCredentials = {}
 
   debug('Attempting to make OAuthenticated Request to %s for user %s using token %s', config.url, username, access_token)
@@ -61,7 +60,6 @@ export default async function(req, res, config) {
             const proxyTicket = await cas.getProxyTicketAsync(req.session.casAttributes.PGTIOU, process.env.PORTAL_SERVICE_NAME)
             debug('Got proxy ticket: %s', proxyTicket)
             const newCredentialsResponse = await getAccessToken(proxyTicket)
-            console.log(newCredentialsResponse.data)
             debug('Got OAuth credentials: %s', JSON.stringify(newCredentialsResponse.data))
             if (newCredentialsResponse.data && newCredentialsResponse.data.access_token) {
               updateCredentials = newCredentialsResponse.data
