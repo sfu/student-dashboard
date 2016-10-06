@@ -1,5 +1,6 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const values = require('postcss-modules-values')
@@ -42,6 +43,15 @@ module.exports = (env = {}) => {
 
     module: {
       loaders: removeEmpty([
+        {
+          test: /\.html$/,
+          loader: 'html',
+          query: {
+            interpolate: true,
+            minimize: false
+          }
+        },
+
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -108,6 +118,15 @@ module.exports = (env = {}) => {
 
       ifProd(new ExtractTextPlugin('styles.css'), {
         allChunks: true
+      }),
+
+      new HtmlWebpackPlugin({
+        title: 'OH SNAP',
+        minify: false,
+        chunks: [ 'app' ],
+        hash: true,
+        template: resolve(__dirname, 'html_templates/snap.html'),
+        filename: resolve(__dirname, 'public/index.html')
       }),
 
       new webpack.DefinePlugin({
