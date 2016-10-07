@@ -57,7 +57,7 @@
     "ava": "grahamb/ava#master",
     "babel-cli": "6.16.0",
     "babel-core": "6.17.0",
-    "babel-eslint": "6.1.2",
+    "babel-eslint": "7.0.0",
     "babel-loader": "6.2.5",
     "babel-plugin-dedent": "2.0.0",
     "babel-plugin-rewire": "1.0.0-rc-2",
