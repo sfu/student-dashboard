@@ -1,0 +1,21 @@
+.fullHeight {
+  height: 100vh;
+  width: 100vw;
+}
+.nav {
+  height: 3vh;
+}
+
+.nav a {
+  padding: 1em;
+  display: block;
+
+}
+.barcode {
+  height: 97vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
