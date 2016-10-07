@@ -31,9 +31,6 @@ const _Library = React.createClass({
 })
 
 export const Library = Relay.createContainer(_Library, {
-  initialVariables: {
-    barcode: window.ENV.CURRENT_USER.barcode
-  },
   fragments: {
     viewer: () => Relay.QL`
       fragment on ViewerType {
