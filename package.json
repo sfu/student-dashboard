@@ -53,7 +53,7 @@
     "lint:changed"
   ],
   "devDependencies": {
-    "autoprefixer": "6.4.0",
+    "autoprefixer": "6.5.0",
     "ava": "grahamb/ava#master",
     "babel-cli": "6.16.0",
     "babel-core": "6.17.0",
