@@ -1,0 +1,45 @@
+@value sfured, sfublue from 'styles/color.css';
+
+.libraryHours {
+  margin: 1em;
+}
+
+.libraryHoursList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.libraryHoursListItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  margin-bottom: 1em;
+}
+
+.libraryHoursListItem span {
+  display: block;
+  font-size: .8em;
+}
+
+.libraryLocation {
+  color: sfured;
+  margin: 0;
+  font-weight: 300;
+}
+
+.openClosed {
+  color: sfublue;
+  text-transform: uppercase;
+  line-height: 1.75em;
+  font-weight: bold;
+}
+
+.col1 {
+  flex-basis: 60%;
+}
+
+.col2 {
+  flex-basis: auto;
+}

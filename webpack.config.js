@@ -1,5 +1,6 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const values = require('postcss-modules-values')
@@ -11,14 +12,17 @@ module.exports = (env = {}) => {
   const removeEmpty = array => array.filter(i => !!i)
 
   const config = {
-    entry: removeEmpty([
-      ifDev('react-hot-loader/patch'),
-      ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
-      resolve(__dirname, 'client/index.js')
-    ]),
+    entry: {
+      app: removeEmpty([
+        ifDev('react-hot-loader/patch'),
+        ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
+        resolve(__dirname, 'client/index.js')
+      ]),
+      graphql_docs: resolve(__dirname, 'graphql_docs/index.js')
+    },
 
     output: {
-      filename: 'app.js',
+      filename: '[name].js',
       path: resolve(__dirname, 'public/assets'),
       publicPath: '/assets/'
     },
@@ -29,7 +33,7 @@ module.exports = (env = {}) => {
       extensions: ['', '.js', '.jsx'],
       modules: [
         resolve(__dirname, 'client'),
-        resolve(__dirname, 'utils'),
+        resolve(__dirname, 'queries'),
         resolve(__dirname, 'node_modules')
       ]
     },
@@ -40,19 +44,30 @@ module.exports = (env = {}) => {
     module: {
       loaders: removeEmpty([
         {
+          test: /\.html$/,
+          loader: 'html',
+          query: {
+            interpolate: true,
+            minimize: false
+          }
+        },
+
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           loader: 'babel',
           query: {
-            plugins: [
+            plugins: removeEmpty([
               ifDev('react-hot-loader/babel'),
               resolve(__dirname, './babelRelayPlugin.js'),
-              'transform-class-properties'
-            ],
-            presets: removeEmpty([
+              'transform-class-properties',
+              'transform-object-rest-spread'
+            ]),
+            presets: [
               ['es2015', {modules: false}],
               'react'
-            ])
+            ],
+            babelrc: false
           }
         },
 
@@ -105,9 +120,19 @@ module.exports = (env = {}) => {
         allChunks: true
       }),
 
+      new HtmlWebpackPlugin({
+        title: 'OH SNAP',
+        minify: false,
+        chunks: [ 'app' ],
+        hash: true,
+        template: resolve(__dirname, 'html_templates/snap.html'),
+        filename: resolve(__dirname, 'html/snap.html')
+      }),
+
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: env.prod ? '"production"' : '"development"'
+          NODE_ENV: env.prod ? '"production"' : '"development"',
+          GRAPHQL_SERVER: JSON.stringify(process.env.GRAPHQL_SERVER)
         }
       })
     ])

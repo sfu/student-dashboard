@@ -11,6 +11,6 @@ export const Widget = ({title, children}) => {
 }
 
 Widget.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]).isRequired,
   title: PropTypes.string.isRequired
 }

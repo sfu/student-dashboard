@@ -3,9 +3,8 @@
 .app {
   composes: systemFont from 'styles/type.css';
   color: blacktext;
-  margin-bottom: 2em;
 }
 
 .widgets {
-  margin: 0 1em
+  margin: 0 1em 100px 1em;
 }

@@ -1,10 +1,12 @@
 import 'babel-polyfill'
-
-import React from 'react'
+import './routerHotLoadPatch'
 import Relay from 'react-relay'
-import {render} from 'react-dom'
-import {RootContainer} from './containers/RootContainer'
+import React from 'react'
 import {AppContainer} from 'react-hot-loader'
+import ReactDOM from 'react-dom'
+import Renderer from './routes/router'
+
+const RootElement = document.getElementById('sorry')
 
 Relay.injectNetworkLayer(
   new Relay.DefaultNetworkLayer('/graphql', {
@@ -12,18 +14,20 @@ Relay.injectNetworkLayer(
   })
 )
 
-const RootElement = document.getElementById('sorry')
+if (process.env.NODE_ENV !== 'production') {
+  const RelayNetworkDebug = require('react-relay/lib/RelayNetworkDebug')
+  RelayNetworkDebug.init()
+}
 
-render(
-  <AppContainer>
-    {RootContainer}
-  </AppContainer>,
-RootElement)
+const render = () => {
+  ReactDOM.render(<AppContainer>{Renderer}</AppContainer>, RootElement)
+}
 
+render()
 
 if (module.hot) {
-  module.hot.accept('./containers/RootContainer', () => {
-    const NextRootContainer = require('./containers/RootContainer').RootContainer
+  module.hot.accept('./routes/router', () => {
+    const NextRootContainer = require('./routes/router').default
     render(
       <AppContainer>
          {NextRootContainer}

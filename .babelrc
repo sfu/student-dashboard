@@ -5,7 +5,8 @@
   ],
   "plugins": [
     "dedent",
-    "transform-async-to-generator"
+    "transform-async-to-generator",
+    "transform-object-rest-spread"
   ],
   "env": {
     "test": {
