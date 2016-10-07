@@ -82,6 +82,8 @@ export const createServer = (app) => {
     app.use(enforceSSL())
   }
 
+  app.set('htmlDirectory', path.resolve(__dirname, '../html'))
+
   // mount routes
   app.use('/pgt', routes.pgt)
   app.use('/auth', routes.auth)
