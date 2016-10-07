@@ -1,4 +1,4 @@
-@value sfublue, sfured from '../../styles/color.css';
+@value sfublue, sfured from 'styles/color.css';
 
 .helloTile {
   background-color: sfublue;
