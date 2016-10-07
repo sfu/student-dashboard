@@ -1,4 +1,3 @@
-import path from 'path'
 import {Router} from 'express'
 import {loggedin} from '../auth-middleware'
 import bodyParser from 'body-parser'
@@ -8,8 +7,8 @@ const debug = require('debug')('snap:server:routes:graphql')
 
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../public/graphql_docs.html'))
+router.get('/', loggedin, (req, res) => {
+  res.sendFile(`${req.app.get('htmlDirectory')}/graphiql.html`)
 })
 
 router.post('/', loggedin, bodyParser.json(), async (req, res) => {
@@ -36,8 +35,12 @@ router.post('/', loggedin, bodyParser.json(), async (req, res) => {
   })
 })
 
-router.get('/graphiql', loggedin, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../public/graphiql.html'))
+router.get('/graphiql', (req, res) => {
+  res.redirect('/graphql')
+})
+
+router.get('/docs', (req, res) => {
+  res.sendFile(`${req.app.get('htmlDirectory')}/graphql_docs.html`)
 })
 
 export default router
