@@ -1,7 +1,10 @@
 import axios from 'axios'
+const debug = require('debug')('snap:server:getUserBio')
 
 export default async function getUserBio(username, token, req) {
-  const urlBase = token ? 'https://api.its.sfu.ca/aobrest/v1' : 'https://rest.its.sfu.ca/cgi-bin/WebObjects/AOBRestServer.woa/rest'
+  debug('Getting userBio for %s', username)
+  const urlBase = token ? 'https://api.its.sfu.ca/aobrest/v1' :
+                          'https://rest.its.sfu.ca/cgi-bin/WebObjects/AOBRestServer.woa/rest'
   const headers = token ? {
     'Authorization': `Bearer ${token}`
   } : {
@@ -15,6 +18,7 @@ export default async function getUserBio(username, token, req) {
     })
     return bio.data
   } catch (e) {
+    debug(`Error in getUserBio: %s`, e)
     throw new Error(e.data)
   }
 }
