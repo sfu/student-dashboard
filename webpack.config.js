@@ -126,7 +126,7 @@ module.exports = (env = {}) => {
         chunks: [ 'app' ],
         hash: true,
         template: resolve(__dirname, 'html_templates/snap.html'),
-        filename: resolve(__dirname, 'public/index.html')
+        filename: resolve(__dirname, 'html/snap.html')
       }),
 
       new webpack.DefinePlugin({
