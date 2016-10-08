@@ -1,13 +1,14 @@
-import path from 'path'
 import {Router} from 'express'
 import {loggedin} from '../auth-middleware'
 import bodyParser from 'body-parser'
 import {oAuthenticatedRequest} from '../lib'
 
+const debug = require('debug')('snap:server:routes:graphql')
+
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../public/graphql_docs.html'))
+router.get('/', loggedin, (req, res) => {
+  res.sendFile(`${req.app.get('htmlDirectory')}/graphiql.html`)
 })
 
 router.post('/', loggedin, bodyParser.json(), async (req, res) => {
@@ -26,6 +27,7 @@ router.post('/', loggedin, bodyParser.json(), async (req, res) => {
   }).then(response => {
     res.send(response.data)
   }).catch(graphqlErr => {
+    debug('Caught GraphQL error: %s', graphqlErr.message)
     if (graphqlErr.message === 'ERR_CREDENTIALS_INVALID') {
       return res.boom.unauthorized('ERR_CREDENTIALS_INVALID')
     }
@@ -33,8 +35,12 @@ router.post('/', loggedin, bodyParser.json(), async (req, res) => {
   })
 })
 
-router.get('/graphiql', loggedin, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../public/graphiql.html'))
+router.get('/graphiql', (req, res) => {
+  res.redirect('/graphql')
+})
+
+router.get('/docs', (req, res) => {
+  res.sendFile(`${req.app.get('htmlDirectory')}/graphql_docs.html`)
 })
 
 export default router
