@@ -83,8 +83,8 @@ export const WeekAtAGlance = Relay.createContainer(_WeekAtAGlance, {
   fragments: {
     schedule: () => Relay.QL`
       fragment on ViewerType {
-        scheduleItems(term: $term, start_at: $scheduleStartAt, end_at: $scheduleEndAt) {
-          dept
+        scheduleForRangeInTerm(term: $term, rangeStart: $scheduleStartAt, rangeEnd: $scheduleEndAt) {
+         dept
         }
       }
     `
