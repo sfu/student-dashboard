@@ -2,7 +2,7 @@ import { default as React, PropTypes } from 'react'
 import { Link } from 'react-router'
 import styles from './MyLibrary.css'
 
-const MyLibrary = ({barcode, fines, checkedOut, holds, ...props}) => {
+const MyLibrary = ({barcode, fines, checkedOut, holds}) => {
   const checkedOutItemsList = checkedOut.map((item, index) => <li key={index}><a href={item.link}>{item.title}</a><br/>Due: {item.due_printable}</li>)
   const checkedOutItems = (<ul>{checkedOutItemsList}</ul>)
 
@@ -27,7 +27,6 @@ const MyLibrary = ({barcode, fines, checkedOut, holds, ...props}) => {
 
       <h3 className={styles.h3}>Hold Requests</h3>
       {holds.length ? holdItems : <p className={styles.p}>You have no hold requests.</p>}
-      {props.children}
     </div>
   )
 }
