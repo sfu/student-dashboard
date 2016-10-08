@@ -1,55 +1,35 @@
-import assert from 'assert'
+import test from 'ava'
 import calcTerm from '../calcTerm'
 
-const tests = [
 
-  // SHOULD BE FALL 2016 (1167)
-  {
-    date: new Date('2016-09-26').getTime(),
-    shouldBeTerm: '1167'
-  },
+test('2016-09-26 should be 1167', t => {
+  t.is((calcTerm(new Date('2016-09-26'))), '1167')
+})
 
-  {
-    date: new Date('2016-12-24').getTime(),
-    shouldBeTerm: '1167'
-  },
+test('2016-12-24 should be 1167', t => {
+  t.is((calcTerm(new Date('2016-12-24'))), '1167')
+})
 
-  // SHOULD BE SPRING 2017 (1171)
-  {
-    date: new Date('2016-12-25').getTime(),
-    shouldBeTerm: '1171'
-  },
+test('2016-12-25 should be 1171', t => {
+  t.is((calcTerm(new Date('2016-12-25'))), '1171')
+})
 
-  {
-    date: new Date('2017-01-01').getTime(),
-    shouldBeTerm: '1171'
-  },
+test('2017-01-01 should be 1171', t => {
+  t.is((calcTerm(new Date('2017-01-01'))), '1171')
+})
 
-  {
-    date: new Date('2017-04-23').getTime(),
-    shouldBeTerm: '1171'
-  },
+test('2017-04-23 should be 1171', t => {
+  t.is((calcTerm(new Date('2017-04-23'))), '1171')
+})
 
-  // SHOULD BE SUMMER 2017 (1174)
-  {
-    date: new Date('2017-04-24').getTime(),
-    shouldBeTerm: '1174'
-  },
+test('2017-04-24 should be 1174', t => {
+  t.is((calcTerm(new Date('2017-04-24'))), '1174')
+})
 
-  {
-    date: new Date('2017-08-24').getTime(),
-    shouldBeTerm: '1174'
-  },
+test('2017-08-24 should be 1174', t => {
+  t.is((calcTerm(new Date('2017-08-24'))), '1174')
+})
 
-  // SHOULD BE FALL 1997 (0977)
-  {
-    date: new Date('1997-09-01').getTime(),
-    shouldBeTerm: '0977'
-  }
-
-]
-
-tests.forEach((test, i) => {
-  const result = calcTerm(test.date)
-  assert.strictEqual(result, test.shouldBeTerm, `tests[${i}]: got ${result}, should be ${test.shouldBeTerm}`)
+test('1997-09-01 should be 0977', t => {
+  t.is((calcTerm(new Date('1997-09-01'))), '0977')
 })

@@ -11,3 +11,4 @@ public/assets
 build
 data/schema.json
 tmp/*
+html/snap.html

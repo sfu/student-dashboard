@@ -1,7 +1,7 @@
 import test from 'ava'
 import {mockReq, mockRes} from 'sinon-express-mock'
 import sinon from 'sinon'
-import {provisionUser, __RewireAPI__ as AsyncGetUserBioRewireAPI} from '../index' // eslint-disable-line
+import {provisionOrUpdateUser, __RewireAPI__ as RewireAPI} from '../index' // eslint-disable-line
 import db from '../../db'
 
 const FAKEUSERBIO = {
@@ -27,6 +27,13 @@ const FAKEUSER = {
   barcode: '12345678901234'
 }
 
+const FAKEOAUTH = {
+  access_token: 'lol',
+  refresh_token: 'wtf',
+  expires_in: 3600,
+  valid_until: 0
+}
+
 const insertFakeUser = async () => {
   const res = await db('users').insert(FAKEUSER).returning('*')
   return res[0]
@@ -36,20 +43,24 @@ test.beforeEach('Reset the database', async () => {
   await db.migrate.rollback()
   await db.migrate.latest()
 
-  // rewire the getUserBio function called by provisionUser
-  AsyncGetUserBioRewireAPI.__Rewire__('getUserBio', function() {
+  // rewire the getUserBio function called by provisionOrUpdateUser
+  RewireAPI.__Rewire__('getUserBio', function() {
     return Promise.resolve(FAKEUSERBIO)
+  })
+
+  // rewire the getProxyTicket function called by provisionOrUpdateUser
+  RewireAPI.__Rewire__('getAccessToken', () => {
+    return Promise.resolve({data: FAKEOAUTH})
   })
 })
 
 test('Provision a user when none exists', async t => {
   const req = mockReq({
-    OAUTH_CREDENTIALS: { access_token: 'xxx', refresh_token: 'xxx' },
     username: 'fakeuser'
   })
   const res = mockRes()
   const next = sinon.spy()
-  await provisionUser(req, res, next)
+  await provisionOrUpdateUser(req, res, next)
   t.is(req.user.username, 'fakeuser')
   t.truthy(req.user.uid)
 })
@@ -58,11 +69,10 @@ test('Call next() when a user already exists, do not update', async t => {
   const fakeUser = await insertFakeUser()
   const req = mockReq({
     user: fakeUser,
-    OAUTH_CREDENTIALS: { access_token: 'updated', refresh_token: 'xxx' }
   })
   const res = mockRes()
   const next = sinon.spy()
-  await provisionUser(req, res, next)
+  await provisionOrUpdateUser(req, res, next)
   t.true(next.calledOnce)
 })
 
@@ -75,6 +85,6 @@ test('Should call next when is an API request', async t => {
   })
   const res = mockRes()
   const next = sinon.spy()
-  await provisionUser(req, res, next)
+  await provisionOrUpdateUser(req, res, next)
   t.true(next.calledOnce)
 })
