@@ -121,12 +121,15 @@ module.exports = (env = {}) => {
         allChunks: true
       }),
 
+      // SFU Snap HTML (snap.html)
       new HtmlWebpackPlugin({
-        title: 'OH SNAP',
-        minify: false,
+        inject: false,
+        template: htmlWebpackTemplate,
+        title: 'SFU Snap',
+        appMountId: 'sorry',
+        mobile: true,
         chunks: [ 'app' ],
         hash: true,
-        template: resolve(__dirname, 'html_templates/snap.html'),
         filename: resolve(__dirname, 'public/assets/snap.html')
       }),
 
