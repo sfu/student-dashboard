@@ -5,7 +5,7 @@
   "main": "build/server/index.js",
   "scripts": {
     "prestart": "npm run prebuild && npm run generate-schema",
-    "start": "NODE_ENV=development nodemon --watch server -r babel-register -r ./environment.js server/index.js",
+    "start": "npm run prebuild && NODE_ENV=development nodemon --watch server -r babel-register -r ./environment.js server/index.js",
     "start:inspect": "npm run prestart && NODE_ENV=development node --inspect -r babel-register -r ./environment.js server/index.js",
     "start:production": "NODE_ENV=production node -r ./environment.js build/index.js",
     "prebuild": "rimraf build public/assets",
