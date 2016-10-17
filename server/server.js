@@ -73,6 +73,7 @@ export const createServer = (app) => {
     app = createDevServer(app)
   }
   app.set('JWT_SIGNING_CERTIFICATE', fs.readFileSync(process.env.JWT_SIGNING_CERTIFICATE))
+  app.set('JWT_SIGNING_KEY', fs.readFileSync(process.env.JWT_SIGNING_KEY))
   app.set('JWT_SIGNING_ALG', 'RS512')
   app.use(session(sessionConfig))
   app.use(helmet())
