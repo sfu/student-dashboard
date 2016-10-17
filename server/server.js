@@ -53,6 +53,7 @@ export const createDevServer = (app) => {
       chunk: false
     }
   }))
+  app.set('compiler', compiler)
   app.use(WebpackHotMiddleware(compiler))
   return app
 }
