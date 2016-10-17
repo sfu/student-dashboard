@@ -16,12 +16,6 @@ import {
 // If they're not logged in, then they get a JSON 401 or redirected to CAS, as appropriate
 async function loggedin(req, res, next) {
 
-  // session
-  if (req.session.auth) {
-    debug('`loggedin` called, user has session, calling `next()`')
-    return next()
-  }
-
   // api request
   if (req.isApiRequest) {
     let token = req.headers.authorization
@@ -42,6 +36,12 @@ async function loggedin(req, res, next) {
       debug('JWT error: %s', e)
       return next(e)
     }
+  }
+
+  // session
+  if (req.session.auth) {
+    debug('`loggedin` called, user has session, calling `next()`')
+    return next()
   }
 
   debug('User not logged in, redirecting to login')
@@ -73,7 +73,7 @@ function authenticateCasUser(req, res, next) {
 }
 
 async function getUser(req, res, next) {
-    const { username } = req
+  const { username } = req
   debug('Getting user record for %s', username)
 
   try {
