@@ -19,7 +19,8 @@ module.exports = (env = {}) => {
         ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
         resolve(__dirname, 'client/index.js')
       ]),
-      graphql_docs: resolve(__dirname, 'graphql_docs/index.js')
+      graphql_docs: resolve(__dirname, 'graphql_docs/index.js'),
+      graphiql: resolve(__dirname, 'graphiql/index.js')
     },
 
     output: {
@@ -77,8 +78,16 @@ module.exports = (env = {}) => {
           loader: 'url'
         },
 
+        {
+          test: /node_modules\/graphiql\/graphiql\.css$/,
+          loaders: [
+            'file?name=[name].[ext]'
+          ]
+        },
+
         ifProd({
           test: /\.css$/,
+          exclude: [/graphiql\.css$/],
           loader: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
             loader: 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
@@ -87,6 +96,7 @@ module.exports = (env = {}) => {
 
         ifDev({
           test: /\.css$/,
+          exclude: [/graphiql\.css$/],
           loaders: [
             'style?sourceMap',
             'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -131,6 +141,18 @@ module.exports = (env = {}) => {
         chunks: [ 'app' ],
         hash: true,
         filename: resolve(__dirname, 'public/assets/snap.html')
+      }),
+
+      // GraphiQL HTML (graphiql.html)
+      new HtmlWebpackPlugin({
+        inject: false,
+        template: htmlWebpackTemplate,
+        title: 'SFU Snap - API Explorer',
+        appMountId: 'graphiql',
+        links: ['/assets/graphiql.css'],
+        chunks: [ 'graphiql' ],
+        hash: true,
+        filename: resolve(__dirname, 'public/assets/graphiql.html')
       }),
 
       new webpack.DefinePlugin({
