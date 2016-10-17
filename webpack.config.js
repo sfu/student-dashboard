@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const values = require('postcss-modules-values')
+const htmlWebpackTemplate = require('html-webpack-template')
 
 module.exports = (env = {}) => {
   const addItem = (add, item) => add ? item : undefined
