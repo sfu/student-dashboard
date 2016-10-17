@@ -29,7 +29,7 @@ router.post('/login/cas',
 
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/')
+    res.redirect(`${process.env.CAS_BASE_URL}/appLogout`)
   })
 })
 
