@@ -80,9 +80,13 @@ module.exports = (env = {}) => {
 
         {
           test: /node_modules\/graphiql\/graphiql\.css$/,
-          loaders: [
-            'file?name=[name].[ext]'
-          ]
+          loader: ExtractTextPlugin.extract({
+            fallbackLoader: 'style-loader',
+            loader: 'css'
+          })
+          // loaders: [
+          //   'file?name=[name].[ext]'
+          // ]
         },
 
         ifProd({
@@ -128,7 +132,7 @@ module.exports = (env = {}) => {
       })),
 
       ifProd(new ExtractTextPlugin('[name].css'), {
-        allChunks: true
+        allChunks: false
       }),
 
       // SFU Snap HTML (snap.html)
