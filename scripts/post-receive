@@ -50,12 +50,16 @@ echo "building the app"
 cd $RELEASE_PATH && NODE_ENV=production npm run build || { echo "Error building the app" ; exit 1; }
 
 # symlink logs
-ln -s $SHARED_PATH/{log} $RELEASE_PATH || { echo "Error symlinking logs" ; exit 1; }
+ln -s $SHARED_PATH/log $RELEASE_PATH || { echo "Error symlinking logs" ; exit 1; }
 
 # move symlink
 echo "Move symlink"
 rm -f $CURRENT_PATH || { echo "Error removing current symlink" ; exit 1; }
 ln -s $RELEASE_PATH $CURRENT_PATH || { echo "Error making symlink" ; exit 1; }
+
+# run migrations
+echo "Run DB Migrations"
+cd $CURRENT_PATH && NODE_ENV=production npm run db:migrate
 
 # start or restart
 if [ -e "$PIDFILE" ]; then
