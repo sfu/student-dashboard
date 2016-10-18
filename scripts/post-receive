@@ -17,7 +17,7 @@ DATESTAMP=$(date +"%Y%m%d%H%M%S")
 RELEASE_PATH="$DEPLOY_BASE_PATH/releases/$DATESTAMP"
 CURRENT_PATH="$DEPLOY_BASE_PATH/current"
 SHARED_PATH="$DEPLOY_BASE_PATH/shared"
-LOG_PATH="$DEPLOY_BASE_PATH/shared/log"
+LOG_PATH="$DEPLOY_BASE_PATH/shared/logs"
 PRESTART_URL="https://snap-test.its.sfu.ca/isup"
 PIDFILE="/var/run/nginx.pid"
 
@@ -41,13 +41,13 @@ git --work-tree=$RELEASE_PATH --git-dir=$GIT_DIR checkout -f || { echo "Error ch
 echo "yarn install"
 cd $RELEASE_PATH && yarn || { echo "Error running yarn" ; exit 1; }
 
-# build the app
-echo "building the app"
-cd $RELEASE_PATH && npm run build || { echo "Error running `npm run build`" ; exit 1; }
-
 # copy config files
 echo "Symlink config files"
 ln -s $SHARED_PATH/config/.env.production $RELEASE_PATH || { echo "Error symlinking .env.production" ; exit 1; }
+
+# build the app
+echo "building the app"
+cd $RELEASE_PATH && NODE_ENV=production npm run build || { echo "Error building the app" ; exit 1; }
 
 # symlink logs
 ln -s $SHARED_PATH/{log} $RELEASE_PATH || { echo "Error symlinking logs" ; exit 1; }
