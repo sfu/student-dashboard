@@ -78,16 +78,20 @@ module.exports = (env = {}) => {
           loader: 'url'
         },
 
-        {
+        ifProd({
           test: /node_modules\/graphiql\/graphiql\.css$/,
           loader: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
             loader: 'css'
           })
-          // loaders: [
-          //   'file?name=[name].[ext]'
-          // ]
-        },
+        }),
+
+        ifDev({
+          test: /node_modules\/graphiql\/graphiql\.css$/,
+          loaders: [
+            'file?name=[name].[ext]'
+          ]
+        }),
 
         ifProd({
           test: /\.css$/,
