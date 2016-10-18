@@ -11,4 +11,5 @@ public/assets
 build
 data/schema.json
 tmp/*
+!tmp/.gitkeep
 html/snap.html
