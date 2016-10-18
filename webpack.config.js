@@ -127,7 +127,7 @@ module.exports = (env = {}) => {
         }
       })),
 
-      ifProd(new ExtractTextPlugin('styles.css'), {
+      ifProd(new ExtractTextPlugin('[name].css'), {
         allChunks: true
       }),
 
@@ -139,6 +139,7 @@ module.exports = (env = {}) => {
         appMountId: 'sorry',
         mobile: true,
         chunks: [ 'app' ],
+        links: ['/assets/app.css'],
         hash: true,
         filename: resolve(__dirname, 'public/assets/snap.html')
       }),
