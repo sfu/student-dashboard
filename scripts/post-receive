@@ -48,6 +48,7 @@ ln -s $SHARED_PATH/config/.env.production $RELEASE_PATH || { echo "Error symlink
 # build the app
 echo "building the app"
 cd $RELEASE_PATH && NODE_ENV=production npm run build || { echo "Error building the app" ; exit 1; }
+cd $RELEASE_PATH/public/assets && find . -name "*.html" | xargs sed -i '/^[[:space:]]*$/d' || { echo "Error stripping whitespcae from HTML files" ; exit 1; }
 
 # symlink logs
 ln -s $SHARED_PATH/log $RELEASE_PATH || { echo "Error symlinking logs" ; exit 1; }
