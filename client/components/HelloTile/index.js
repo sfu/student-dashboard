@@ -94,8 +94,8 @@ export const _HelloTile = React.createClass({
 export const HelloTile = Relay.createContainer(_HelloTile, {
   initialVariables: {
     term: calcTerm(),
-    scheduleStartAt: moment().startOf('day').toISOString(),
-    scheduleEndAt: moment().endOf('day').toISOString()
+    scheduleStartAt: moment().startOf('day').format('YYYY-MM-DD'),
+    scheduleEndAt: moment().endOf('day').format('YYYY-MM-DD')
   },
 
   fragments: {
