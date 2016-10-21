@@ -1,6 +1,5 @@
 import {default as React, PropTypes} from 'react'
 import moment from 'moment'
-import { Link } from 'react-router'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import styles from './WeekAtAGlance.css'
 
