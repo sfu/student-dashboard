@@ -1,10 +1,11 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 
-import {App} from 'components/App'
-import {Dashboard} from 'components/Dashboard'
+import { App } from 'components/App'
+import { Dashboard } from 'components/Dashboard'
 import { Library } from 'components/Library'
 import { LibraryBarcode } from 'components/LibraryBarcode'
+import RoomFinder from 'components/RoomFinder'
 import ViewerQueries from 'queries/ViewerQueries'
 
 
@@ -15,6 +16,6 @@ export default (
     <Route title="Transit" path="transit" component={() => <h1>Transit</h1>} />
     <Route title="Library" path="library" component={Library} queries={ViewerQueries}/>
     <Route title="Library Barcode" path="library/barcode" fullScreen={true} component={LibraryBarcode} />
-    <Route title="Room Finder" path="room_finder" component={() => <h1>Room Finder</h1>} />
+    <Route title="Room Finder" path="room_finder" component={RoomFinder} />
   </Route>
 )
