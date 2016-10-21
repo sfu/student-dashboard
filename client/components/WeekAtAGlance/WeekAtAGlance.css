@@ -5,11 +5,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
-
   border-bottom: 2px solid #EEEEEE;
-  margin: .5em auto 1.5em auto;
-
+  margin: .5em 1em 1.5em 1em;
   text-transform: uppercase;
 }
 
