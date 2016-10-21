@@ -147,7 +147,7 @@ module.exports = (env = {}) => {
         appMountId: 'sorry',
         mobile: true,
         chunks: [ 'app' ],
-        links: ['/assets/app.css'],
+        links: [ifProd('/assets/app.css')],
         hash: true,
         filename: resolve(__dirname, 'public/assets/snap.html')
       }),
