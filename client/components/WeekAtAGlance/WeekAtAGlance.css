@@ -63,6 +63,11 @@
   text-transform: uppercase;
 }
 
+.activityType {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 .activityDetails {}
 
 .dots {}
