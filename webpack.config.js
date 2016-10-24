@@ -1,3 +1,5 @@
+require('./environment')
+
 const {resolve} = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -167,7 +169,8 @@ module.exports = (env = {}) => {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: env.prod ? '"production"' : '"development"',
-          GRAPHQL_SERVER: JSON.stringify(process.env.GRAPHQL_SERVER)
+          GRAPHQL_SERVER: JSON.stringify(process.env.GRAPHQL_SERVER),
+          ROOMFINDER_URL: JSON.stringify(process.env.ROOMFINDER_URL || 'https://its-arcgis-web.its.sfu.ca/apps/sfuroomfinder_ios')
         }
       })
     ])
