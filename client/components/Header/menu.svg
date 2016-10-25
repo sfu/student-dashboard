@@ -1,10 +1,7 @@
 <svg width="39px" height="31px" viewBox="0 0 39 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
     <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Rectangle" fill="#A6192E" x="0" y="0" width="38.9346615" height="7"></rect>
-        <rect id="Rectangle" fill="#A6192E" x="0" y="12" width="38.9346615" height="7"></rect>
-        <rect id="Rectangle" fill="#A6192E" x="0" y="24" width="38.9346615" height="7"></rect>
+        <rect id="Rectangle" fill="#fff" x="0" y="0" width="38" height="5"></rect>
+        <rect id="Rectangle" fill="#fff" x="0" y="12" width="38" height="5"></rect>
+        <rect id="Rectangle" fill="#fff" x="0" y="24" width="38" height="5"></rect>
     </g>
 </svg>

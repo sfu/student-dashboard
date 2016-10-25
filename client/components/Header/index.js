@@ -2,7 +2,7 @@ import { default as React, PropTypes } from 'react'
 import HeaderNavGrid from 'components/HeaderNavGrid'
 import Collapse from 'react-collapse'
 import { presets } from 'react-motion'
-import snapLogo from './sfusnap.png'
+import snapLogo from './sfusnap_white.png'
 import Menu from './menu.svg'
 import styles from './Header.css'
 

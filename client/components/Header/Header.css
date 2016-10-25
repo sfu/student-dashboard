@@ -10,20 +10,28 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  padding: 0 1em
+  background-color: sfured;
+  padding: .5em 1em;
 }
 
 .title {
-  color: #A6192E;
+  color: #fff;
   font-weight: 300;
   font-size: 1.5em;
 }
 
-button.hamburger {
+.navToggle {
   -webkit-appearance: none;
   border: none;
   margin: 0;
   padding: 0;
   background: none;
+}
+
+.navToggle:focus {
+  outline: none;
+}
+
+.snapLogo {
+  border-radius: 3px;
 }
