@@ -1,0 +1,35 @@
+<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <rect id="transit_a" x=".5" width="21" height="21" rx="2"/>
+    <mask id="transit_f" x="0" y="0" width="21" height="21" fill="#fff">
+      <use xlink:href="#transit_a"/>
+    </mask>
+    <rect id="transit_b" x="1" y="15" width="20" height="1" rx=".5"/>
+    <mask id="transit_g" x="0" y="0" width="20" height="1" fill="#fff">
+      <use xlink:href="#transit_b"/>
+    </mask>
+    <rect id="transit_c" x="1" y="4" width="20" height="1" rx=".5"/>
+    <mask id="transit_h" x="0" y="0" width="20" height="1" fill="#fff">
+      <use xlink:href="#transit_c"/>
+    </mask>
+    <path d="M2.5 21c0-.553.443-1 1.01-1h1.98c.558 0 1.01.443 1.01 1v1c0 .553-.443 1-1.01 1H3.51c-.558 0-1.01-.443-1.01-1v-1z" id="transit_d"/>
+    <mask id="transit_i" x="0" y="0" width="4" height="3" fill="#fff">
+      <use xlink:href="#transit_d"/>
+    </mask>
+    <path d="M15.5 21c0-.553.443-1 1.01-1h1.98c.558 0 1.01.443 1.01 1v1c0 .553-.443 1-1.01 1h-1.98c-.558 0-1.01-.443-1.01-1v-1z" id="transit_e"/>
+    <mask id="transit_j" x="0" y="0" width="4" height="3" fill="#fff">
+      <use xlink:href="#transit_e"/>
+    </mask>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(1.5 1)">
+      <use stroke="#fff" mask="url(#transit_f)" stroke-width="2" xlink:href="#transit_a"/>
+      <use stroke="#fff" mask="url(#transit_g)" stroke-width="2" fill="#D8D8D8" xlink:href="#transit_b"/>
+      <use stroke="#fff" mask="url(#transit_h)" stroke-width="2" fill="#D8D8D8" xlink:href="#transit_c"/>
+      <ellipse fill="#fff" cx="5.5" cy="18" rx="1" ry="1"/>
+      <ellipse fill="#fff" cx="16.5" cy="18" rx="1" ry="1"/>
+      <use stroke="#fff" mask="url(#transit_i)" stroke-width="2" xlink:href="#transit_d"/>
+      <use stroke="#fff" mask="url(#transit_j)" stroke-width="2" xlink:href="#transit_e"/>
+    </g>
+  </g>
+</svg>

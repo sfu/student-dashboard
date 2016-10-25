@@ -1,0 +1,38 @@
+.tileContainer {
+  margin-bottom: .5em;
+}
+
+.tileContainer a {
+  text-decoration: none;
+}
+
+.tile {
+  background: #A6192E;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.icon > svg {
+  width: 45px;
+  height: 45px;
+}
+
+
+.title {
+  text-transform: uppercase;
+  color: #fff;
+  background: #007096;
+  text-align: center;
+  padding: .5em;
+  flex-grow: 0;
+  font-size: .75em;
+}

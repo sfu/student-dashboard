@@ -1,12 +1,15 @@
 @value sfured from 'styles/color.css';
 
+.headerContainer {
+  border-bottom: 2px solid sfured;
+  margin-bottom: 1em;
+}
+
 .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid sfured;
-  margin-bottom: 1em;
   background-color: #fff;
   padding: 0 1em
 }
@@ -15,4 +18,12 @@
   color: #A6192E;
   font-weight: 300;
   font-size: 1.5em;
+}
+
+button.hamburger {
+  -webkit-appearance: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
 }

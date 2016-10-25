@@ -1,7 +1,6 @@
 import {default as React, PropTypes} from 'react'
 
 import {Header} from 'components/Header'
-import {NavBar} from 'components/NavBar'
 
 import 'normalize.css/normalize.css'
 import 'styles/global.css'
@@ -19,7 +18,6 @@ export const App = ({children}) => {
           {children}
         </div>
       </div>
-      { fullScreen ? null : <NavBar /> }
     </div>
   )
 }
