@@ -29,9 +29,9 @@ export const Header = React.createClass({
     return (
       <div className={styles.headerContainer}>
         <header className={styles.header}>
-          <img alt="SFU Snap Logo" src={snapLogo} height={50} width={50} />
-          <h1 className={styles.title}>{title}</h1>
-          <button type="button" name="Toggle Menu" className={styles.hamburger} onClick={this.toggleNavGrid}>
+          <img className={styles.snapLogo} alt="SFU Snap Logo" src={snapLogo} height={50} width={50} />
+          <button className={styles.navToggle} onClick={this.toggleNavGrid}><h1 className={styles.title}>{title}</h1></button>
+          <button type="button" name="Toggle Menu" className={styles.navToggle} onClick={this.toggleNavGrid}>
             <Menu />
           </button>
         </header>
