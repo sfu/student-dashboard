@@ -1,11 +1,15 @@
-import React from 'react'
+import { default as React, PropTypes } from 'react'
 import Barcode from 'react-barcode'
 import { Link } from 'react-router'
 import styles from './LibraryBarcode.css'
 
 const LibraryBarcode = React.createClass({
+  propTypes: {
+    location: PropTypes.object.isRequired
+  },
+
   render() {
-    const { barcode } = window.ENV.CURRENT_USER
+    const { barcode } = this.props.location.query
     return (
       <div className={styles.fullHeight}>
         <nav className={styles.nav}>
