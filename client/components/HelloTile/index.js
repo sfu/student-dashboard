@@ -2,6 +2,8 @@ import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
 import moment from 'moment'
 import calcTerm from 'utils/calcTerm'
+import Collapse from 'react-collapse'
+import { presets } from 'react-motion'
 
 import styles from './HelloTile.css'
 
@@ -76,7 +78,11 @@ export const _HelloTile = React.createClass({
     const {names, helloTileSchedule} = this.props
     const name = names.commonname ? names.commonname : names.firstnames
 
-    return this.state.hide ? null : (
+    return (
+      <Collapse
+        isOpened={!this.state.hide}
+        springConfig={presets.stiff}
+      >
       <div className={styles.helloTile}>
         <p className={styles.p}>Hello, <b>{name}</b>.</p>
         <p className={styles.p}>{this.youHave(helloTileSchedule.scheduleForRangeInTerm)}</p>
@@ -87,6 +93,7 @@ export const _HelloTile = React.createClass({
         >Got it!</button>
         </div>
       </div>
+      </Collapse>
     )
   }
 })
