@@ -17,5 +17,6 @@ export default (
     <Route title="Library" path="library" component={Library} queries={ViewerQueries}/>
     <Route title="Library Barcode" path="library/barcode" fullScreen={true} component={LibraryBarcode} />
     <Route title="Room Finder" path="room_finder" component={RoomFinder} />
+    <Route title="Settings" path="settings" component={() => <h1>Settings</h1>} />
   </Route>
 )
