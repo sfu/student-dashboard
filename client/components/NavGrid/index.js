@@ -17,6 +17,7 @@ const NavGrid = React.createClass({
           LinkTo="/"
           Title="Dashboard"
           Icon={DashboardIcon}
+          OnlyActiveOnIndex={true}
         />
 
         <NavTile

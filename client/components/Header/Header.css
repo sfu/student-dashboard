@@ -1,4 +1,4 @@
-@value sfured from 'styles/color.css';
+@value sfured, sfugold from 'styles/color.css';
 
 .headerContainer {
   border-bottom: 2px solid sfured;
@@ -26,6 +26,10 @@
   margin: 0;
   padding: 0;
   background: none;
+}
+
+.navToggleActive svg rect {
+  fill: sfugold;
 }
 
 .navToggle:focus {

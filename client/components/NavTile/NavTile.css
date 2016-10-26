@@ -1,3 +1,5 @@
+@value sfured, sfugold, sfublue from 'styles/color.css';
+
 .tileContainer {
   margin-bottom: .5em;
 }
@@ -7,11 +9,15 @@
 }
 
 .tile {
-  background: #A6192E;
+  background-color: sfured;
   height: 100px;
   width: 100px;
   display: flex;
   flex-direction: column;
+}
+
+.active .tile {
+  background-color: sfugold;
 }
 
 .icon {
@@ -26,11 +32,10 @@
   height: 45px;
 }
 
-
 .title {
   text-transform: uppercase;
   color: #fff;
-  background: #007096;
+  background: sfublue;
   text-align: center;
   padding: .5em;
   flex-grow: 0;

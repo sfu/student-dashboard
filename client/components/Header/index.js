@@ -5,6 +5,7 @@ import { presets } from 'react-motion'
 import snapLogo from './sfusnap_white.png'
 import Menu from './menu.svg'
 import styles from './Header.css'
+import cx from 'classnames'
 
 export const Header = React.createClass({
   propTypes: {
@@ -25,13 +26,14 @@ export const Header = React.createClass({
   },
 
   render() {
+    const menuToggleClassNames = this.state.showNavGrid ? cx(styles.navToggle, styles.navToggleActive) : styles.navToggle
     const { title } = this.props
     return (
       <div className={styles.headerContainer}>
         <header className={styles.header}>
           <img className={styles.snapLogo} alt="SFU Snap Logo" src={snapLogo} height={50} width={50} />
-          <button className={styles.navToggle} onClick={this.toggleNavGrid}><h1 className={styles.title}>{title}</h1></button>
-          <button type="button" name="Toggle Menu" className={styles.navToggle} onClick={this.toggleNavGrid}>
+          <button className={menuToggleClassNames} onClick={this.toggleNavGrid}><h1 className={styles.title}>{title}</h1></button>
+          <button type="button" name="Toggle Menu" className={menuToggleClassNames} onClick={this.toggleNavGrid}>
             <Menu />
           </button>
         </header>
