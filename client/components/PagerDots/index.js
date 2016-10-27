@@ -5,7 +5,7 @@ import styles from './PagerDots.css'
 const PagerDots = ({ count, activeDot }) => {
   const dots = [...Array(count).keys()].map((arr, idx) => {
     return (
-      <PagerDot active={idx === activeDot} key={idx} />
+      <PagerDot active={idx === activeDot} idx={idx} key={idx} />
     )
   })
 

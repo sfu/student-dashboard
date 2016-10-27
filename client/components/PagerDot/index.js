@@ -2,10 +2,10 @@ import {default as React, PropTypes} from 'react'
 import styles from './PagerDot.css'
 import cx from 'classnames'
 
-const PagerDot = ({active = false, key}) => {
+const PagerDot = ({active = false, idx}) => {
   const className = active ? cx(styles.active, styles.dot) : styles.dot
   return (
-    <div className={className} key={key}>
+    <div className={className} key={idx}>
       <svg height="16px" width="16px">
         <circle cx="8" cy="8" r={active ? 8 : 4} />
       </svg>
@@ -15,7 +15,7 @@ const PagerDot = ({active = false, key}) => {
 
 PagerDot.propTypes = {
   active: PropTypes.bool.isRequired,
-  key: PropTypes.number.isRequired
+  idx: PropTypes.number.isRequired
 }
 
 export default PagerDot
