@@ -1,0 +1,17 @@
+@value sfured, sfublack from 'styles/color.css'
+
+.dotContainer {
+  margin: 1em;
+}
+
+.dotContainer circle {
+  fill: sfublack;
+}
+
+.dot circle {
+  fill: sfublack;
+}
+
+.active .dot circle {
+  fill: sfured;
+}
