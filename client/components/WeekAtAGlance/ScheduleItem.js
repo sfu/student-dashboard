@@ -2,6 +2,7 @@ import {default as React, PropTypes} from 'react'
 import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import styles from './WeekAtAGlance.css'
+import { COURSE_TYPES } from 'const'
 
 const itemLocation = (item) => {
   if (item.location_campus.toLowerCase() === 'burnaby') {
@@ -17,16 +18,9 @@ const ScheduleItem = ({item}) => {
   const time = item.start_at === item.end_at ? start_at : `${start_at} - ${end_at}`
 
 
-  const classTypes = ['lec', 'lab', 'sem', 'tut']
-  const classTypeAbbr = {
-    lec: 'lecture',
-    lab: 'lab',
-    sem: 'seminar',
-    tut: 'tutorial'
-  }
-
+  const classTypes = Object.keys(COURSE_TYPES)
   let title, details
-  let type = classTypes.indexOf(item.type) >= 0 ? classTypeAbbr[item.type] : item.type
+  let type = classTypes.indexOf(item.type) >= 0 ? COURSE_TYPES[item.type] : item.type
 
   if (item.dept && item.number) {
     title = `${item.dept} ${item.number}`
