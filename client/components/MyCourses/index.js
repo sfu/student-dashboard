@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import calcTerm from 'utils/calcTerm'
 import {
-  COURSE_TYPES,
+  CLASS_TYPES,
   REST_SERVER_DAYS_OF_WEEK,
   CALENDAR_DAYS_OF_WEEK
 } from 'const'
@@ -55,7 +55,7 @@ export const _MyCourses = ({courseSchedule: { enrolledCourses }}) => {
 
 
   const listItems = courseList.map((c, i) => {
-    const courseName = `${c.name} ${c.number} ${COURSE_TYPES[c.sectionCode.toLowerCase()]}`
+    const courseName = `${c.name} ${c.number} ${CLASS_TYPES[c.sectionCode.toLowerCase()]}`
     const notExamDays = c.schedules.filter(s => !s.isExam)
     const schedule = notExamDays.map(s => <ScheduleLine schedule={s} />)
     return (
