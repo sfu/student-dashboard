@@ -1,6 +1,6 @@
 import { default as React, PropTypes } from 'react'
+import PagerHeader from 'components/PagerHeader'
 import PagerDots from 'components/PagerDots'
-import styles from './Pageable.css'
 
 export default React.createClass({
   propTypes: {
@@ -30,23 +30,13 @@ export default React.createClass({
     )
     return (
       <div>
-        <div className={styles.header}>
-          <button
-            disabled={this.state.currentPage === 0}
-            className={styles.pagerButton}
-            onClick={() => {this.setPage(this.state.currentPage - 1)}}
-            >
-              &lt;
-            </button>
-          <span className={styles.pagerTitle}>{pagerTitles[this.state.currentPage]}</span>
-          <button
-            disabled={this.state.currentPage === (this.props.pageCount - 1)}
-            className={styles.pagerButton}
-            onClick={() => {this.setPage(this.state.currentPage + 1)}}
-          >
-            &gt;
-          </button>
-        </div>
+        <PagerHeader
+          currentPage={this.state.currentPage}
+          title={pagerTitles[this.state.currentPage]}
+          backDisabled={this.state.currentPage === 0}
+          forwardDisabled={this.state.currentPage === (this.props.pageCount - 1)}
+          buttonHandler={this.setPage}
+         />
         {childrenWithProps}
         <PagerDots count={pageCount} activeDot={this.state.currentPage} />
       </div>
