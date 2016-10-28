@@ -1,31 +1,5 @@
 @value sfured from 'styles/color.css';
 
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #EEEEEE;
-  margin: .5em 1em 1.5em 1em;
-  text-transform: uppercase;
-}
-
-.date {
-  font-size: .75em;
-}
-
-.dateButton {
-  background: none;
-  border: none;
-  height: 44px;
-  width: 44px;
-  color: sfured;
-}
-
-.dateButton:disabled {
-  color: #CCC;
-}
-
 .caption,
 .thead {
   composes: screenreader-only from 'styles/screenreaderOnly.css'
