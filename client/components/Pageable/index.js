@@ -38,7 +38,11 @@ export default React.createClass({
           buttonHandler={this.setPage}
          />
         {childrenWithProps}
-        <PagerDots count={pageCount} activeDot={this.state.currentPage} />
+        <PagerDots
+          count={pageCount}
+          activeDot={this.state.currentPage}
+          dotClickHandler={this.setPage}
+        />
       </div>
     )
   }
