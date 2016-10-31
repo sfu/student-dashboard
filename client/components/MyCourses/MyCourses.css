@@ -1,9 +1,15 @@
 @value sfured from 'styles/color.css';
 
-.courseTitle {
+.classTitle {
+  font-size: 1em;
   text-transform: uppercase;
 }
 
+.classSchedule {
+  font-size: .8em;
+}
+
+/* DaysOfWeekIndicator */
 .day {
   margin: 0 .25em;
 }
