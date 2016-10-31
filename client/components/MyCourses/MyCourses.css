@@ -1,0 +1,13 @@
+@value sfured from 'styles/color.css';
+
+.courseTitle {
+  text-transform: uppercase;
+}
+
+.day {
+  margin: 0 .25em;
+}
+
+.activeDay {
+  color: sfured;
+}

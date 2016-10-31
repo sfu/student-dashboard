@@ -2,28 +2,8 @@ import { default as React, PropTypes } from 'react'
 import Relay from 'react-relay'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import calcTerm from 'utils/calcTerm'
-import {
-  CLASS_TYPES,
-  REST_SERVER_DAYS_OF_WEEK,
-  CALENDAR_DAYS_OF_WEEK
-} from 'const'
-
-const DayThingy = ({days}) => {
-  const scheduleDays = days.split('')
-  const activeStyle = {
-    color: 'red'
-  }
-  const dayEls = REST_SERVER_DAYS_OF_WEEK.map((d, i) => {
-    return <span style={scheduleDays.indexOf(d) >= 0 ? activeStyle : null}>{CALENDAR_DAYS_OF_WEEK[i]}</span>
-  })
-  return (
-    <span>{dayEls}</span>
-  )
-}
-
-DayThingy.propTypes = {
-  days: PropTypes.string.isRequired
-}
+import DaysOfWeekIndicator from './DaysOfWeekIndicator.js'
+import { CLASS_TYPES } from 'const'
 
 const ScheduleLine = ({ schedule }) => {
   const { startTime, endTime, days, buildingCode, roomNumber } = schedule
@@ -37,7 +17,7 @@ const ScheduleLine = ({ schedule }) => {
 
   return (
     <div>
-      <DayThingy days={days} />
+      <DaysOfWeekIndicator days={days} />
       <span>{startTime} - {endTime}</span>
       {location(schedule)}
     </div>
