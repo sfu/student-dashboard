@@ -21,17 +21,21 @@ const ClassSchedule = ({schedule}) => {
   const endFormatted = moment().hour(end.hour).minute(end.minute).format('h:mm A')
 
   const location = (schedule) => {
-    if (schedule.campus.toLowerCase() === 'burnaby') {
-      return <RoomFinderLink building={buildingCode} room={roomNumber} />
-    } else {
-      return <span>{schedule.buildingCode} {schedule.roomNumber}</span>
-    }
+    const location = schedule.campus.toLowerCase() === 'burnaby' ?
+      <RoomFinderLink building={buildingCode} room={roomNumber} /> :
+      <span>{schedule.buildingCode} {schedule.roomNumber}</span>
+
+    return (
+      <span className={styles.classLocation}>
+        {location}
+      </span>
+    )
   }
 
   return (
     <div className={styles.classSchedule}>
       <DaysOfWeekIndicator days={days} />
-      <span>{startFormatted} - {endFormatted}</span>
+      <span className={styles.classTimes}>{startFormatted} - {endFormatted}</span>
       {location(schedule)}
     </div>
   )

@@ -15,14 +15,14 @@ export const _MyCourses = ({courseSchedule: { enrolledCourses }}) => {
     const notExamDays = c.schedules.filter(s => !s.isExam)
     const schedule = notExamDays.map((s, i) => <ClassSchedule key={i} schedule={s} />)
     return (
-      <div key={i}>
+      <div className={styles.classItem} key={i}>
         <h2 className={styles.classTitle}>{courseName}</h2>
         {schedule}
       </div>
     )
   })
   return (
-    <div>
+    <div className={styles.myCourses}>
       {listItems}
     </div>
   )

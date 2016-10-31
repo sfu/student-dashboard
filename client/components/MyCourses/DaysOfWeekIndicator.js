@@ -14,7 +14,7 @@ const DaysOfWeekIndicator = ({days}) => {
     return <span key={i} className={className}>{CALENDAR_DAYS_OF_WEEK[i]}</span>
   })
   return (
-    <span>{dayEls}</span>
+    <span className={styles.daysOfWeek}>{dayEls}</span>
   )
 }
 
