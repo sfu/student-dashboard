@@ -11,7 +11,7 @@ const DaysOfWeekIndicator = ({days}) => {
   const dayEls = REST_SERVER_DAYS_OF_WEEK.map((d, i) => {
     const isActiveDay = scheduleDays.indexOf(d) >= 0
     const className = isActiveDay ? cx(styles.day, styles.activeDay) : styles.day
-    return <span className={className}>{CALENDAR_DAYS_OF_WEEK[i]}</span>
+    return <span key={i} className={className}>{CALENDAR_DAYS_OF_WEEK[i]}</span>
   })
   return (
     <span>{dayEls}</span>
