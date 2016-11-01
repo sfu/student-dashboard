@@ -3,8 +3,8 @@ import styles from './PagerHeader.css'
 
 const PagerHeader = ({
   title,
-  forwardDisabled = false,
-  backDisabled = false,
+  forwardDisabled,
+  backDisabled,
   buttonHandler,
   currentPage
 }) => {
@@ -27,6 +27,11 @@ const PagerHeader = ({
       </button>
     </div>
   )
+}
+
+PagerHeader.defaultProps = {
+  forwardDisabled: false,
+  backDisabled: false
 }
 
 PagerHeader.propTypes = {
