@@ -1,7 +1,7 @@
 import {default as React, PropTypes} from 'react'
 import Relay from 'react-relay'
 import moment from 'moment'
-import calcTerm from 'utils/calcTerm'
+import calcTermForDate from 'utils/calcTermForDate'
 import Collapse from 'react-collapse'
 import { presets } from 'react-motion'
 
@@ -100,7 +100,7 @@ export const _HelloTile = React.createClass({
 
 export const HelloTile = Relay.createContainer(_HelloTile, {
   initialVariables: {
-    term: calcTerm(),
+    term: calcTermForDate(),
     scheduleStartAt: moment().startOf('day').format('YYYY-MM-DD'),
     scheduleEndAt: moment().endOf('day').format('YYYY-MM-DD')
   },
