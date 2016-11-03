@@ -1,0 +1,28 @@
+@value sfured from 'styles/color.css';
+
+.activityItem > td {
+  vertical-align: top;
+  padding-bottom: 2em;
+}
+
+.activityTime {
+  white-space: nowrap;
+  padding-right: 2em;
+  width: 50%;
+}
+
+.activityName {
+  display: block;
+  font-weight: bold;
+  padding-bottom: .6em;
+  text-transform: uppercase;
+}
+
+.activityType {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.exam {
+  color: sfured;
+}

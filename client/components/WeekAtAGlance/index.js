@@ -4,7 +4,7 @@ import moment from 'moment'
 import calcTermForDate from 'utils/calcTermForDate'
 import styles from './WeekAtAGlance.css'
 import ScheduleTable from './ScheduleTable'
-import ScheduleItem from './ScheduleItem'
+import ScheduleItem from 'components/ScheduleItem'
 
 export const _WeekAtAGlance = ({schedule, selectedDay}) => {
   const items = schedule.scheduleForRangeInTerm

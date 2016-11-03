@@ -1,8 +1,9 @@
 import {default as React, PropTypes} from 'react'
 import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
-import styles from './WeekAtAGlance.css'
+import styles from './ScheduleItem.css'
 import { CLASS_TYPES } from 'const'
+import cx from 'classnames'
 
 const itemLocation = (item) => {
   if (item.location_campus.toLowerCase() === 'burnaby') {
@@ -23,7 +24,7 @@ const ScheduleItem = ({item}) => {
   let type = classTypes.indexOf(item.type) >= 0 ? CLASS_TYPES[item.type] : item.type
 
   if (item.dept && item.number) {
-    title = `${item.dept} ${item.number}`
+    title = `${item.dept} ${item.number} ${type}`
   } else {
     title = item.title
   }
@@ -31,23 +32,23 @@ const ScheduleItem = ({item}) => {
   if (item.location_buildingcode && item.location_roomnumber) {
     details = (
       <span>
-        <span className={styles.activityType}>{type}</span> » {itemLocation(item)}
+        {itemLocation(item)}
       </span>
     )
   } else {
     details = (
       <span>
-        <span className={styles.activityType}>{type}</span> » <a href={item.url}>{item.title}</a>
+        <a href={item.url}>{item.title}</a>
       </span>
     )
   }
 
   return (
-    <tr className={styles.activityItem}>
+    <tr className={type === 'exam' ? cx(styles.activityItem, styles.exam) : styles.activityItem}>
       <td className={styles.activityTime}>{time}</td>
       <td>
         <span className={styles.activityName}>{title}</span>
-        <span className={styles.activityDetails}>{details}</span>
+        <span>{details}</span>
       </td>
     </tr>
   )

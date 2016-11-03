@@ -17,30 +17,6 @@
   font-size: .75em;
 }
 
-.activityItem > td {
-  vertical-align: top;
-  padding-bottom: 2em;
-}
-
-.activityTime {
-  white-space: nowrap;
-  padding-right: 2em;
-}
-
-.activityName {
-  display: block;
-  font-weight: bold;
-  padding-bottom: .6em;
-  text-transform: uppercase;
-}
-
-.activityType {
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.activityDetails {}
-
 .dots {}
 
 .dot {
