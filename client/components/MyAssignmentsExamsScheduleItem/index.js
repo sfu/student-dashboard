@@ -3,7 +3,6 @@ import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import styles from './ScheduleItem.css'
 import { CLASS_TYPES } from 'const'
-import cx from 'classnames'
 
 const itemLocation = (item) => {
   if (item.location_campus.toLowerCase() === 'burnaby') {
