@@ -1,20 +1,6 @@
 import moment from 'moment'
 import leftPad from './leftPad'
-
-const TERM_DATES = {
-  spring: {
-    start: { month: '12', day: '25' },
-    end: { month: '04', day: '23' }
-  },
-  summer: {
-    start: { month: '04', day: '24'},
-    end: { month: '08', day: '24' }
-  },
-  fall: {
-    start: { month: '08', day: '25' },
-    end: { month: '12', day: '24' }
-  }
-}
+import { TERM_DATES } from '../const'
 
 const SPRING = '1'
 const SUMMER = '4'
