@@ -1,0 +1,38 @@
+.myAssignmentsExams {
+  margin: 1em .5em;
+}
+
+.termName {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: .75em;
+  font-weight: normal;
+  border-bottom: 2px solid #EEEEEE;
+  padding-bottom: 1em;
+  margin: .5em 1em 1.5em 1em;
+}
+
+.caption,
+.thead {
+  composes: screenreader-only from 'styles/screenreaderOnly.css'
+}
+
+.scheduleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1em;
+}
+
+.schedule {
+  border-collapse: collapse;
+  font-size: .75em;
+  width: 100%;
+}
+
+
+.date {
+  font-size: 1em;
+  /*text-transform: uppercase;*/
+  margin-bottom: .5em;
+}
