@@ -67,7 +67,9 @@ export const _MyCourses = React.createClass({
           backDisabled={this.state.currentPage === 0}
           forwardDisabled={this.state.currentPage === 2}
         />
-        {listItems}
+        <div>
+          {listItems}
+        </div>
         <PagerDots
           count={3}
           activeDot={this.state.currentPage}
