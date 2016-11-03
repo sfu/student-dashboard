@@ -17,7 +17,7 @@ const _Courses = React.createClass({
         <Widget title="My Courses">
           <MyCourses courseSchedule={viewer} term={calcTermForDate()}/>
         </Widget>
-        <Widget title="My Assignments and Exams">
+        <Widget title="My Assignments & Exams">
           <MyAssignmentsExams assignmentExamSchedule={viewer} />
         </Widget>
       </div>
