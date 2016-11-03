@@ -4,7 +4,7 @@ import moment from 'moment'
 import calcTermForDate from 'utils/calcTermForDate'
 import termNameForCode from 'utils/termNameForCode'
 import ScheduleTable from './ScheduleTable'
-import ScheduleItem from 'components/ScheduleItem'
+import MyAssignmentsExamsScheduleItem from 'components/MyAssignmentsExamsScheduleItem'
 
 import {
   TERM_DATES,
@@ -42,7 +42,7 @@ export const _MyAssignmentsExams = ({ assignmentExamSchedule: { scheduleForRange
       if (a.type < b.type) return 1
       return 0
     })
-    .map((item, i) => <ScheduleItem item={item} key={i} />)
+    .map((item, i) => <MyAssignmentsExamsScheduleItem item={item} key={i} />)
 
     return (
       <ScheduleTable date={moment(date).format('dddd, MMMM D')} key={i}>

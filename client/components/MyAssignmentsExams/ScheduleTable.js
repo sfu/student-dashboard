@@ -3,7 +3,7 @@ import styles from './MyAssignmentsExams.css'
 
 const ScheduleTable = ({date, children}) => {
   return (
-    <div>
+    <div className={styles.scheduleTableContainer}>
       <h2 className={styles.date}>{date}</h2>
       <table className={styles.schedule}>
         <caption className={styles.caption}>Schedule for {date}</caption>

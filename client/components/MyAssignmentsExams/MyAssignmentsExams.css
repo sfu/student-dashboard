@@ -1,5 +1,13 @@
 .myAssignmentsExams {
-  margin: 1em .5em;
+  margin: 1em;
+}
+
+.scheduleTableContainer {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.scheduleTableContainer:last-of-type {
+  border-bottom: none;
 }
 
 .termName {
@@ -17,22 +25,13 @@
   composes: screenreader-only from 'styles/screenreaderOnly.css'
 }
 
-.scheduleContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 1em;
-}
-
 .schedule {
   border-collapse: collapse;
   font-size: .75em;
   width: 100%;
 }
 
-
 .date {
   font-size: 1em;
-  /*text-transform: uppercase;*/
-  margin-bottom: .5em;
+  margin-bottom: 1em;
 }

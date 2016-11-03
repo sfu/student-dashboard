@@ -4,12 +4,12 @@ import moment from 'moment'
 import calcTermForDate from 'utils/calcTermForDate'
 import styles from './WeekAtAGlance.css'
 import ScheduleTable from './ScheduleTable'
-import ScheduleItem from 'components/ScheduleItem'
+import WeekAtAGlanceScheduleItem from 'components/WeekAtAGlanceScheduleItem'
 
 export const _WeekAtAGlance = ({schedule, selectedDay}) => {
   const items = schedule.scheduleForRangeInTerm
               .filter((item) => moment(item.start_at).day() === selectedDay)
-              .map((item, i) => (<ScheduleItem key={i} item={item}/>))
+              .map((item, i) => (<WeekAtAGlanceScheduleItem key={i} item={item}/>))
 
 
   return (
