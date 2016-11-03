@@ -1,6 +1,7 @@
 import {default as React, PropTypes} from 'react'
 import { RoomFinderLink } from 'components/RoomFinderLink'
-import DaysOfWeekIndicator from './DaysOfWeekIndicator.js'
+import { REST_TO_ABBR_DAYS_MAP } from 'const'
+
 import leftPad from 'utils/leftPad'
 import moment from 'moment'
 
@@ -32,10 +33,11 @@ const ClassSchedule = ({schedule}) => {
     )
   }
 
+  const classDays = days.split('').map(day => REST_TO_ABBR_DAYS_MAP[day]).join('/')
+
   return (
     <div className={styles.classSchedule}>
-      <DaysOfWeekIndicator days={days} />
-      <span className={styles.classTimes}>{startFormatted} - {endFormatted}</span>
+      <span className={styles.classTimes}><span className={styles.classDays}>{classDays}</span> {startFormatted} - {endFormatted}</span>
       {location(schedule)}
     </div>
   )
