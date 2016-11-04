@@ -3,4 +3,8 @@
 a {
   color: sfured;
 }
+
+*::selection {
+  background: sfured;
+  color: #fff
 }
