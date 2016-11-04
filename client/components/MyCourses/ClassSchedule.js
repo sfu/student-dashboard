@@ -1,5 +1,6 @@
 import {default as React, PropTypes} from 'react'
 import { RoomFinderLink } from 'components/RoomFinderLink'
+import formatTimeRange from 'utils/formatTimeRange'
 import { REST_TO_ABBR_DAYS_MAP } from 'const'
 
 import leftPad from 'utils/leftPad'
@@ -18,8 +19,8 @@ const ClassSchedule = ({schedule}) => {
     minute: leftPad(endTime, 4, 0).substr(2)
   }
 
-  const startFormatted = moment().hour(start.hour).minute(start.minute).format('h:mm A')
-  const endFormatted = moment().hour(end.hour).minute(end.minute).format('h:mm A')
+  const startMoment = moment().hour(start.hour).minute(start.minute)
+  const endMoment = moment().hour(end.hour).minute(end.minute)
 
   const location = (schedule) => {
     const location = schedule.campus.toLowerCase() === 'burnaby' ?
@@ -37,7 +38,8 @@ const ClassSchedule = ({schedule}) => {
 
   return (
     <div className={styles.classSchedule}>
-      <span className={styles.classTimes}><span className={styles.classDays}>{classDays}</span> {startFormatted} - {endFormatted}</span>
+      <span className={styles.classDays}>{classDays}</span>
+      <span className={styles.classTimes}>{formatTimeRange(startMoment, endMoment)}</span>
       {location(schedule)}
     </div>
   )

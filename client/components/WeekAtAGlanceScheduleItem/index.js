@@ -1,6 +1,7 @@
 import {default as React, PropTypes} from 'react'
 import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
+import formatTimeRange from 'utils/formatTimeRange'
 import styles from './ScheduleItem.css'
 import { CLASS_TYPES } from 'const'
 import cx from 'classnames'
@@ -14,11 +15,6 @@ const itemLocation = (item) => {
 }
 
 const ScheduleItem = ({item}) => {
-  const start_at = moment(item.start_at).format('h:mm A')
-  const end_at = item.end_at ? moment(item.end_at).format('h:mm A') : null
-  const time = item.start_at === item.end_at ? start_at : `${start_at} - ${end_at}`
-
-
   const classTypes = Object.keys(CLASS_TYPES)
   let title, details
   let type = classTypes.indexOf(item.type) >= 0 ? CLASS_TYPES[item.type] : item.type
@@ -45,7 +41,7 @@ const ScheduleItem = ({item}) => {
 
   return (
     <tr className={type === 'exam' ? cx(styles.activityItem, styles.exam) : styles.activityItem}>
-      <td className={styles.activityTime}>{time}</td>
+      <td className={styles.activityTime}>{formatTimeRange(moment(item.start_at), moment(item.end_at))}</td>
       <td>
         <span className={styles.activityName}>{title}</span>
         <span>{details}</span>
