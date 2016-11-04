@@ -1,3 +1,6 @@
-body {
-  /*background-color: #EEEEEE;*/
+@value sfured from 'styles/color.css';
+
+a {
+  color: sfured;
+}
 }
