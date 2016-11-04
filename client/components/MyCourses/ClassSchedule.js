@@ -33,7 +33,7 @@ const ClassSchedule = ({schedule}) => {
     )
   }
 
-  const classDays = days.split('').map(day => REST_TO_ABBR_DAYS_MAP[day]).join('/')
+  const classDays = days.split('').map(day => REST_TO_ABBR_DAYS_MAP[day]).join(', ')
 
   return (
     <div className={styles.classSchedule}>
