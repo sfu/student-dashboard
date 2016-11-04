@@ -9,7 +9,7 @@ import moment from 'moment'
 const _Dashboard = ({viewer, location: { query }}) => {
   const { start_at } = query
   const today = moment().day()
-  const selectedDay = !isNaN(start_at) && (start_at >= 0 && start_at <= 6) ? start_at : today
+  const selectedDay = !isNaN(start_at) && (start_at >= 0 && start_at <= 6) ? parseInt(start_at) : today
   return (
     <div>
       <HelloTile helloTileSchedule={viewer} names={viewer} />
