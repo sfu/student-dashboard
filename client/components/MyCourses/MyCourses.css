@@ -40,27 +40,3 @@
   font-weight: bold;
   color: sfured;
 }
-
-
-/* DaysOfWeekIndicator */
-.daysOfWeek {
-  width: 40%;
-}
-
-.day {
-  margin: 0 .1em;
-  color: rgba(84, 88, 90, .5);
-}
-
-.day:first-child {
-  margin-left: 0;
-}
-
-.day:last-child {
-  margin-right: 0;
-}
-
-.activeDay {
-  color: sfured;
-  font-weight: bold;
-}
