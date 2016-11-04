@@ -6,3 +6,9 @@ export {
  } from './days'
 export { default as TERM_DATES } from './termDates'
 export { default as TERM_CODES_TO_NAMES } from './termCodesToNames'
+export {
+  TIME_FORMAT_12H_WITH_PERIOD,
+  TIME_FORMAT_12H_WITHOUT_PERIOD,
+  TIME_FORMAT_24H,
+  TIME_SEPARATOR
+} from './timeFormat'
