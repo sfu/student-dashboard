@@ -27,16 +27,17 @@
   font-size: .75em;
 }
 
-.classTimes {
-  width: 60%;
-}
-
-.classLocation {
-  width: 40%;
-  text-align: right;
-}
-
 .classDays {
   font-weight: bold;
   color: sfured;
+  width: 33%;
+}
+
+.classTimes {
+  width: 33%;
+}
+
+.classLocation {
+  width: 33%;
+  text-align: right;
 }
