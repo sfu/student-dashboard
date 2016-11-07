@@ -67,8 +67,4 @@ router.get('/graphiql', (req, res) => {
   res.redirect('/graphql')
 })
 
-router.get('/docs', (req, res) => {
-  res.sendFile(`${req.app.get('htmlDirectory')}/graphql_docs.html`)
-})
-
 export default router

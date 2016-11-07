@@ -22,7 +22,6 @@ module.exports = (env = {}) => {
         resolve(__dirname, 'client/index.js')
       ]),
       vendor: ['react', 'react-dom', 'react-relay', 'react-router', 'moment'],
-      graphql_docs: resolve(__dirname, 'graphql_docs/index.js'),
       graphiql: resolve(__dirname, 'graphiql/index.js')
     },
 
