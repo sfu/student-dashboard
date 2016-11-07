@@ -168,7 +168,7 @@ module.exports = (env = {}) => {
         title: 'SFU Snap - API Explorer',
         appMountId: 'graphiql',
         links: ['/assets/graphiql.css'],
-        chunks: [ 'graphiql' ],
+        chunks: [ 'vendor', 'graphiql' ],
         hash: true,
         filename: resolve(__dirname, 'public/assets/graphiql.html')
       }),
