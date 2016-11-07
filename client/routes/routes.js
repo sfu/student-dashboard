@@ -2,11 +2,11 @@ import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 
 import { App } from 'components/App'
-import { Dashboard } from 'components/Dashboard'
-import { Courses } from 'components/Courses'
-import { Library } from 'components/Library'
+import { Dashboard } from 'pages/Dashboard'
+import { Courses } from 'pages/Courses'
+import { Library } from 'pages/Library'
 import { LibraryBarcode } from 'components/LibraryBarcode'
-import RoomFinder from 'components/RoomFinder'
+import RoomFinder from 'pages/RoomFinder'
 import ViewerQueries from 'queries/ViewerQueries'
 
 
