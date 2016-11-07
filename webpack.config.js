@@ -21,6 +21,7 @@ module.exports = (env = {}) => {
         ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
         resolve(__dirname, 'client/index.js')
       ]),
+      vendor: ['react', 'react-dom', 'react-relay', 'react-router', 'moment'],
       graphql_docs: resolve(__dirname, 'graphql_docs/index.js'),
       graphiql: resolve(__dirname, 'graphiql/index.js')
     },
@@ -123,6 +124,8 @@ module.exports = (env = {}) => {
     },
 
     plugins: removeEmpty([
+      new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
+      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js', chunks: 'app' }),
       ifDev(new webpack.HotModuleReplacementPlugin()),
 
       ifProd(new webpack.optimize.DedupePlugin()),
@@ -133,7 +136,6 @@ module.exports = (env = {}) => {
         debug: false,
         quiet: true
       })),
-
 
       ifProd(new webpack.optimize.UglifyJsPlugin({
         compress: {
@@ -153,7 +155,7 @@ module.exports = (env = {}) => {
         title: 'SFU Snap',
         appMountId: 'sorry',
         mobile: true,
-        chunks: [ 'app' ],
+        chunks: [ 'vendor', 'app' ],
         links: [ifProd('/assets/app.css')],
         hash: true,
         filename: resolve(__dirname, 'public/assets/snap.html')
