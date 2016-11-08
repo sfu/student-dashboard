@@ -150,7 +150,7 @@ module.exports = (env = {}) => {
       // SFU Snap HTML (snap.html)
       new HtmlWebpackPlugin({
         inject: false,
-        template: htmlWebpackTemplate,
+        template: './html_templates/snap.ejs',
         title: 'SFU Snap',
         appMountId: 'sorry',
         mobile: true,
