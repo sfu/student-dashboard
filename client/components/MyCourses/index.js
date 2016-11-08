@@ -68,7 +68,7 @@ export const _MyCourses = React.createClass({
           forwardDisabled={this.state.currentPage === 2}
         />
         <div>
-          {listItems}
+          {listItems.length ? listItems : <p className={styles.noClasses}>No classes scheduled this term</p>}
         </div>
         <PagerDots
           count={3}

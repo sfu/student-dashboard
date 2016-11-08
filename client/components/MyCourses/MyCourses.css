@@ -4,6 +4,10 @@
   margin: 1em;
 }
 
+.noClasses {
+  text-align: center;
+}
+
 .classItem {
   padding-bottom: 1em;
   border-bottom: 1px solid #eeeeee;

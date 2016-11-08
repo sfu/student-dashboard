@@ -53,7 +53,7 @@ export const _MyAssignmentsExams = ({ assignmentExamSchedule: { scheduleForRange
   return (
     <div className={styles.myAssignmentsExams}>
       <h2 className={styles.termName}>{termNameForCode(calcTermForDate())}</h2>
-      {groups}
+      {groups.length ? groups : <p className={styles.noAssignmentsExams}>No upcoming assignments or exams</p>}
     </div>
   )
 }
