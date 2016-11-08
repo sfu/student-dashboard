@@ -31,7 +31,7 @@ _Dashboard.propTypes = {
   location: PropTypes.object
 }
 
-export const Dashboard = Relay.createContainer(_Dashboard, {
+export default Relay.createContainer(_Dashboard, {
   fragments: {
     viewer: () => Relay.QL`
       fragment viewer on ViewerType {

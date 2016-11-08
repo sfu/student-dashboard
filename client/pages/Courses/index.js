@@ -25,7 +25,7 @@ const _Courses = React.createClass({
   }
 })
 
-export const Courses = Relay.createContainer(_Courses, {
+export default Relay.createContainer(_Courses, {
   fragments: {
     viewer: () => Relay.QL`
       fragment viewer on ViewerType {

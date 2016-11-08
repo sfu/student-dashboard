@@ -30,7 +30,7 @@ const _Library = React.createClass({
   }
 })
 
-export const Library = Relay.createContainer(_Library, {
+export default Relay.createContainer(_Library, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on ViewerType {
