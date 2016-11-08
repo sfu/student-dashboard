@@ -9,6 +9,8 @@ import { LibraryBarcode } from 'components/LibraryBarcode'
 import RoomFinder from 'pages/RoomFinder'
 import ViewerQueries from 'queries/ViewerQueries'
 
+const Transit = () => <h1>Transit</h1>
+const Settings = () => <h1>Settings</h1>
 
 export default (
   <Route path="/" component={App}>
