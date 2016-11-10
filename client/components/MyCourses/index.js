@@ -7,6 +7,8 @@ import previousOrNextTerm from 'utils/previousOrNextTerm'
 import termNameForCode from 'utils/termNameForCode'
 import PagerHeader from 'components/PagerHeader'
 import PagerDots from 'components/PagerDots'
+import Loading from 'components/Loading'
+import RelayFetchError from 'components/RelayFetchError'
 
 import styles from './MyCourses.css'
 
@@ -20,7 +22,9 @@ export const _MyCourses = React.createClass({
   getInitialState() {
     return {
       currentPage: 1,
-      currentTerm: calcTermForDate()
+      currentTerm: calcTermForDate(),
+      fetching: false,
+      error: false
     }
   },
 
@@ -30,13 +34,24 @@ export const _MyCourses = React.createClass({
     previousOrNextTerm(calcTermForDate(), 'NEXT'),
   ],
 
-  buttonHandler(page) {
+  buttonHandler(nextPage) {
+    const nextTerm = this.termCodes[nextPage]
     this.setState({
-      currentPage: page,
-      currentTerm: this.termCodes[page]
+      currentPage: nextPage,
+      currentTerm: nextTerm,
+      fetching: true
     }, () => {
       this.props.relay.setVariables({
         term: this.state.currentTerm
+      }, ({ done, error, ready }) => {
+        if (done && ready && !error) {
+          this.setState({ fetching: false, error: null })
+        } else if (error) {
+          this.setState({
+            fetching: false,
+            error
+          })
+        }
       })
     })
   },
@@ -58,6 +73,22 @@ export const _MyCourses = React.createClass({
       )
     })
 
+    const classList = listItems.length ? listItems :
+      <p className={styles.noClasses}>No classes scheduled this term</p>
+
+    const getContent = () => {
+      if (this.state.fetching) {
+        return <Loading />
+      } else if (this.state.error) {
+        return (
+          <RelayFetchError
+            error={this.state.error}
+          />
+        )
+      } else {
+        return classList
+      }
+    }
     return (
       <div className={styles.myCourses}>
         <PagerHeader
@@ -68,7 +99,7 @@ export const _MyCourses = React.createClass({
           forwardDisabled={this.state.currentPage === 2}
         />
         <div>
-          {listItems.length ? listItems : <p className={styles.noClasses}>No classes scheduled this term</p>}
+          {getContent()}
         </div>
         <PagerDots
           count={3}
