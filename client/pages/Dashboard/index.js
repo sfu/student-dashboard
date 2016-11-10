@@ -1,9 +1,10 @@
-import {default as React, PropTypes} from 'react'
+import { default as React, PropTypes } from 'react'
 import Relay from 'react-relay'
-import {Widget} from 'components/Widget'
+import { Widget } from 'components/Widget'
 import Pageable from 'components/Pageable'
-import {HelloTile} from 'components/HelloTile'
-import {WeekAtAGlance} from 'components/WeekAtAGlance'
+import { HelloTile } from 'components/HelloTile'
+import { WeekAtAGlance } from 'components/WeekAtAGlance'
+import DashboardNavGrid from 'components/DashboardNavGrid'
 import moment from 'moment'
 
 const _Dashboard = ({viewer, location: { query }}) => {
@@ -22,6 +23,7 @@ const _Dashboard = ({viewer, location: { query }}) => {
           <WeekAtAGlance schedule={viewer} selectedDay={selectedDay} />
         </Pageable>
       </Widget>
+      <DashboardNavGrid />
     </div>
   )
 }
