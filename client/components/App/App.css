@@ -1,11 +1,25 @@
-@value blacktext from 'styles/color.css';
+@value sfured, blacktext from 'styles/color.css';
 
 .app {
   composes: systemFont from 'styles/type.css';
   color: blacktext;
 }
 
+.fetchError {
+  width: 70%;
+  padding: 1em;
+  margin: 0 auto;
+}
+
 .widgets {
   margin: 0 1em 5em 1em;
   padding-top: 1em;
+}
+
+.loadingWrapper {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
