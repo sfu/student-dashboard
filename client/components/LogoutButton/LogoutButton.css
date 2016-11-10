@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+}
+
+.logoutButton {
+  background: #fff;
+  color: #007096;
+  text-decoration: none;
+  padding: .5em;
+  border: 1px solid #007096;
+  border-radius: 5px;
+  display: inline-block;
+}

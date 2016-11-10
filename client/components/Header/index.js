@@ -1,5 +1,6 @@
 import { default as React, PropTypes } from 'react'
 import HeaderNavGrid from 'components/HeaderNavGrid'
+import LogoutButton from 'components/LogoutButton'
 import Collapse from 'react-collapse'
 import { presets } from 'react-motion'
 import snapLogo from './sfusnap_white.png'
@@ -40,8 +41,10 @@ export const Header = React.createClass({
 
         <Collapse
           isOpened={this.state.showNavGrid}
-          springConfig={presets.stiff}>
+          springConfig={presets.stiff}
+        >
           <HeaderNavGrid />
+          <LogoutButton />
         </Collapse>
       </div>
     )
