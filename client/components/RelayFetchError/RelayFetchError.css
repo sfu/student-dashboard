@@ -1,0 +1,24 @@
+@value sfublue from 'styles/color.css';
+
+.fetchError {
+  text-align: center;
+  /*width: 70%;
+  padding: 1em;
+  margin: 0 auto;*/
+}
+
+
+.retryButton {
+  border: 1px solid sfublue;
+  border-radius: 5px;
+  color: sfublue;
+  font-weight: 500;
+  padding: .25em 1em;
+  background-color: #fff;
+  margin-top: 1em;
+}
+
+.retryButton:hover, .retryButton:active {
+  background-color: sfublue;
+  color: #fff;
+}
