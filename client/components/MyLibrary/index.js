@@ -1,5 +1,4 @@
 import { default as React, PropTypes } from 'react'
-import { Link } from 'react-router'
 import styles from './MyLibrary.css'
 
 const MyLibrary = ({barcode, fines, checkedOut, holds}) => {
@@ -20,10 +19,7 @@ const MyLibrary = ({barcode, fines, checkedOut, holds}) => {
       {fines !== '0.00' ? <h3 className={styles.h3}>Current Fines: ${fines}</h3> : null}
 
       <h3 className={styles.h3}>Library Barcode</h3>
-      <Link to={{
-        pathname: '/library/barcode',
-        query: { barcode }
-      }}><p className={styles.p}>{barcode}</p></Link>
+      <p className={styles.p}>{barcode}</p>
 
       <h3 className={styles.h3}>Items Checked Out</h3>
       {checkedOut.length ? checkedOutItems : <p className={styles.p}>You have nothing checked out.</p>}
