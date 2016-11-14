@@ -17,10 +17,16 @@
   border-bottom: none;
 }
 
-.classTitle {
+.className {
   font-size: 1em;
   text-transform: uppercase;
-  margin-bottom: 1em;
+  margin-bottom: 0;
+}
+
+.classTitle {
+  font-size: .8em;
+  text-transform: uppercase;
+  margin: .25em 0 1em 0;
 }
 
 .classSchedule {
