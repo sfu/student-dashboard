@@ -67,7 +67,8 @@ export const _MyCourses = React.createClass({
       const schedule = notExamDays.map((s, i) => <ClassSchedule key={i} schedule={s} />)
       return (
         <div className={styles.classItem} key={i}>
-          <h2 className={styles.classTitle}>{courseName}</h2>
+          <h2 className={styles.className}>{courseName}</h2>
+          <h3 className={styles.classTitle}>{c.title}</h3>
           {schedule}
         </div>
       )
