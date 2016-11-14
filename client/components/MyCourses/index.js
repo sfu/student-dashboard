@@ -121,17 +121,12 @@ export const MyCourses = Relay.createContainer(_MyCourses, {
       fragment on ViewerType {
         enrolledCourses(term: $term) {
           course {
-            associatedClass
             canvasCourses
-            classStat
-            classType
             key
             name
             number
-            peopleSoftCode
             section
             sectionCode
-            semester
             title
             schedules {
               buildingCode
