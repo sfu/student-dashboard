@@ -21,7 +21,7 @@ module.exports = (env = {}) => {
         ifDev('webpack-hot-middleware/client?path=/__webpack_hmr'),
         resolve(__dirname, 'client/index.js')
       ]),
-      vendor: ['react', 'react-dom', 'react-relay', 'react-router', 'moment'],
+      vendor: ['react', 'react-dom', 'react-relay', 'react-router', 'redux', 'moment'],
       graphiql: resolve(__dirname, 'graphiql/index.js')
     },
 
