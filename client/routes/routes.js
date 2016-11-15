@@ -1,5 +1,5 @@
 import React from 'react'
-import { App } from 'components/App'
+import App from 'components/App'
 import Loading from 'components/Loading'
 import RelayFetchError from 'components/RelayFetchError'
 import ViewerQueries from 'queries/ViewerQueries'
