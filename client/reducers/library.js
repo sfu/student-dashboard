@@ -14,7 +14,6 @@ export const DEFAULT = {
 }
 
 export default (state = DEFAULT, action) => {
-  console.log(action, state)
   switch (action.type) {
     case FETCH_LIBRARY_HOURS_START: {
       const nextState = { ...state }
