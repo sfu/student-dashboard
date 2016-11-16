@@ -1,4 +1,5 @@
 import { default as React, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import HeaderNavGrid from 'components/HeaderNavGrid'
 import LogoutButton from 'components/LogoutButton'
 import Collapse from 'react-collapse'
@@ -8,7 +9,23 @@ import Menu from './menu.svg'
 import styles from './Header.css'
 import cx from 'classnames'
 
-export const Header = ({ title, showNav, toggleHeaderNav }) => {
+const mapStateToProps = (state) => {
+  return {
+    showNav: state.header.showNav
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleHeaderNav: () => {
+      dispatch({
+        type: 'TOGGLE_HEADER_NAV'
+      })
+    }
+  }
+}
+
+const Header = ({ title, showNav, toggleHeaderNav }) => {
   const menuToggleClassNames = showNav ? cx(styles.navToggle, styles.navToggleActive) : styles.navToggle
   return (
     <div className={styles.headerContainer}>
@@ -36,3 +53,5 @@ Header.propTypes = {
   showNav: PropTypes.bool.isRequired,
   toggleHeaderNav: PropTypes.func.isRequired
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
