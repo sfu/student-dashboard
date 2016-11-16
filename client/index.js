@@ -9,14 +9,18 @@ import {Router, browserHistory, applyRouterMiddleware} from 'react-router'
 import useRelay from 'react-router-relay'
 import routes from './routes/routes'
 
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { header } from './reducers'
+import thunkMiddleware from 'redux-thunk'
+import { header, library } from './reducers'
+import { toggleHeaderNav } from 'actions/header'
+import { fetchLibraryHours } from 'actions/library'
 
 const store = createStore(
-  combineReducers({ header }),
+  combineReducers({ header, library }),
   window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunkMiddleware)
 )
 
 const RootElement = document.getElementById('sorry')
