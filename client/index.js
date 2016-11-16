@@ -36,9 +36,12 @@ if (process.env.NODE_ENV !== 'production') {
   RelayNetworkDebug.init()
 }
 
-browserHistory.listen(() => {
+browserHistory.listen(({pathname}) => {
   if (store.getState().header.showNav) {
-    store.dispatch({ type: 'TOGGLE_HEADER_NAV' })
+    store.dispatch(toggleHeaderNav())
+  }
+  if (pathname === '/library') {
+    store.dispatch(fetchLibraryHours())
   }
 })
 
