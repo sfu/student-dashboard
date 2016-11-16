@@ -1,4 +1,8 @@
-export default (state = { showNav: false }, action) => {
+export const DEFAULT = {
+  showNav: false
+}
+
+export default (state = DEFAULT, action) => {
   switch (action.type) {
     case 'TOGGLE_HEADER_NAV':
       return {
