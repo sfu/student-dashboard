@@ -8,6 +8,7 @@ import snapLogo from './sfusnap_white.png'
 import Menu from './menu.svg'
 import styles from './Header.css'
 import cx from 'classnames'
+import { toggleHeaderNav } from 'actions/header'
 
 const mapStateToProps = (state) => {
   return {
@@ -18,9 +19,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleHeaderNav: () => {
-      dispatch({
-        type: 'TOGGLE_HEADER_NAV'
-      })
+      dispatch(toggleHeaderNav())
     }
   }
 }
