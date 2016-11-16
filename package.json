@@ -137,6 +137,7 @@
     "react-router-relay": "0.13.4",
     "redis": "2.6.2",
     "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
     "svg-react-loader": "0.4.0-beta.2",
     "url": "0.11.0"
   }
