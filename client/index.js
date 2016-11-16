@@ -13,7 +13,11 @@ import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { header } from './reducers'
 
-const store = createStore(combineReducers({ header }), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStore(
+  combineReducers({ header }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 const RootElement = document.getElementById('sorry')
 
