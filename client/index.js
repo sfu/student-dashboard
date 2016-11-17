@@ -1,29 +1,21 @@
 import 'babel-polyfill'
 import './routerHotLoadPatch'
-import Relay from 'react-relay'
 import React from 'react'
-// import {AppContainer} from 'react-hot-loader'
 import ReactDOM from 'react-dom'
-// import Renderer from './routes/router'
+import Relay from 'react-relay'
+import { Provider } from 'react-redux'
 import {Router, browserHistory, applyRouterMiddleware} from 'react-router'
 import useRelay from 'react-router-relay'
 import routes from './routes/routes'
 
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunkMiddleware from 'redux-thunk'
-import { header, library } from './reducers'
+// import {AppContainer} from 'react-hot-loader'
+// import Renderer from './routes/router'
+
 import { toggleHeaderNav } from 'actions/header'
 import { fetchLibraryHours } from 'actions/library'
+import configureStore from './configureStore'
 
-const store = createStore(
-  combineReducers({ header, library }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunkMiddleware)
-)
-
-const RootElement = document.getElementById('sorry')
+const store = configureStore()
 
 Relay.injectNetworkLayer(
   new Relay.DefaultNetworkLayer('/graphql', {
@@ -45,6 +37,8 @@ browserHistory.listen(({pathname}) => {
   }
 })
 
+
+const RootElement = document.getElementById('sorry')
 ReactDOM.render(
   <Provider store={store}>
     <Router
