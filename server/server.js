@@ -91,6 +91,7 @@ export const createServer = (app) => {
   app.use('/auth', routes.auth)
   app.use('/api', routes.api)
   app.use('/graphql', routes.graphql)
+  app.use('/translink', routes.translink)
   app.use('/isup', (req, res) => { res.send('ok') })
   app.use('*', routes.app)
 
