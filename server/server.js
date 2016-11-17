@@ -12,6 +12,7 @@ import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
 import enforceSSL from 'express-enforces-ssl'
+import proxy from 'express-http-proxy'
 
 const RedisStore = ConnectRedis(session)
 const PRODUCTION = process.env.NODE_ENV === 'production'
@@ -91,7 +92,15 @@ export const createServer = (app) => {
   app.use('/auth', routes.auth)
   app.use('/api', routes.api)
   app.use('/graphql', routes.graphql)
-  app.use('/translink', routes.translink)
+  app.use('/translink', proxy('api.translink.ca', {
+    https: false,
+    preserveHostHdr: true,
+    forwardPath: (req) => `/RTTIAPI/V1${req.url}?apikey=${process.env.TRANSLINK_API_KEY}`,
+    decorateRequest: (proxyReq) => {
+      proxyReq.headers['accept'] = 'application/json'
+      return proxyReq
+    }
+  }))
   app.use('/isup', (req, res) => { res.send('ok') })
   app.use('*', routes.app)
 
