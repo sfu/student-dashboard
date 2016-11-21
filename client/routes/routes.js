@@ -6,9 +6,6 @@ import ViewerQueries from 'queries/ViewerQueries'
 
 import styles from 'components/App/App.css'
 
-const Transit = () => <h1>Transit</h1>
-const Settings = () => <h1>Settings</h1>
-
 function errorLoading(err) {
   console.error('Dynamic page loading failed', err) // eslint-disable-line
 }
@@ -57,7 +54,10 @@ export default {
     {
       path: 'transit',
       title: 'Transit',
-      component: Transit
+      getComponent(location, cb) {
+        System.import('pages/Transit').then(loadRoute(cb)).catch(errorLoading)
+      },
+
     },
     {
       path: 'library',
@@ -78,7 +78,10 @@ export default {
     {
       path: 'settings',
       title: 'Settings',
-      component: Settings
+      getComponent(location, cb) {
+        System.import('pages/Settings').then(loadRoute(cb)).catch(errorLoading)
+      },
+
     },
 
   ]
