@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react'
+import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
 import { Widget } from 'components/Widget'
 import LibaryHours from 'components/LibraryHours'

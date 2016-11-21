@@ -1,4 +1,4 @@
-import {default as React, PropTypes} from 'react'
+import React, { PropTypes }  from 'react'
 import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import formatTimeRange from 'utils/formatTimeRange'

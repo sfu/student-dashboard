@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react'
+import React, { PropTypes }  from 'react'
 import { Link } from 'react-router'
 
 export const RoomFinderLink = ({building, room}) =>

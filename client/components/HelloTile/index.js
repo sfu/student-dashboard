@@ -1,4 +1,4 @@
-import {default as React, PropTypes} from 'react'
+import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
 import moment from 'moment'
 import calcTermForDate from 'utils/calcTermForDate'

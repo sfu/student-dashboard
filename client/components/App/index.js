@@ -1,4 +1,4 @@
-import {default as React, PropTypes} from 'react'
+import React, { PropTypes }  from 'react'
 import Header from 'components/Header'
 
 import 'normalize.css/normalize.css'

@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react'
+import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
 import ClassSchedule from './ClassSchedule'
 import { CLASS_TYPES } from 'const'

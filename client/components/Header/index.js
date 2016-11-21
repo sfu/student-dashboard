@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react'
+import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import HeaderNavGrid from 'components/HeaderNavGrid'
 import LogoutButton from 'components/LogoutButton'

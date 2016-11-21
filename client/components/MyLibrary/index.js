@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react'
+import React, { PropTypes }  from 'react'
 import styles from './MyLibrary.css'
 
 const MyLibrary = ({barcode, fines, checkedOut, holds}) => {

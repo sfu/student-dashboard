@@ -1,4 +1,4 @@
-import {default as React, PropTypes} from 'react'
+import React, { PropTypes }  from 'react'
 import logo from './sfusnap_white.png'
 import styles from './Splash.css'
 

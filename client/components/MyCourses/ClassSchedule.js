@@ -1,4 +1,4 @@
-import {default as React, PropTypes} from 'react'
+import React, { PropTypes }  from 'react'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import formatTimeRange from 'utils/formatTimeRange'
 import { REST_TO_ABBR_DAYS_MAP } from 'const'

@@ -1,4 +1,4 @@
-import {default as React, PropTypes} from 'react'
+import React, { PropTypes }  from 'react'
 import PagerDot from 'components/PagerDot'
 import styles from './PagerDots.css'
 
