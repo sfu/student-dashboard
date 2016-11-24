@@ -102,7 +102,7 @@ export const createServer = (app) => {
 
       // inject API Key into query string
       const path = require('url').parse(proxyReq.path)
-      const qs = path.query.split('&')
+      const qs = path.query ? path.query.split('&') : []
       qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
       path.query = qs.join('&')
       path.search = `?${path.query}`
