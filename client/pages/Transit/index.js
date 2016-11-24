@@ -1,15 +1,18 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import TransitMap from 'components/TransitMap'
+
+const mapStateToProps = state => ({
+  transit: state.transit
+})
 
 const Transit = () => {
   return (
     <div>
-      <h1>Transit</h1>
+      <TransitMap />
     </div>
+
   )
 }
 
-Transit.propTypes = {
-
-}
-
-export default Transit
+export default connect(mapStateToProps)(Transit)
