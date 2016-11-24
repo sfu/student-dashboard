@@ -7,7 +7,8 @@ import ViewerQueries from 'queries/ViewerQueries'
 import styles from 'components/App/App.css'
 
 function errorLoading(err) {
-  console.error('Dynamic page loading failed', err) // eslint-disable-line
+  console.error(err.stack) //eslint-disable-line
+  throw new Error('Dynamic page loading failed', err) // eslint-disable-line
 }
 
 function loadRoute(cb) {
