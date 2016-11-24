@@ -95,9 +95,19 @@ export const createServer = (app) => {
   app.use('/translink', proxy('api.translink.ca', {
     https: false,
     preserveHostHdr: true,
-    forwardPath: (req) => `/RTTIAPI/V1${req.url}?apikey=${process.env.TRANSLINK_API_KEY}`,
+    forwardPath: (req) => `/RTTIAPI/V1${req.url}`,
     decorateRequest: (proxyReq) => {
+      // set headers
       proxyReq.headers['accept'] = 'application/json'
+
+      // inject API Key into query string
+      const path = require('url').parse(proxyReq.path)
+      const qs = path.query.split('&')
+      qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
+      path.query = qs.join('&')
+      path.search = `?${path.query}`
+      proxyReq.path = path.format()
+
       return proxyReq
     }
   }))
