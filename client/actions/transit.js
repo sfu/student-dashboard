@@ -5,6 +5,7 @@ export const FETCH_STOPS_START = 'FETCH_STOPS_START'
 export const FETCH_STOPS_SUCCESS = 'FETCH_STOPS_SUCCESS'
 export const FETCH_STOPS_ERROR = 'FETCH_STOPS_ERROR'
 export const TOGGLE_CURRENT_LOCATION_ON_MAP = 'TOGGLE_CURRENT_LOCATION_ON_MAP'
+export const SET_SELECTED_STOP = 'SET_SELECTED_STOP'
 
 export const fetchStops = (coords, radius = 600) => {
   return (dispatch) => {
@@ -37,6 +38,13 @@ export const fetchStopsError = (error) => {
   return {
     type: FETCH_STOPS_ERROR,
     error
+  }
+}
+
+export const setSelectedStop = stop => {
+  return {
+    type: SET_SELECTED_STOP,
+    stop
   }
 }
 

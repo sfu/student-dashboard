@@ -2,7 +2,8 @@ import {
   FETCH_STOPS_START,
   FETCH_STOPS_SUCCESS,
   FETCH_STOPS_ERROR,
-  TOGGLE_CURRENT_LOCATION_ON_MAP
+  TOGGLE_CURRENT_LOCATION_ON_MAP,
+  SET_SELECTED_STOP
 } from '../actions/transit'
 
 export const DEFAULT = {
@@ -10,7 +11,8 @@ export const DEFAULT = {
   fetchError: null,
   forceMapUpdate: false,
   stops: [],
-  showCurrentLocationOnMap: false
+  showCurrentLocationOnMap: false,
+  selectedStop: null
 }
 
 export default (state = DEFAULT, action) => {
@@ -42,6 +44,11 @@ export default (state = DEFAULT, action) => {
       return {
         ...state,
         showCurrentLocationOnMap: !state.showCurrentLocationOnMap
+      }
+    case SET_SELECTED_STOP:
+      return {
+        ...state,
+        selectedStop: action.stop
       }
     default:
       return state
