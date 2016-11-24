@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Map, TileLayer, Marker, Circle } from 'react-leaflet'
+import { Map, TileLayer, Circle } from 'react-leaflet'
 import { connect } from 'react-redux'
 import {
   getPositionStart,
@@ -10,6 +10,7 @@ import {
   fetchStops,
   toggleCurrentLocationOnMap
 } from 'actions/transit'
+import BusStopMarker from 'components/BusStopMarker'
 import L from 'leaflet'
 import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
 import './TransitMap.css'
@@ -34,14 +35,9 @@ const mapStateToProps = (state) => {
 }
 
 const markers = (stops) => {
-  return stops.map((stop, i) => (<Marker
-    position={{
-      lat: stop.Latitude,
-      lng: stop.Longitude
-    }}
-    draggable={false}
-    key={i}
-  />))
+  return stops.map((stop, i) => {
+    return <BusStopMarker stop={stop} key={i} />
+  })
 }
 
 class TransitMap extends React.Component {
@@ -117,15 +113,14 @@ TransitMap.propTypes = {
     stops: PropTypes.array.isRequired,
     showCurrentLocationOnMap: PropTypes.bool.isRequired
   }),
-  position: {
+  position: PropTypes.shape({
     locating: PropTypes.bool.isRequired,
     error: PropTypes.object,
     lastUpdated: PropTypes.number,
     latitude: PropTypes.number,
     longitude: PropTypes.number,
     accuracy: PropTypes.number
-
-  }
+  })
 }
 
 export default connect(mapStateToProps)(TransitMap)
