@@ -1,0 +1,24 @@
+@value sfured from 'styles/color.css';
+
+.stopInfoHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 2px solid sfured;
+}
+
+.stopName {
+  color: sfured;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: capitalize;
+}
+
+.stopNumber {
+  font-weight: lighter;
+  font-size: .8em;
+}
+
+.schedules {
+  margin-top: 1em;
+}
