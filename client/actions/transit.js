@@ -1,10 +1,14 @@
 import axios from 'axios'
+import uniqBy from 'lodash/uniqBy'
 
 export const FETCH_STOPS = 'FETCH_STOPS'
 export const FETCH_STOPS_START = 'FETCH_STOPS_START'
 export const FETCH_STOPS_SUCCESS = 'FETCH_STOPS_SUCCESS'
 export const FETCH_STOPS_ERROR = 'FETCH_STOPS_ERROR'
-export const TOGGLE_CURRENT_LOCATION_ON_MAP = 'TOGGLE_CURRENT_LOCATION_ON_MAP'
+
+export const UPDATE_MAP_CENTER = 'UPDATE_MAP_CENTER'
+export const SHOW_CURRENT_LOCATION_ON_MAP = 'SHOW_CURRENT_LOCATION_ON_MAP'
+
 export const SET_SELECTED_STOP = 'SET_SELECTED_STOP'
 
 export const FETCH_SCHEDULE_FOR_BUS_STOP_START = 'FETCH_SCHEDULE_FOR_BUS_STOP_START'
@@ -55,7 +59,6 @@ export const setSelectedStop = stop => {
   }
 }
 
-export const toggleCurrentLocationOnMap = () => ({ type: TOGGLE_CURRENT_LOCATION_ON_MAP })
 export const fetchSchedulesForBusStop = (stop) => {
   return (dispatch) => {
     dispatch(fetchSchedulesForBusStopStart())
@@ -81,5 +84,19 @@ export const fetchSchedulesForBusStopError = (error) => {
   return {
     type: FETCH_SCHEDULE_FOR_BUS_STOP_ERROR,
     error
+  }
+}
+
+export const updateMapCenter = mapCenter => {
+  return {
+    type: UPDATE_MAP_CENTER,
+    mapCenter
+  }
+}
+
+export const toggleCurrentLocationOnMap = (state = false) => {
+  return {
+    type: SHOW_CURRENT_LOCATION_ON_MAP,
+    showCurrentLocationOnMap: state
   }
 }
