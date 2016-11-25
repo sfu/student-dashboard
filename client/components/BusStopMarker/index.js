@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Marker } from 'react-leaflet'
-import { setSelectedStop } from 'actions/transit'
+import { setSelectedStop, fetchSchedulesForBusStop } from 'actions/transit'
 import { connect } from 'react-redux'
 
 const mapPropsToState = state => {
@@ -19,7 +19,10 @@ const BusStopMarker = ({stop, dispatch, transit}) => {
       }}
       zIndexOffset={selectedStop && selectedStop.StopNo === stop.StopNo ? 1000 : 0}
       draggable={false}
-      onClick={ () => { dispatch(setSelectedStop(stop)) } }
+      onClick={() => {
+        dispatch(setSelectedStop(stop))
+        dispatch(fetchSchedulesForBusStop(stop.StopNo))
+      }}
     />
   )
 }
