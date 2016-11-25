@@ -9,6 +9,11 @@ export const SET_SELECTED_STOP = 'SET_SELECTED_STOP'
 
 export const fetchStops = (coords, radius = 600) => {
   return (dispatch) => {
+export const FETCH_SCHEDULE_FOR_BUS_STOP_START = 'FETCH_SCHEDULE_FOR_BUS_STOP_START'
+export const FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS = 'FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS'
+export const FETCH_SCHEDULE_FOR_BUS_STOP_ERROR = 'FETCH_SCHEDULE_FOR_BUS_STOP_ERROR'
+export const FETCH_SCHEDULE_FOR_BUS_STOP = 'FETCH_SCHEDULE_FOR_BUS_STOP'
+
     dispatch(fetchStopsStart())
     const latitude = parseFloat(coords.latitude).toFixed(5)
     const longitude =  parseFloat(coords.longitude).toFixed(5)
@@ -49,3 +54,30 @@ export const setSelectedStop = stop => {
 }
 
 export const toggleCurrentLocationOnMap = () => ({ type: TOGGLE_CURRENT_LOCATION_ON_MAP })
+export const fetchSchedulesForBusStop = (stop) => {
+  return (dispatch) => {
+    dispatch(fetchSchedulesForBusStopStart())
+    const SCHEDULES_URL = `/translink/stops/${stop}/estimates?count=3`
+    return axios.get(SCHEDULES_URL).then((response) => {
+      dispatch(fetchSchedulesForBusStopSuccess(response.data))
+    }).catch((error) => {
+      dispatch(fetchSchedulesForBusStopError(error))
+    })
+  }
+}
+
+export const fetchSchedulesForBusStopStart = () => ({ type: FETCH_SCHEDULE_FOR_BUS_STOP_START })
+
+export const fetchSchedulesForBusStopSuccess = (schedules) => {
+  return {
+    type: FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS,
+    schedulesForSelectedStop: schedules
+  }
+}
+
+export const fetchSchedulesForBusStopError = (error) => {
+  return {
+    type: FETCH_SCHEDULE_FOR_BUS_STOP_ERROR,
+    error
+  }
+}
