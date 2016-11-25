@@ -121,7 +121,7 @@
     "jsonwebtoken": "7.1.9",
     "knex": "0.12.2",
     "leaflet": "^1.0.2",
-    "lodash": "4.16.4",
+    "lodash": "^4.17.2",
     "moment": "2.15.1",
     "node-uuid": "1.4.7",
     "normalize.css": "4.2.0",
