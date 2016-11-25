@@ -2,17 +2,30 @@ import {
   FETCH_STOPS_START,
   FETCH_STOPS_SUCCESS,
   FETCH_STOPS_ERROR,
-  TOGGLE_CURRENT_LOCATION_ON_MAP,
-  SET_SELECTED_STOP
+  SHOW_CURRENT_LOCATION_ON_MAP,
+  UPDATE_MAP_CENTER,
+  SET_SELECTED_STOP,
+  FETCH_SCHEDULE_FOR_BUS_STOP_START,
+  FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS,
+  FETCH_SCHEDULE_FOR_BUS_STOP_ERROR
 } from '../actions/transit'
 
 export const DEFAULT = {
-  fetching: false,
-  fetchError: null,
-  forceMapUpdate: false,
+  /* stops */
+  fetchingStops: false,
+  fetchStopsError: null,
   stops: [],
+
+  /* map/positioning */
+  forceMapUpdate: false,
   showCurrentLocationOnMap: false,
-  selectedStop: null
+  mapCenter: null,
+
+  /* schedules for selected stop */
+  selectedStop: null,
+  fetchingSchedules: false,
+  fetchSchedulesError: null,
+  schedulesForSelectedStop: []
 }
 
 export default (state = DEFAULT, action) => {
@@ -21,34 +34,60 @@ export default (state = DEFAULT, action) => {
     case FETCH_STOPS_START:
       return {
         ...state,
-        fetching: true,
-        fetchError: null,
+        fetchingStops: true,
+        fetchStopsError: null,
         forceMapUpdate: false
       }
     case FETCH_STOPS_SUCCESS:
       return {
         ...state,
-        fetching: false,
+        fetchingStops: false,
         stops: action.stops,
-        fetchError: null,
+        fetchStopsError: null,
         forceMapUpdate: true
       }
     case FETCH_STOPS_ERROR:
       return {
         ...state,
-        fetching: false,
-        fetchError: action.error,
+        fetchingStops: false,
+        fetchStopsError: action.error,
         forceMapUpdate: true
       }
-    case TOGGLE_CURRENT_LOCATION_ON_MAP:
+    case SHOW_CURRENT_LOCATION_ON_MAP:
       return {
         ...state,
-        showCurrentLocationOnMap: !state.showCurrentLocationOnMap
+        showCurrentLocationOnMap: action.showCurrentLocationOnMap
+      }
+    case UPDATE_MAP_CENTER:
+      return {
+        ...state,
+        mapCenter: action.mapCenter
       }
     case SET_SELECTED_STOP:
       return {
         ...state,
         selectedStop: action.stop
+      }
+    case FETCH_SCHEDULE_FOR_BUS_STOP_START:
+      return {
+        ...state,
+        fetchingSchedules: true,
+        fetchSchedulesError: null,
+        schedulesForSelectedStop: []
+      }
+    case FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS:
+      return {
+        ...state,
+        fetchingSchedules: false,
+        fetchSchedulesError: null,
+        schedulesForSelectedStop: action.schedulesForSelectedStop
+      }
+    case FETCH_SCHEDULE_FOR_BUS_STOP_ERROR:
+      return {
+        ...state,
+        fetchingSchedules: false,
+        fetchSchedulesError: action.error,
+        schedulesForSelectedStop: []
       }
     default:
       return state
