@@ -17,16 +17,6 @@ const arrivalTimes = (schedules) => {
       </li>
     )
   })
-
-  // return times.map((time, i) => {
-  //   time = time < 2 ? 'Now' : `${time} min`
-  //   return (
-  //     <li key={i} className={styles.arrivalTime}>
-  //       {i === 0 ? <img alt="Real-time arrival estimate" className={styles.realTimeIcon} src={RealTimeIcon}/> : null}
-  //       {time}
-  //     </li>
-  //   )
-  // })
 }
 
 const BusScheduleRow = ({ schedules }) => {
