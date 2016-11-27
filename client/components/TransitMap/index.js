@@ -71,7 +71,7 @@ class TransitMap extends React.Component {
     const newCenter = map.getCenter()
     this.props.dispatch(updateMapCenter(newCenter))
     const distanceMoved = originalCenter.distanceTo(newCenter)
-    if (distanceMoved > 500) {
+    if (distanceMoved > 250) {
       this.props.dispatch(toggleCurrentLocationOnMap(false))
       this.props.dispatch(fetchStops({
         latitude: parseFloat(newCenter.lat).toFixed(5),
