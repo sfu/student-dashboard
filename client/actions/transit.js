@@ -63,7 +63,7 @@ export const setSelectedStop = stop => {
 export const fetchSchedulesForBusStop = (stop) => {
   return (dispatch) => {
     dispatch(fetchSchedulesForBusStopStart())
-    const SCHEDULES_URL = `/translink/stops/${stop}/estimates?count=3`
+    const SCHEDULES_URL = `/translink/stops/${stop}/estimates`
     return axios.get(SCHEDULES_URL).then((response) => {
       dispatch(fetchSchedulesForBusStopSuccess(normalizeTranslinkData(response.data)))
     }).catch((error) => {

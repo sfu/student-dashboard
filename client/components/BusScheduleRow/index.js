@@ -7,7 +7,7 @@ import styles from './BusScheduleRow.css'
 const arrivalTimes = (schedules) => {
   const sorted = schedules.sort((a, b) => a.ExpectedCountdown > b.ExpectedCountdown)
 
-  return sorted.map((item, i) => {
+  return sorted.slice(0,3).map((item, i) => {
     const { ScheduleStatus, ExpectedCountdown } = item
     const time =  ExpectedCountdown < 2 ? 'Now' : `${ExpectedCountdown} min`
     return (
