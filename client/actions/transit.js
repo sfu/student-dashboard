@@ -1,5 +1,6 @@
 import axios from 'axios'
 import uniqBy from 'lodash/uniqBy'
+import normalizeTranslinkData from 'utils/normalizeTranslinkData'
 
 export const FETCH_STOPS = 'FETCH_STOPS'
 export const FETCH_STOPS_START = 'FETCH_STOPS_START'
@@ -64,7 +65,7 @@ export const fetchSchedulesForBusStop = (stop) => {
     dispatch(fetchSchedulesForBusStopStart())
     const SCHEDULES_URL = `/translink/stops/${stop}/estimates?count=3`
     return axios.get(SCHEDULES_URL).then((response) => {
-      dispatch(fetchSchedulesForBusStopSuccess(response.data))
+      dispatch(fetchSchedulesForBusStopSuccess(normalizeTranslinkData(response.data)))
     }).catch((error) => {
       dispatch(fetchSchedulesForBusStopError(error))
     })
