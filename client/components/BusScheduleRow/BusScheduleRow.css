@@ -49,7 +49,7 @@
   height: .5em;
   position: relative;
   top: -15px;
-  right: -2px;
-  transform: scaleX(-1);
+  right: -3px;
+  transform: scaleX(-1) rotate(-15deg);
   filter: FlipH;
 }

@@ -77,7 +77,8 @@ export const fetchSchedulesForBusStopStart = () => ({ type: FETCH_SCHEDULE_FOR_B
 export const fetchSchedulesForBusStopSuccess = (schedules) => {
   return {
     type: FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS,
-    schedulesForSelectedStop: schedules
+    schedulesForSelectedStop: schedules,
+    fetchedAt: Date.now()
   }
 }
 

@@ -3,6 +3,7 @@ import BusScheduleRow from 'components/BusScheduleRow'
 import transformTranslinkText from 'utils/transformTranslinkText'
 import Loading from 'components/Loading'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import styles from './BusSchedules.css'
 
 const mapStateToProps = state => ({ transit: state.transit })
@@ -21,6 +22,12 @@ const BusSchedules = ({transit, selectedStop, schedules}) => {
       </div>
       <div className={styles.schedules}>
         {transit.fetchingSchedules && <Loading title='Checking Schedules' />}
+        {
+          transit.schedulesFetchedAt &&
+          <p className={styles.fetchedAt}>
+            Prediction as of {moment(transit.schedulesFetchedAt).format('h:mm A')}
+          </p>
+        }
         {scheduleRows(schedules)}
       </div>
     </div>

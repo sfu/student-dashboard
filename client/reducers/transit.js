@@ -25,7 +25,8 @@ export const DEFAULT = {
   selectedStop: null,
   fetchingSchedules: false,
   fetchSchedulesError: null,
-  schedulesForSelectedStop: []
+  schedulesForSelectedStop: [],
+  schedulesFetchedAt: null
 }
 
 export default (state = DEFAULT, action) => {
@@ -73,21 +74,24 @@ export default (state = DEFAULT, action) => {
         ...state,
         fetchingSchedules: true,
         fetchSchedulesError: null,
-        schedulesForSelectedStop: []
+        schedulesForSelectedStop: [],
+        schedulesFetchedAt: null
       }
     case FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS:
       return {
         ...state,
         fetchingSchedules: false,
         fetchSchedulesError: null,
-        schedulesForSelectedStop: action.schedulesForSelectedStop
+        schedulesForSelectedStop: action.schedulesForSelectedStop,
+        schedulesFetchedAt: action.fetchedAt
       }
     case FETCH_SCHEDULE_FOR_BUS_STOP_ERROR:
       return {
         ...state,
         fetchingSchedules: false,
         fetchSchedulesError: action.error,
-        schedulesForSelectedStop: []
+        schedulesForSelectedStop: [],
+        schedulesFetchedAt: null
       }
     default:
       return state

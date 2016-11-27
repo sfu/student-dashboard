@@ -22,3 +22,10 @@
 .schedules {
   margin-top: 1em;
 }
+
+.fetchedAt {
+  font-size: .7em;
+  text-transform: uppercase;
+  font-weight: lighter;
+  margin: 1em 0;
+}
