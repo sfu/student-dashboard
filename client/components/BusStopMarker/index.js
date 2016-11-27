@@ -2,6 +2,19 @@ import React, { PropTypes } from 'react'
 import { Marker } from 'react-leaflet'
 import { setSelectedStop, fetchSchedulesForBusStop } from 'actions/transit'
 import { connect } from 'react-redux'
+import L from 'leaflet'
+import BlueIcon from '!url!./translink_blue.svg'
+import RedIcon from '!url!./translink_red.svg'
+
+const TransitIcon = L.Icon.extend({
+  options: {
+    shadowUrl: null,
+    iconSize: [15, 15]
+  }
+})
+
+const BusStopIconBlue = new TransitIcon({ iconUrl: BlueIcon })
+const BusStopIconRed = new TransitIcon({ iconUrl: RedIcon })
 
 const mapPropsToState = state => {
   return {
@@ -17,6 +30,7 @@ const BusStopMarker = ({stop, dispatch, transit}) => {
         lat: stop.Latitude,
         lng: stop.Longitude
       }}
+      icon={selectedStop && selectedStop.StopNo === stop.StopNo ? BusStopIconRed : BusStopIconBlue}
       zIndexOffset={selectedStop && selectedStop.StopNo === stop.StopNo ? 1000 : 0}
       draggable={false}
       onClick={() => {

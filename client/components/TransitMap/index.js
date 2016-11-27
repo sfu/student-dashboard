@@ -16,17 +16,6 @@ import L from 'leaflet'
 import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
 import './TransitMap.css'
 
-// Workaround to get default L.Marker icon working
-// https://github.com/PaulLeCam/react-leaflet/issues/255#issuecomment-261904061
-delete L.Icon.Default.prototype._getIconUrl
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: undefined
-})
-// End Workaround
-
-
 const mapStateToProps = (state) => {
   const { position, transit } = state
   return {
