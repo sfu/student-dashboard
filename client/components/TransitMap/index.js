@@ -12,7 +12,6 @@ import {
   updateMapCenter
 } from 'actions/transit'
 import BusStopMarker from 'components/BusStopMarker'
-import L from 'leaflet'
 import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
 import './TransitMap.css'
 
@@ -93,6 +92,7 @@ class TransitMap extends React.Component {
   render() {
     const { stops, showCurrentLocationOnMap } = this.props.transit
     const { latitude, longitude, accuracy } = this.props.position
+    const map = this.refs.map && this.refs.map.leafletElement
     return (
       <div>
         <Map
@@ -107,7 +107,7 @@ class TransitMap extends React.Component {
           <TileLayer
             url={process.env.MAPBOX_TILES_URL}
           />
-          { stops.length > 0 ? markers(stops) : null }
+          { (stops.length > 0) && (map && map.getZoom() > 13) ? markers(stops) : null }
           { showCurrentLocationOnMap &&
             <Circle
               center={[latitude, longitude]}
