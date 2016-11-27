@@ -116,7 +116,6 @@ class TransitMap extends React.Component {
             />
           }
         </Map>
-        <p style={{fontSize: '.8em'}}>{latitude}, {longitude}, {accuracy}</p>
       </div>
     )
   }
