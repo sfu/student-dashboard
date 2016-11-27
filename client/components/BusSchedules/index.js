@@ -4,6 +4,7 @@ import transformTranslinkText from 'utils/transformTranslinkText'
 import Loading from 'components/Loading'
 import { connect } from 'react-redux'
 import formatTime from 'utils/formatTime'
+import { fetchSchedulesForBusStop } from 'actions/transit'
 import styles from './BusSchedules.css'
 
 const mapStateToProps = state => ({ transit: state.transit })
@@ -12,7 +13,11 @@ const scheduleRows = (schedules) => {
   return schedules.map((schedule, i) => <BusScheduleRow busNumber={schedule.RouteNo} schedules={schedule} key={i} />)
 }
 
-const BusSchedules = ({transit, selectedStop, schedules}) => {
+const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
+  const refresh = stop => {
+    dispatch(fetchSchedulesForBusStop(stop))
+  }
+
   const stopName = `${transformTranslinkText(selectedStop.OnStreet)} / ${transformTranslinkText(selectedStop.AtStreet)}`
   return (
     <div>
@@ -24,9 +29,13 @@ const BusSchedules = ({transit, selectedStop, schedules}) => {
         {transit.fetchingSchedules && <Loading title='Checking Schedules' />}
         {
           transit.schedulesFetchedAt &&
-          <p className={styles.fetchedAt}>
-            Prediction as of {formatTime(transit.schedulesFetchedAt)}
-          </p>
+          <div className={styles.scheduleControls}>
+            <p className={styles.fetchedAt}>
+              Prediction as of {formatTime(transit.schedulesFetchedAt)}
+            </p>
+            <button className={styles.refreshButton} onClick={() => {refresh(selectedStop.StopNo)}}>Refresh</button>
+          </div>
+
         }
         {scheduleRows(schedules)}
       </div>
@@ -37,7 +46,8 @@ const BusSchedules = ({transit, selectedStop, schedules}) => {
 BusSchedules.propTypes = {
   selectedStop: PropTypes.object.isRequired,
   schedules: PropTypes.array.isRequired,
-  transit: PropTypes.object.isRequired
+  transit: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps)(BusSchedules)
