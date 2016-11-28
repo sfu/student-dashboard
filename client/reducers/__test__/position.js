@@ -31,21 +31,21 @@ test('GET_POSITION_SUCCESS', t => {
   const nextState = position(DEFAULT, {
     type: 'GET_POSITION_SUCCESS',
     position: {
-      coords: {
-        latitude: 49,
-        longitude: -123,
-        accuracy: 10
-      },
-      lastUpdated: now
+      latitude: 49,
+      longitude: -123,
+      accuracy: 10,
+      timestamp: now
     }
   })
 
-  const expected = Object.assign({}, DEFAULT)
-  expected.coords = {
+  const expected = {
+    ...DEFAULT,
     latitude: 49,
     longitude: -123,
-    accuracy: 10
+    accuracy: 10,
+    lastUpdated: now
+
   }
-  expected.lastUpdated = now
+
   t.deepEqual(nextState, expected)
 })
