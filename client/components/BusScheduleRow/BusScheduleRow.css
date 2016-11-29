@@ -6,8 +6,8 @@
 }
 
 .busIcon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .routeInfo {
@@ -17,7 +17,7 @@
 
 .routeNumber {
   color: sfured;
-  font-size: 1.5em;
+  font-size: 1.25em;
   margin: 0;
 }
 
@@ -25,7 +25,7 @@
   text-transform: capitalize;
   margin: 0;
   font-weight: normal;
-  font-size: 1em;
+  font-size: .8em;
 }
 
 .arrivalTimes {}
@@ -41,7 +41,7 @@
 
 .arrivalTime:first-of-type {
   color: sfured;
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-weight: bold;
 }
 
