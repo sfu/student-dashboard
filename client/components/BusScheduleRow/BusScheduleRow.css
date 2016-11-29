@@ -53,3 +53,9 @@
   transform: scaleX(-1) rotate(-15deg);
   filter: FlipH;
 }
+
+.bookmarkButton {
+  width: 25px;
+  height: 25px;
+  margin: .25em 0 0 .75em;
+}
