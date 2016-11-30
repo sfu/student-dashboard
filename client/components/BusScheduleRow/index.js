@@ -1,7 +1,14 @@
 import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import {
+  addTransitBookmark,
+  removeTransitBookmark
+} from 'actions/preferences'
 import transformTranslinkText from 'utils/transformTranslinkText'
 import BusIcon from '!url!./bus.svg'
 import RealTimeIcon from '!url!./bus-waves.svg'
+import BookmarkIconHollow from '!url!./Bookmark.svg'
+import BookmarkIconFilled from '!url!./BookmarkFilled.svg'
 import styles from './BusScheduleRow.css'
 
 const arrivalTimes = (schedules) => {
@@ -19,7 +26,11 @@ const arrivalTimes = (schedules) => {
   })
 }
 
-const BusScheduleRow = ({ schedules }) => {
+
+const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) => {
+  const bookmarksForStop = transitBookmarks[stopNumber] || []
+  const routeIsBookmarked = bookmarksForStop.includes(schedules.RouteNo)
+  const BookmarkIcon = routeIsBookmarked ? BookmarkIconFilled : BookmarkIconHollow
   return (
     <div className={styles.row}>
       <img src={BusIcon} alt="Bus Icon" className={styles.busIcon} />
@@ -32,12 +43,33 @@ const BusScheduleRow = ({ schedules }) => {
           {arrivalTimes(schedules.Schedules)}
         </ul>
       </div>
+      <input
+        type="image"
+        className={styles.bookmarkButton}
+        src={BookmarkIcon}
+        onClick={() => {
+          if (routeIsBookmarked) {
+            dispatch(removeTransitBookmark(stopNumber, schedules.RouteNo))
+          } else {
+            dispatch(addTransitBookmark(stopNumber, schedules.RouteNo))
+          }
+        }}
+      />
     </div>
   )
 }
 
 BusScheduleRow.propTypes = {
-  schedules: PropTypes.object.isRequired
+  stopNumber: PropTypes.string.isRequired,
+  schedules: PropTypes.object.isRequired,
+  transitBookmarks: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
-export default BusScheduleRow
+const mapStateToProps = state => {
+  return {
+    transitBookmarks: state.preferences.transitBookmarks
+  }
+}
+
+export default connect(mapStateToProps)(BusScheduleRow)
