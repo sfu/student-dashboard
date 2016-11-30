@@ -9,8 +9,8 @@ import styles from './BusSchedules.css'
 
 const mapStateToProps = state => ({ transit: state.transit })
 
-const scheduleRows = (schedules) => {
-  return schedules.map((schedule, i) => <BusScheduleRow busNumber={schedule.RouteNo} schedules={schedule} key={i} />)
+const scheduleRows = (stop, schedules) => {
+  return schedules.map((schedule, i) => <BusScheduleRow stopNumber={stop.toString()} busNumber={schedule.RouteNo} schedules={schedule} key={i} />)
 }
 
 const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
@@ -37,7 +37,7 @@ const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
           </div>
 
         }
-        {scheduleRows(schedules)}
+        {scheduleRows(selectedStop.StopNo, schedules)}
       </div>
     </div>
   )
