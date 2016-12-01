@@ -31,59 +31,60 @@ const render = ({done, error, props, retry, element}) => {  // eslint-disable-li
   }
 }
 
-export default {
-  path: '/',
-  component: App,
-  indexRoute: {
-    getComponent(location, cb) {
-      System.import('pages/Dashboard').then(loadRoute(cb)).catch(errorLoading)
-    },
-    title: 'Dashboard',
-    queries: ViewerQueries,
-    render
-  },
-  childRoutes: [
-    {
-      path: 'courses',
-      title: 'Courses',
+export default (reduxStore) => { // eslint-disable-line
+  return {
+    path: '/',
+    component: App,
+    indexRoute: {
       getComponent(location, cb) {
-        System.import('pages/Courses').then(loadRoute(cb)).catch(errorLoading)
+        System.import('pages/Dashboard').then(loadRoute(cb)).catch(errorLoading)
       },
+      title: 'Dashboard',
       queries: ViewerQueries,
       render
     },
-    {
-      path: 'transit(/:stop)',
-      title: 'Transit',
-      getComponent(location, cb) {
-        System.import('pages/Transit').then(loadRoute(cb)).catch(errorLoading)
+    childRoutes: [
+      {
+        path: 'courses',
+        title: 'Courses',
+        getComponent(location, cb) {
+          System.import('pages/Courses').then(loadRoute(cb)).catch(errorLoading)
+        },
+        queries: ViewerQueries,
+        render
+      },
+      {
+        path: 'transit(/:stop)',
+        title: 'Transit',
+        getComponent(location, cb) {
+          System.import('pages/Transit').then(loadRoute(cb)).catch(errorLoading)
+        }
+      },
+      {
+        path: 'library',
+        title: 'Library',
+        getComponent(location, cb) {
+          System.import('pages/Library').then(loadRoute(cb)).catch(errorLoading)
+        },
+        queries: ViewerQueries,
+        render
+      },
+      {
+        path: 'room_finder',
+        title: 'Room Finder',
+        getComponent(location, cb) {
+          System.import('pages/RoomFinder').then(loadRoute(cb)).catch(errorLoading)
+        }
+      },
+      {
+        path: 'settings',
+        title: 'Settings',
+        getComponent(location, cb) {
+          System.import('pages/Settings').then(loadRoute(cb)).catch(errorLoading)
+        },
+
       },
 
-    },
-    {
-      path: 'library',
-      title: 'Library',
-      getComponent(location, cb) {
-        System.import('pages/Library').then(loadRoute(cb)).catch(errorLoading)
-      },
-      queries: ViewerQueries,
-      render
-    },
-    {
-      path: 'room_finder',
-      title: 'Room Finder',
-      getComponent(location, cb) {
-        System.import('pages/RoomFinder').then(loadRoute(cb)).catch(errorLoading)
-      }
-    },
-    {
-      path: 'settings',
-      title: 'Settings',
-      getComponent(location, cb) {
-        System.import('pages/Settings').then(loadRoute(cb)).catch(errorLoading)
-      },
-
-    },
-
-  ]
+    ]
+  }
 }
