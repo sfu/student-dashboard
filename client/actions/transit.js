@@ -18,6 +18,20 @@ export const FETCH_SCHEDULE_FOR_BUS_STOP_ERROR = 'FETCH_SCHEDULE_FOR_BUS_STOP_ER
 export const FETCH_SCHEDULE_FOR_BUS_STOP = 'FETCH_SCHEDULE_FOR_BUS_STOP'
 
 
+export const fetchStop = (stop) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStopsStart())
+    const STOP_URL = `/translink/stops/${stop}`
+    return axios.get(STOP_URL).then((response) => {
+      const newStop = response.data
+      const nextState = uniqBy(getState().transit.stops.concat(newStop), 'StopNo')
+      dispatch(fetchStopsSuccess(nextState))
+    }).catch((error) => {
+      dispatch(fetchStopsError(error))
+    })
+  }
+}
+
 export const fetchStops = (coords, radius) => {
   return (dispatch, getState) => {
     dispatch(fetchStopsStart())
