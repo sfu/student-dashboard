@@ -53,7 +53,7 @@ export default {
       render
     },
     {
-      path: 'transit',
+      path: 'transit(/:stop)',
       title: 'Transit',
       getComponent(location, cb) {
         System.import('pages/Transit').then(loadRoute(cb)).catch(errorLoading)
