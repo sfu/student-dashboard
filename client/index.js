@@ -52,7 +52,7 @@ ReactDOM.render(
       history={browserHistory}
       render={applyRouterMiddleware(useRelay)}
       environment={Relay.Store}
-      routes={routes}
+      routes={routes(store)}
     />
   </Provider>,
   RootElement
