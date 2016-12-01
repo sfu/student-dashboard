@@ -56,162 +56,131 @@ test('ADD_TRANSIT_BOOKMARK should throw if missing `route`', t => {
   }, TypeError)
 })
 
+test('ADD_TRANSIT_BOOKMARK should throw if missing `destination`', t => {
+  t.throws(() => {
+    preferences(DEFAULT, {
+      type: 'ADD_TRANSIT_BOOKMARK',
+      stop: '12345',
+      route: '145'
+    })
+
+  }, TypeError)
+})
+
 test('ADD_TRANSIT_BOOKMARK - initial empty', t => {
   const nextState = preferences(DEFAULT, {
     type: 'ADD_TRANSIT_BOOKMARK',
     stop: '12345',
-    route: '145'
+    route: '145',
+    destination: 'SFU'
   })
 
   const expected = {
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' }
+    ]
   }
 
   t.deepEqual(nextState, expected)
 })
 
-test('ADD_TRANSIT_BOOKMARK - existing stop, new route', t => {
+test('ADD_TRANSIT_BOOKMARK - existing stop & route, new destination', t => {
   const nextState = preferences({
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' }
+    ]
   }, {
     type: 'ADD_TRANSIT_BOOKMARK',
     stop: '12345',
-    route: '004'
+    route: '145',
+    destination: 'PRODUCTION STATION'
   })
 
   const expected = {
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['004', '145',]
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' },
+      { stop: '12345', 'route': '145', 'destination': 'PRODUCTION STATION' }
+    ]
 
   }
-  t.deepEqual(nextState, expected)
-})
-
-test('ADD_TRANSIT_BOOKMARK - existing stop, duplicate route', t => {
-  const nextState = preferences({
-    ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145']
-    }
-
-  }, {
-    type: 'ADD_TRANSIT_BOOKMARK',
-    stop: '12345',
-    route: '145'
-  })
-
-  const expected = {
-    ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145']
-    }
-  }
-
   t.deepEqual(nextState, expected)
 })
 
 test('ADD_TRANSIT_BOOKMARK - new stop', t => {
   const nextState = preferences({
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' }
+    ]
 
   }, {
     type: 'ADD_TRANSIT_BOOKMARK',
     stop: '98765',
-    route: '135'
+    route: '135',
+    destination: 'BURRARD STATION'
   })
 
   const expected = {
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145'],
-      '98765': ['135']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' },
+      { stop: '98765', 'route': '135', 'destination': 'BURRARD STATION' }
+    ]
   }
 
   t.deepEqual(nextState, expected)
 
 })
 
-test('REMOVE_TRANSIT_BOOKMARK - remove only route from stop', t=> {
+test('REMOVE_TRANSIT_BOOKMARK - remove existing bookmark', t=> {
   const nextState = preferences({
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145'],
-      '98765': ['135']
-    }
-
-  }, {
-    type: 'REMOVE_TRANSIT_BOOKMARK',
-    stop: '98765',
-    route: '135'
-  })
-
-  const expected = {
-    ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['145']
-    }
-  }
-
-  t.deepEqual(nextState, expected)
-})
-
-test('REMOVE_TRANSIT_BOOKMARK - remove one stop from many stops', t=> {
-  const nextState = preferences({
-    ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['135', '144', '145'],
-      '50490': ['004', '209']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' },
+      { stop: '12345', 'route': '145', 'destination': 'PRODUCTION STATION' }
+    ]
 
   }, {
     type: 'REMOVE_TRANSIT_BOOKMARK',
     stop: '12345',
-    route: '135'
+    route: '145',
+    destination: 'SFU'
   })
 
   const expected = {
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['144', '145'],
-      '50490': ['004', '209']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'PRODUCTION STATION' },
+    ]
   }
 
   t.deepEqual(nextState, expected)
 })
 
-test('REMOVE_TRANSIT_BOOKMARK -- non-bookmarked stop', t=> {
+test('REMOVE_TRANSIT_BOOKMARK -- non-existant bookmark', t=> {
   const nextState = preferences({
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['135', '144', '145'],
-      '50490': ['004', '209']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' },
+      { stop: '12345', 'route': '145', 'destination': 'PRODUCTION STATION' }
+    ]
 
   }, {
     type: 'REMOVE_TRANSIT_BOOKMARK',
     stop: '98765',
-    route: '135'
+    route: '135',
+    destination: 'NOWHERE'
   })
 
   const expected = {
     ...DEFAULT,
-    transitBookmarks: {
-      '12345': ['135', '144', '145'],
-      '50490': ['004', '209']
-    }
+    transitBookmarks: [
+      { stop: '12345', 'route': '145', 'destination': 'SFU' },
+      { stop: '12345', 'route': '145', 'destination': 'PRODUCTION STATION' }
+    ]
 
   }
 
@@ -222,7 +191,8 @@ test('REMOVE_TRANSIT_BOOKMARK -- empty bookmarks', t=> {
   const nextState = preferences(DEFAULT, {
     type: 'REMOVE_TRANSIT_BOOKMARK',
     stop: '99999',
-    route: '123'
+    route: '145',
+    destination: 'SFU'
   })
 
   t.deepEqual(nextState, DEFAULT)

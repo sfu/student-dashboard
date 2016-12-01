@@ -14,18 +14,20 @@ export const setPreference = (preference, value) => {
   }
 }
 
-export const addTransitBookmark = (stop, route) => {
+export const addTransitBookmark = (stop, route, destination) => {
   return {
     type: ADD_TRANSIT_BOOKMARK,
     stop: stop.toString(),
-    route: route.toString()
+    route: route.toString(),
+    destination
   }
 }
 
-export const removeTransitBookmark = (stop, route) => {
+export const removeTransitBookmark = (stop, route, destination) => {
   return {
     type: REMOVE_TRANSIT_BOOKMARK,
     stop: stop.toString(),
-    route: route.toString()
+    route: route.toString(),
+    destination
   }
 }

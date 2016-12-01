@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import isEqual from 'lodash/isEqual'
 import {
   addTransitBookmark,
   removeTransitBookmark
@@ -28,15 +29,15 @@ const arrivalTimes = (schedules) => {
 
 
 const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) => {
-  const bookmarksForStop = transitBookmarks[stopNumber] || []
-  const routeIsBookmarked = bookmarksForStop.includes(schedules.RouteNo)
-  const BookmarkIcon = routeIsBookmarked ? BookmarkIconFilled : BookmarkIconHollow
+  const destination = schedules.Schedules[0].Destination
+  const isBookmarked = !!transitBookmarks.find((bookmark) => isEqual(bookmark, {stop: stopNumber, route: schedules.RouteNo, destination }))
+  const BookmarkIcon = isBookmarked ? BookmarkIconFilled : BookmarkIconHollow
   return (
     <div className={styles.row}>
       <img src={BusIcon} alt="Bus Icon" className={styles.busIcon} />
       <div className={styles.routeInfo}>
         <h1 className={styles.routeNumber}>{schedules.RouteNo}</h1>
-        <h2 className={styles.destination}>{transformTranslinkText(schedules.Schedules[0].Destination)}</h2>
+        <h2 className={styles.destination}>{transformTranslinkText(destination)}</h2>
       </div>
       <div className={styles.arrivalTimes}>
         <ul className={styles.arrivalTimesList}>
@@ -48,10 +49,10 @@ const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) =
         className={styles.bookmarkButton}
         src={BookmarkIcon}
         onClick={() => {
-          if (routeIsBookmarked) {
-            dispatch(removeTransitBookmark(stopNumber, schedules.RouteNo))
+          if (isBookmarked) {
+            dispatch(removeTransitBookmark(stopNumber, schedules.RouteNo, destination))
           } else {
-            dispatch(addTransitBookmark(stopNumber, schedules.RouteNo))
+            dispatch(addTransitBookmark(stopNumber, schedules.RouteNo, destination))
           }
         }}
       />
@@ -62,7 +63,7 @@ const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) =
 BusScheduleRow.propTypes = {
   stopNumber: PropTypes.string.isRequired,
   schedules: PropTypes.object.isRequired,
-  transitBookmarks: PropTypes.object.isRequired,
+  transitBookmarks: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 

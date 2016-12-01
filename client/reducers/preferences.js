@@ -1,3 +1,4 @@
+import isEqual from 'lodash/isEqual'
 import {
   GET_PREFERENCES,
   SET_PREFERENCE,
@@ -7,7 +8,7 @@ import {
 
 export const DEFAULT = {
   timeFormat: '12h',
-  transitBookmarks: {}
+  transitBookmarks: []
 }
 
 export default (state = DEFAULT, action) => {
@@ -28,20 +29,15 @@ export default (state = DEFAULT, action) => {
     }
 
     case ADD_TRANSIT_BOOKMARK: {
-      const { stop, route } = action
-      if (!stop || !route) {
-        throw new TypeError('`stop` and `route` are required')
+      const { stop, route, destination } = action
+      if (!stop || !route || !destination) {
+        throw new TypeError('`stop`, `route`, and `destination` are required')
       }
       const { transitBookmarks } = state
-
-      const nextTransitBookmarks = {
-        ...transitBookmarks
-      }
-
-      if (Object.keys(nextTransitBookmarks).includes(stop)) {
-        nextTransitBookmarks[stop] = Array.from(new Set([...nextTransitBookmarks[stop], route])).sort()
-      } else {
-        nextTransitBookmarks[stop] = [route]
+      const newBookmark = { stop, route, destination }
+      const nextTransitBookmarks = [ ...transitBookmarks ]
+      if (!transitBookmarks.find((bookmark) => { return isEqual(bookmark, newBookmark) })) {
+        nextTransitBookmarks.push(newBookmark)
       }
 
       return {
@@ -51,21 +47,13 @@ export default (state = DEFAULT, action) => {
     }
 
     case REMOVE_TRANSIT_BOOKMARK: {
-      const { stop, route } = action
-      if (!stop || !route) {
-        throw new ReferenceError('`stop` and `route` are required')
+      const { stop, route, destination } = action
+      if (!stop || !route || !destination) {
+        throw new TypeError('`stop`, `route`, and `destination` are required')
       }
       const { transitBookmarks } = state
-      const nextTransitBookmarks = {
-        ...transitBookmarks
-      }
-
-      if (Object.keys(nextTransitBookmarks).includes(stop)) {
-        nextTransitBookmarks[stop] = nextTransitBookmarks[stop].filter(r => r !== route)
-        if (!nextTransitBookmarks[stop].length) {
-          delete nextTransitBookmarks[stop]
-        }
-      }
+      const toRemove = { stop, route, destination }
+      const nextTransitBookmarks = transitBookmarks.filter(bookmark => !isEqual(bookmark, toRemove))
 
       return {
         ...state,
