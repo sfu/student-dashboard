@@ -10,7 +10,8 @@ import {
   fetchStops,
   toggleCurrentLocationOnMap,
   updateMapCenter,
-  updateMapZoom
+  updateMapZoom,
+  toggleLocateOnMount
 } from 'actions/transit'
 import BusStopMarker from 'components/BusStopMarker'
 import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
@@ -32,12 +33,14 @@ const markers = (stops) => {
 
 class TransitMap extends React.Component {
   componentDidMount() {
-    const map = this.refs.map.leafletElement
-    this.props.dispatch(getPositionStart())
-    map.locate({
-      setView: true,
-      enableHighAccuracy: true
-    })
+    if (this.props.transit.locateOnMount) {
+      const map = this.refs.map.leafletElement
+      this.props.dispatch(getPositionStart())
+      map.locate({
+        setView: true,
+        enableHighAccuracy: true
+      })
+    }
   }
 
   handleLocationFound = (e) => {
@@ -63,12 +66,14 @@ class TransitMap extends React.Component {
   handleMapDrag = () => {
     const map = this.refs.map.leafletElement
     const originalCenter = this.props.transit.mapCenter
+    const { dispatch } = this.props
     const newCenter = map.getCenter()
-    this.props.dispatch(updateMapCenter(newCenter))
+    dispatch(updateMapCenter(newCenter))
+    dispatch(toggleLocateOnMount(false))
     const distanceMoved = originalCenter.distanceTo(newCenter)
     if (distanceMoved > 250) {
-      this.props.dispatch(toggleCurrentLocationOnMap(false))
-      this.props.dispatch(fetchStops({
+      dispatch(toggleCurrentLocationOnMap(false))
+      dispatch(fetchStops({
         latitude: parseFloat(newCenter.lat).toFixed(5),
         longitude: parseFloat(newCenter.lng).toFixed(5)
       }, 600))
@@ -90,6 +95,7 @@ class TransitMap extends React.Component {
     // so dispatch both updateMapZoom and updateMapCenter
     dispatch(updateMapZoom(map.getZoom()))
     dispatch(updateMapCenter(map.getCenter()))
+    dispatch(toggleLocateOnMount(false))
   }
 
   render() {
