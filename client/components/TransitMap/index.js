@@ -9,7 +9,8 @@ import {
 import {
   fetchStops,
   toggleCurrentLocationOnMap,
-  updateMapCenter
+  updateMapCenter,
+  updateMapZoom
 } from 'actions/transit'
 import BusStopMarker from 'components/BusStopMarker'
 import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
