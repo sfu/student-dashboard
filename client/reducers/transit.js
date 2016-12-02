@@ -65,7 +65,6 @@ export default (state = DEFAULT, action) => {
         showCurrentLocationOnMap: action.showCurrentLocationOnMap
       }
     case LOCATE_ON_MOUNT:
-      console.log({state, action})
       return {
         ...state,
         locateOnMount: action.locateOnMount
