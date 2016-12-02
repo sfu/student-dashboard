@@ -4,11 +4,13 @@ import {
   FETCH_STOPS_ERROR,
   SHOW_CURRENT_LOCATION_ON_MAP,
   UPDATE_MAP_CENTER,
+  UPDATE_MAP_ZOOM,
   SET_SELECTED_STOP,
   FETCH_SCHEDULE_FOR_BUS_STOP_START,
   FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS,
   FETCH_SCHEDULE_FOR_BUS_STOP_ERROR
 } from '../actions/transit'
+import L from 'leaflet'
 
 export const DEFAULT = {
   /* stops */
@@ -19,7 +21,8 @@ export const DEFAULT = {
   /* map/positioning */
   forceMapUpdate: false,
   showCurrentLocationOnMap: false,
-  mapCenter: null,
+  mapCenter: new L.latLng(49.21490, -123.00018),
+  mapZoom: 10,
 
   /* schedules for selected stop */
   selectedStop: null,
@@ -63,6 +66,11 @@ export default (state = DEFAULT, action) => {
       return {
         ...state,
         mapCenter: action.mapCenter
+      }
+    case UPDATE_MAP_ZOOM:
+      return {
+        ...state,
+        mapZoom: action.mapZoom
       }
     case SET_SELECTED_STOP:
       return {

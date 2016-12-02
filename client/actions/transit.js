@@ -8,6 +8,7 @@ export const FETCH_STOPS_SUCCESS = 'FETCH_STOPS_SUCCESS'
 export const FETCH_STOPS_ERROR = 'FETCH_STOPS_ERROR'
 
 export const UPDATE_MAP_CENTER = 'UPDATE_MAP_CENTER'
+export const UPDATE_MAP_ZOOM = 'UPDATE_MAP_ZOOM'
 export const SHOW_CURRENT_LOCATION_ON_MAP = 'SHOW_CURRENT_LOCATION_ON_MAP'
 
 export const SET_SELECTED_STOP = 'SET_SELECTED_STOP'
@@ -107,6 +108,13 @@ export const updateMapCenter = mapCenter => {
   return {
     type: UPDATE_MAP_CENTER,
     mapCenter
+  }
+}
+
+export const updateMapZoom = mapZoom => {
+  return {
+    type: UPDATE_MAP_ZOOM,
+    mapZoom
   }
 }
 
