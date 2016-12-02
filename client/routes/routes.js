@@ -3,6 +3,16 @@ import App from 'components/App'
 import Loading from 'components/Loading'
 import RelayFetchError from 'components/RelayFetchError'
 import ViewerQueries from 'queries/ViewerQueries'
+import L from 'leaflet'
+import {
+  updateMapZoom,
+  updateMapCenter,
+  setSelectedStop,
+  fetchSchedulesForBusStop,
+  toggleLocateOnMount,
+  fetchStop,
+  fetchStops
+} from 'actions/transit'
 
 import styles from 'components/App/App.css'
 
@@ -54,10 +64,65 @@ export default (reduxStore) => { // eslint-disable-line
         render
       },
       {
-        path: 'transit(/:stop)',
+        path: 'transit(/:stopNumber)',
         title: 'Transit',
         getComponent(location, cb) {
           System.import('pages/Transit').then(loadRoute(cb)).catch(errorLoading)
+        },
+        onEnter: ({ params }, replace, done) => {
+          const { stopNumber } = params
+          const { dispatch } = reduxStore
+          const { transit } = reduxStore.getState()
+
+          if (!stopNumber) { return done() }
+
+          // set locateOnMount to false
+          dispatch(toggleLocateOnMount(false))
+
+          // if stop has already been fetched
+          // set it, update map, fetch map schedules
+          const stopObj = transit.stops.find(s => s.StopNo == stopNumber)
+          if (stopObj) {
+            dispatch(setSelectedStop(stopObj))
+            dispatch(updateMapCenter(new L.latLng(
+              stopObj.Latitude,
+              stopObj.Longitude
+            )))
+            dispatch(updateMapZoom(17))
+            dispatch(fetchSchedulesForBusStop(stopNumber))
+            done()
+          }
+          // stop has not already been fetched
+          // get it, set it, update map, fetch schedules
+          else {
+            dispatch(fetchStop(stopNumber)).then(() => {
+              const { transit } = reduxStore.getState()
+              const stopObj = transit.stops.find(s => s.StopNo == stopNumber)
+              // invalid stop number
+              if (!stopObj) {
+                if (!transit.selectedStop) {
+                  dispatch(toggleLocateOnMount(true))
+                  replace('/transit')
+                  done()
+                }
+
+              // valid stop
+              } else {
+                dispatch(setSelectedStop(stopObj))
+                dispatch(updateMapCenter(new L.latLng(
+                  stopObj.Latitude,
+                  stopObj.Longitude
+                )))
+                dispatch(updateMapZoom(17))
+                dispatch(fetchSchedulesForBusStop(stopNumber))
+                dispatch(fetchStops({
+                  latitude: stopObj.Latitude,
+                  longitude: stopObj.Longitude
+                }, 600))
+                done()
+              }
+            })
+          }
         }
       },
       {
