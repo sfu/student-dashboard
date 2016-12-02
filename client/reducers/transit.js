@@ -3,6 +3,7 @@ import {
   FETCH_STOPS_SUCCESS,
   FETCH_STOPS_ERROR,
   SHOW_CURRENT_LOCATION_ON_MAP,
+  LOCATE_ON_MOUNT,
   UPDATE_MAP_CENTER,
   UPDATE_MAP_ZOOM,
   SET_SELECTED_STOP,
@@ -23,6 +24,7 @@ export const DEFAULT = {
   showCurrentLocationOnMap: false,
   mapCenter: new L.latLng(49.21490, -123.00018),
   mapZoom: 10,
+  locateOnMount: true,
 
   /* schedules for selected stop */
   selectedStop: null,
@@ -61,6 +63,12 @@ export default (state = DEFAULT, action) => {
       return {
         ...state,
         showCurrentLocationOnMap: action.showCurrentLocationOnMap
+      }
+    case LOCATE_ON_MOUNT:
+      console.log({state, action})
+      return {
+        ...state,
+        locateOnMount: action.locateOnMount
       }
     case UPDATE_MAP_CENTER:
       return {

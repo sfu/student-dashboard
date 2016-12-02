@@ -10,6 +10,7 @@ export const FETCH_STOPS_ERROR = 'FETCH_STOPS_ERROR'
 export const UPDATE_MAP_CENTER = 'UPDATE_MAP_CENTER'
 export const UPDATE_MAP_ZOOM = 'UPDATE_MAP_ZOOM'
 export const SHOW_CURRENT_LOCATION_ON_MAP = 'SHOW_CURRENT_LOCATION_ON_MAP'
+export const LOCATE_ON_MOUNT = 'LOCATE_ON_MOUNT'
 
 export const SET_SELECTED_STOP = 'SET_SELECTED_STOP'
 
@@ -115,6 +116,13 @@ export const updateMapZoom = mapZoom => {
   return {
     type: UPDATE_MAP_ZOOM,
     mapZoom
+  }
+}
+
+export const toggleLocateOnMount = (locateOnMount = false) => {
+  return {
+    type: LOCATE_ON_MOUNT,
+    locateOnMount
   }
 }
 
