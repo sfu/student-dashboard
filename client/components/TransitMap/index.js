@@ -59,7 +59,7 @@ class TransitMap extends React.Component {
     this.props.dispatch(getPositionError(err))
   }
 
-  handleMapMove = () => {
+  handleMapDrag = () => {
     const map = this.refs.map.leafletElement
     const originalCenter = this.props.transit.mapCenter
     if (!originalCenter) {
@@ -108,6 +108,7 @@ class TransitMap extends React.Component {
           onLocationfound={this.handleLocationFound}
           onLocationerror={this.handleLocationError}
           onMoveend={this.handleMapMove}
+          onDragend={this.handleMapDrag}
         >
           <TileLayer
             url={process.env.MAPBOX_TILES_URL}
