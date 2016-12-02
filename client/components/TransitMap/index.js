@@ -105,8 +105,8 @@ class TransitMap extends React.Component {
       mapCenter,
       mapZoom
     } = this.props.transit
+
     const { latitude, longitude, accuracy } = this.props.position
-    const map = this.refs.map && this.refs.map.leafletElement
     return (
       <div>
         <Map
@@ -116,7 +116,6 @@ class TransitMap extends React.Component {
           animate={true}
           onLocationfound={this.handleLocationFound}
           onLocationerror={this.handleLocationError}
-          onMoveend={this.handleMapMove}
           onDragend={this.handleMapDrag}
           onZoomEnd={this.handleMapZoom}
         >
