@@ -80,14 +80,6 @@ class TransitMap extends React.Component {
     }
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   const nextTransit = nextProps.transit
-  //   const currentTransit = this.props.transit
-  //   const scu = nextTransit.forceMapUpdate ||
-  //               nextTransit.showCurrentLocationOnMap != currentTransit.showCurrentLocationOnMap
-  //   console.log({scu})
-  //   return scu
-  // }
   handleMapZoom = () => {
     const map = this.refs.map.leafletElement
     const { dispatch } = this.props
