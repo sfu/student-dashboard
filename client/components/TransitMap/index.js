@@ -63,12 +63,6 @@ class TransitMap extends React.Component {
   handleMapDrag = () => {
     const map = this.refs.map.leafletElement
     const originalCenter = this.props.transit.mapCenter
-    if (!originalCenter) {
-       // first load of the map
-      this.props.dispatch(updateMapCenter(map.getCenter()))
-      return
-    }
-
     const newCenter = map.getCenter()
     this.props.dispatch(updateMapCenter(newCenter))
     const distanceMoved = originalCenter.distanceTo(newCenter)
