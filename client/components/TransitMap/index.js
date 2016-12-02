@@ -122,7 +122,7 @@ class TransitMap extends React.Component {
           <TileLayer
             url={process.env.MAPBOX_TILES_URL}
           />
-          { (stops.length > 0) && (map && map.getZoom() > 13) ? markers(stops) : null }
+          { (stops.length > 0) && (mapZoom > 13) ? markers(stops) : null }
           { showCurrentLocationOnMap &&
             <Circle
               center={[latitude, longitude]}
