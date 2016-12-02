@@ -88,6 +88,14 @@ class TransitMap extends React.Component {
   //   console.log({scu})
   //   return scu
   // }
+  handleMapZoom = () => {
+    const map = this.refs.map.leafletElement
+    const { dispatch } = this.props
+    // zooming can change the center point of the map
+    // so dispatch both updateMapZoom and updateMapCenter
+    dispatch(updateMapZoom(map.getZoom()))
+    dispatch(updateMapCenter(map.getCenter()))
+  }
 
   render() {
     const {
@@ -109,6 +117,7 @@ class TransitMap extends React.Component {
           onLocationerror={this.handleLocationError}
           onMoveend={this.handleMapMove}
           onDragend={this.handleMapDrag}
+          onZoomEnd={this.handleMapZoom}
         >
           <TileLayer
             url={process.env.MAPBOX_TILES_URL}
