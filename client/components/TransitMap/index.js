@@ -144,11 +144,13 @@ TransitMap.propTypes = {
     stops: PropTypes.array.isRequired,
     forceMapUpdate: PropTypes.bool.isRequired,
     showCurrentLocationOnMap: PropTypes.bool.isRequired,
+    locateOnMount: PropTypes.bool.isRequired,
     selectedStop: PropTypes.object,
     fetchingSchedules: PropTypes.bool.isRequired,
     fetchSchedulesError: PropTypes.string,
     schedulesForSelectedStop: PropTypes.array.isRequired,
-    mapCenter: PropTypes.object
+    mapCenter: PropTypes.object.isRequired,
+    mapZoom: PropTypes.number.isRequired
   }),
   position: PropTypes.shape({
     locating: PropTypes.bool.isRequired,
