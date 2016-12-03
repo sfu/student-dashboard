@@ -2596,10 +2596,6 @@ express-boom@1.0.0:
   dependencies:
     boom "3.2.x"
 
-express-enforces-ssl@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/express-enforces-ssl/-/express-enforces-ssl-1.1.0.tgz#cf29c6a61c5bdd802e2c7ed265a4a98e7487d1ac"
-
 express-http-proxy@^0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/express-http-proxy/-/express-http-proxy-0.10.1.tgz#dff83794a8ec11db0e7d9448e6ce1ca6278b3dd7"
@@ -4157,11 +4153,7 @@ lodash@^3.2.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.1, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.0, lodash@^4.6.1:
-  version "4.16.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
-
-lodash@^4.17.2:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.1, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.0, lodash@^4.6.1:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 

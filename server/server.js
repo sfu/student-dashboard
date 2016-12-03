@@ -11,7 +11,6 @@ import WebpackHotMiddleware from 'webpack-hot-middleware'
 import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
-import enforceSSL from 'express-enforces-ssl'
 import proxy from 'express-http-proxy'
 
 const RedisStore = ConnectRedis(session)
@@ -80,10 +79,6 @@ export const createServer = (app) => {
   app.use(helmet())
   app.use(express.static(path.resolve(__dirname, '../public')))
   app.use(boom())
-
-  if (PRODUCTION) {
-    app.use(enforceSSL())
-  }
 
   app.set('htmlDirectory', path.resolve(__dirname, '../public/assets'))
 
