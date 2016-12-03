@@ -20,42 +20,41 @@ async function loggedin(req, res, next) {
   if (req.isApiRequest) {
     let token = req.headers.authorization
     token = token ? token.split(' ') : undefined
-    debug('Incoming api request')
+    debug('%s - %s - Incoming api request', req.id, req.originalUrl)
     if (!token || (token && token[0].toLowerCase() !== 'bearer')) {
-      debug('Invalid or missing token, redirecting to login')
+      debug('%s - %s - Invalid or missing token, redirecting to login', req.id, req.originalUrl)
       return res.redirectToLogin()
     }
 
     try {
-      debug('Validating JWT')
+      debug('%s - %s - Validating JWT', req.id, req.originalUrl)
       const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
       req.username = payload.sub
-      debug('JWT sub: %s', req.username)
+      debug('%s - %s - JWT sub: %s', req.id, req.originalUrl, req.username)
       return next()
     } catch(e) {
-      debug('JWT error: %s', e)
+      debug('%s - %s - JWT error: %s', req.id, req.originalUrl, e)
       return next(e)
     }
   }
 
   // session
   if (req.session.auth) {
-    debug('`loggedin` called, user has session, calling `next()`')
+    debug('%s - %s - `loggedin` called, user has session, calling `next()`', req.id, req.originalUrl)
     return next()
   }
 
-  debug('User not logged in, redirecting to login')
+  debug('%s - %s - User not logged in, redirecting to login', req.id, req.originalUrl)
   res.redirectToLogin()
 }
 
 function authenticateCasUser(req, res, next) {
     cas.authenticate(req, res, (err, status, username, extended) => {
         if (err) {
-      debug('Error authenticating user with CAS')
-      debug(err)
+      debug('%s - %s - Error authenticating user with CAS: %s', req.id, req.originalUrl, err)
       next(err)
     } else {
-      debug(`Authenticated user %s via CAS`, username)
+      debug(`%s - %s - Authenticated user %s via CAS`, req.id, req.originalUrl, username)
       const {redirectTo} = req.session || '/'
       delete req.session.redirectTo
       req.session.regenerate(() => {
@@ -65,7 +64,7 @@ function authenticateCasUser(req, res, next) {
         req.session.casAttributes = extended
         req.session.redirectTo = redirectTo
 
-        debug(`Regenerating session: ${JSON.stringify(req.session, null, 2)}`)
+        debug(`%s - %s - Regenerating session: ${JSON.stringify(req.session, null, 2)}`, req.id, req.originalUrl)
         next()
       })
     }
@@ -74,35 +73,35 @@ function authenticateCasUser(req, res, next) {
 
 async function getUser(req, res, next) {
   const { username } = req
-  debug('Getting user record for %s', username)
+  debug('%s - %s - Getting user record for %s', req.id, req.originalUrl, username)
 
   try {
     req.user = await loadUser(username)
-    debug(req.user ? `Retreived user record for ${username}: ${JSON.stringify(req.user, null, 2)}` : `No user record exists for ${username}`)
+    debug(req.user ? `${req.id} - ${req.originalUrl} - Retreived user record for ${username}: ${JSON.stringify(req.user, null, 2)}` : `${req.id} - ${req.originalUrl} - No user record exists for ${username}`)
     if (req.session) {
       req.session.user = req.user
     }
     next()
   } catch(e) {
-    debug('Error getting user from DB: %s', e)
+    debug('%s - %s - Error getting user from DB: %s', req.id, req.originalUrl, e)
     next(e)
   }
 }
 
 async function getProxyTicket(req, res, next) {
-  debug('Getting proxy ticket for %s', req.username)
+  debug('%s - %s - Getting proxy ticket for %s', req.id, req.originalUrl, req.username)
   try {
      req.PROXY_TICKET = await cas.getProxyTicketAsync(req.session.casAttributes.PGTIOU, process.env.PORTAL_SERVICE_NAME)
-     debug('Proxy ticket: %s', req.PROXY_TICKET)
+     debug('%s - %s - Proxy ticket: %s', req.id, req.originalUrl, req.PROXY_TICKET)
      next()
   } catch (e) {
-    debug('Error getting proxy ticket: %s', e)
+    debug('%s - %s - Error getting proxy ticket: %s', req.id, req.originalUrl, e)
     next(e)
   }
 }
 
 async function provisionOrUpdateUser(req, res, next) {
-    debug('provisionOrUpdateUser')
+    debug('%s - %s - provisionOrUpdateUser', req.id, req.originalUrl)
 
   if (req.user || req.session.user) {
     if (req.isApiRequest) {
@@ -112,23 +111,23 @@ async function provisionOrUpdateUser(req, res, next) {
     const user = req.user || req.session.user
     const userHasAccessToken = !!user.oauth_access_token
     const accessTokenStillValid = userHasAccessToken ? await validateAccessToken(user.oauth_access_token, new Date(user.oauth_valid_until).getTime()) : false
-    debug('User %s exists in DB, access token valid? %s', user.username, accessTokenStillValid)
+    debug('%s - %s - User %s exists in DB, access token valid? %s', req.id, req.originalUrl, user.username, accessTokenStillValid)
 
     // user exists in the database, may or may not need new oauth credentials
     if (accessTokenStillValid) {
       return next()
     } else {
       try {
-        debug('Getting new OAuth credentials for %s', user.username)
+        debug('%s - %s - Getting new OAuth credentials for %s', req.id, req.originalUrl, user.username)
         const response = await getAccessToken(req.PROXY_TICKET)
-        debug(JSON.stringify(response.data))
+        debug(`${req.id} - ${JSON.stringify(response.data)}`)
         const { access_token, refresh_token, valid_until } = response.data
-        debug('Updating user record in DB with new OAuth credentials')
+        debug('%s - %s - Updating user record in DB with new OAuth credentials', req.id, req.originalUrl)
         req.user = req.session.user = await updateOAuthCredentialsForUser(user.username, {access_token, refresh_token, valid_until})
-        debug(JSON.stringify(req.user))
+        debug(`${req.id} - ${JSON.stringify(req.user)}`)
         return next()
       } catch(e) {
-        debug('Error getting new OAuth credentials: %s', e)
+        debug('%s - %s - Error getting new OAuth credentials: %s', req.id, req.originalUrl, e)
         return next(e)
       }
     }
@@ -137,7 +136,7 @@ async function provisionOrUpdateUser(req, res, next) {
   // user does not exist in the database
   // fetch credentials for the user and create their db record
   try {
-    debug('User %s does not exist in DB, fetching OAuth credentials and creating record', req.username)
+    debug('%s - %s - User %s does not exist in DB, fetching OAuth credentials and creating record', req.id, req.originalUrl, req.username)
     // to get the bio we need to get oauth credentials fisrt
     // however, the mobile apps can also call an api route to get the user record with a JWT as the auth
     // in those cases, we can't get oauth credentials; getUserBio needs to be called with undef for the token
@@ -145,16 +144,16 @@ async function provisionOrUpdateUser(req, res, next) {
     let bio
     let oauthCredentials = {}
     if (req.isApiRequest) {
-      debug('This is an API request, getting bio')
+      debug('%s - %s - This is an API request, getting bio', req.id, req.originalUrl)
       bio = await getUserBio(req.username, null, req)
-      debug(JSON.stringify(bio, null, 2))
+      debug(`${req.id} - ${JSON.stringify(bio, null, 2)}`)
     } else {
-      debug('Not an API request; getting OAuth credentials and bio')
+      debug('%s - %s - Not an API request; getting OAuth credentials and bio', req.id, req.originalUrl)
       const oauthResponse = await getAccessToken(req.PROXY_TICKET)
       oauthCredentials = oauthResponse.data
-      debug(JSON.stringify(oauthCredentials))
+      debug(`${req.id} - ${JSON.stringify(oauthCredentials)}`)
       bio = await getUserBio(req.username, oauthCredentials.access_token, req)
-      debug(JSON.stringify(bio, null, 2))
+      debug(`${req.id} - ${JSON.stringify(bio, null, 2)}`)
     }
 
     const { username, lastname, firstnames, commonname, barcode } = bio
@@ -171,13 +170,13 @@ async function provisionOrUpdateUser(req, res, next) {
       oauth_refresh_token: refresh_token || null,
       oauth_valid_until: valid_until ? new Date(valid_until) : null
     }
-    debug('Attempting to create user record in DB')
+    debug('%s - %s - Attempting to create user record in DB', req.id, req.originalUrl)
     const user = await db('users').insert(payload).returning('*')
     req.user = req.session.user = user ? user[0] : null
-    debug(JSON.stringify(req.user, null, 2))
+    debug(`${req.id} - ${JSON.stringify(req.user, null, 2)}`)
     next()
   } catch (e) {
-    debug('Error provisioning user: %s', e)
+    debug('%s - %s - Error provisioning user: %s', req.id, req.originalUrl, e)
     next(e)
   }
 
