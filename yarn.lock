@@ -2603,6 +2603,12 @@ express-http-proxy@^0.10.1:
     es6-promise "^3.2.1"
     raw-body "^2.1.7"
 
+express-request-id@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/express-request-id/-/express-request-id-1.1.0.tgz#5d691cd9c522806efc1cc41277ce28946fa9a034"
+  dependencies:
+    node-uuid "~1.4.1"
+
 express-session@1.14.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.14.1.tgz#600364f0f6bf5dce32649e006770bdeee80aec99"
@@ -4485,7 +4491,7 @@ node-status-codes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-status-codes/-/node-status-codes-1.0.0.tgz#5ae5541d024645d32a58fcddc9ceecea7ae3ac2f"
 
-node-uuid@1.4.7, node-uuid@^1.4.7, node-uuid@~1.4.7:
+node-uuid@1.4.7, node-uuid@^1.4.7, node-uuid@~1.4.1, node-uuid@~1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.7.tgz#6da5a17668c4b3dd59623bda11cf7fa4c1f60a6f"
 

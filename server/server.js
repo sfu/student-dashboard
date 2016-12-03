@@ -12,6 +12,7 @@ import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
 import proxy from 'express-http-proxy'
+import requestId from 'express-request-id'
 
 const RedisStore = ConnectRedis(session)
 const PRODUCTION = process.env.NODE_ENV === 'production'
@@ -77,6 +78,7 @@ export const createServer = (app) => {
   app.set('JWT_SIGNING_ALG', 'RS512')
   app.use(session(sessionConfig))
   app.use(helmet())
+  app.use(requestId())
   app.use(express.static(path.resolve(__dirname, '../public')))
   app.use(boom())
 
