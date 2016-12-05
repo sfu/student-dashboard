@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual'
 import {
   addTransitBookmark,
   removeTransitBookmark
-} from 'actions/preferences'
+} from 'actions/transit'
 import transformTranslinkText from 'utils/transformTranslinkText'
 import BusIcon from '!url!./bus.svg'
 import RealTimeIcon from '!url!./bus-waves.svg'
@@ -70,7 +70,7 @@ BusScheduleRow.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    transitBookmarks: state.preferences.transitBookmarks
+    transitBookmarks: state.transit.transitBookmarks
   }
 }
 

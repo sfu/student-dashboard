@@ -1,6 +1,9 @@
 import axios from 'axios'
 import uniqBy from 'lodash/uniqBy'
-import normalizeTranslinkData from 'utils/normalizeTranslinkData'
+import normalizeTranslinkData from '../utils/normalizeTranslinkData'
+
+export const ADD_TRANSIT_BOOKMARK = 'ADD_TRANSIT_BOOKMARK'
+export const REMOVE_TRANSIT_BOOKMARK = 'REMOVE_TRANSIT_BOOKMARK'
 
 export const FETCH_STOPS = 'FETCH_STOPS'
 export const FETCH_STOPS_START = 'FETCH_STOPS_START'
@@ -19,6 +22,24 @@ export const FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS = 'FETCH_SCHEDULE_FOR_BUS_STOP_
 export const FETCH_SCHEDULE_FOR_BUS_STOP_ERROR = 'FETCH_SCHEDULE_FOR_BUS_STOP_ERROR'
 export const FETCH_SCHEDULE_FOR_BUS_STOP = 'FETCH_SCHEDULE_FOR_BUS_STOP'
 
+
+export const addTransitBookmark = (stop, route, destination) => {
+  return {
+    type: ADD_TRANSIT_BOOKMARK,
+    stop: stop.toString(),
+    route: route.toString(),
+    destination
+  }
+}
+
+export const removeTransitBookmark = (stop, route, destination) => {
+  return {
+    type: REMOVE_TRANSIT_BOOKMARK,
+    stop: stop.toString(),
+    route: route.toString(),
+    destination
+  }
+}
 
 export const fetchStop = (stop) => {
   return (dispatch, getState) => {

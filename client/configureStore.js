@@ -7,7 +7,6 @@ import * as reducers from './reducers'
 const reducerObj = {}
 
 Object.keys(reducers).forEach(r => reducerObj[r] = reducers[r])
-
 var hydratedState = {}
 
 try {

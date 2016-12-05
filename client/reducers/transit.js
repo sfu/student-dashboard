@@ -1,4 +1,8 @@
+import isEqual from 'lodash/isEqual'
+
 import {
+  ADD_TRANSIT_BOOKMARK,
+  REMOVE_TRANSIT_BOOKMARK,
   FETCH_STOPS_START,
   FETCH_STOPS_SUCCESS,
   FETCH_STOPS_ERROR,
@@ -13,7 +17,21 @@ import {
 } from '../actions/transit'
 import L from 'leaflet'
 
+var hydratedBookmarks = []
+
+if (window && window.localStorage) {
+  try {
+    hydratedBookmarks = JSON.parse(localStorage.getItem('transitBookmarks'))
+  } catch (e) {
+    () => {}
+  }
+}
+
+
 export const DEFAULT = {
+  /* bookmarks */
+  transitBookmarks: hydratedBookmarks,
+
   /* stops */
   fetchingStops: false,
   fetchStopsError: null,
@@ -34,9 +52,44 @@ export const DEFAULT = {
   schedulesFetchedAt: null
 }
 
+
+
 export default (state = DEFAULT, action) => {
   const { type } = action
   switch (type) {
+    case ADD_TRANSIT_BOOKMARK: {
+      const { stop, route, destination } = action
+      if (!stop || !route || !destination) {
+        throw new TypeError('`stop`, `route`, and `destination` are required')
+      }
+      const { transitBookmarks } = state
+      const newBookmark = { stop, route, destination }
+      const nextTransitBookmarks = [ ...transitBookmarks ]
+      if (!transitBookmarks.find((bookmark) => { return isEqual(bookmark, newBookmark) })) {
+        nextTransitBookmarks.push(newBookmark)
+      }
+
+      return {
+        ...state,
+        transitBookmarks: nextTransitBookmarks
+      }
+    }
+
+    case REMOVE_TRANSIT_BOOKMARK: {
+      const { stop, route, destination } = action
+      if (!stop || !route || !destination) {
+        throw new TypeError('`stop`, `route`, and `destination` are required')
+      }
+      const { transitBookmarks } = state
+      const toRemove = { stop, route, destination }
+      const nextTransitBookmarks = transitBookmarks.filter(bookmark => !isEqual(bookmark, toRemove))
+
+      return {
+        ...state,
+        transitBookmarks: nextTransitBookmarks
+      }
+    }
+
     case FETCH_STOPS_START:
       return {
         ...state,
