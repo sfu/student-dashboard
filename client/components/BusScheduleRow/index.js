@@ -48,6 +48,7 @@ const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) =
         type="image"
         className={styles.bookmarkButton}
         src={BookmarkIcon}
+        title={isBookmarked ? `Remove from transit bookmarks` : `Add to transit bookmarks`}
         onClick={() => {
           if (isBookmarked) {
             dispatch(removeTransitBookmark(stopNumber, schedules.RouteNo, destination))
