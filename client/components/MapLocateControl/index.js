@@ -21,6 +21,7 @@ import styles from './MapLocateControl.css'
 
 class MapLocateControl extends Component {
   handleClick = () => {
+    this.context.router.push('/transit')
     const { dispatch } = this.props
     dispatch(getPosition({
       enableHighAccuracy: true
@@ -64,6 +65,10 @@ MapLocateControl.propTypes = {
   position: PropTypes.object.isRequired,
   transit: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
+}
+
+MapLocateControl.contextTypes = {
+  router: PropTypes.object
 }
 
 const mapPropsToState = state => {
