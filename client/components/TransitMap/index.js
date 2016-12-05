@@ -141,7 +141,7 @@ TransitMap.propTypes = {
     locateOnMount: PropTypes.bool.isRequired,
     selectedStop: PropTypes.object,
     fetchingSchedules: PropTypes.bool.isRequired,
-    fetchSchedulesError: PropTypes.string,
+    fetchSchedulesError: PropTypes.object,
     schedulesForSelectedStop: PropTypes.array.isRequired,
     mapCenter: PropTypes.object.isRequired,
     mapZoom: PropTypes.number.isRequired

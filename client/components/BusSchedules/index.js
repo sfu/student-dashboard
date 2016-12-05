@@ -17,7 +17,6 @@ const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
   const refresh = stop => {
     dispatch(fetchSchedulesForBusStop(stop))
   }
-
   const stopName = `${transformTranslinkText(selectedStop.OnStreet)} / ${transformTranslinkText(selectedStop.AtStreet)}`
   return (
     <div>
@@ -36,6 +35,9 @@ const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
             <button className={styles.refreshButton} onClick={() => {refresh(selectedStop.StopNo)}}>Refresh</button>
           </div>
 
+        }
+        {transit.fetchSchedulesError && transit.fetchSchedulesError.Code === '3005' &&
+        <p style={{textAlign: 'center'}}>No upcoming departures for this stop.</p>
         }
         {scheduleRows(selectedStop.StopNo, schedules)}
       </div>

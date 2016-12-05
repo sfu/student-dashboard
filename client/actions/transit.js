@@ -83,7 +83,7 @@ export const fetchSchedulesForBusStop = (stop) => {
     return axios.get(SCHEDULES_URL).then((response) => {
       dispatch(fetchSchedulesForBusStopSuccess(normalizeTranslinkData(response.data)))
     }).catch((error) => {
-      dispatch(fetchSchedulesForBusStopError(error.message))
+      dispatch(fetchSchedulesForBusStopError(error.response.data))
     })
   }
 }
