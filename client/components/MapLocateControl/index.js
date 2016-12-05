@@ -52,6 +52,7 @@ class MapLocateControl extends Component {
             type="image"
             src={iconUrl}
             onClick={this.handleClick}
+            title="Find current location"
           />
         </div>
       </Control>
