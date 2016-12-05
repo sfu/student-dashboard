@@ -1,0 +1,30 @@
+.container {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.compassIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.compassIcon:focus {
+  outline: none;
+}
+
+.compassIcon.locating {
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(180deg);}
+}

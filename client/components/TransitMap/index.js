@@ -13,6 +13,7 @@ import {
   updateMapZoom,
   toggleLocateOnMount
 } from 'actions/transit'
+import MapLocateControl from 'components/MapLocateControl'
 import BusStopMarker from 'components/BusStopMarker'
 import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
 import './TransitMap.css'
@@ -71,8 +72,8 @@ class TransitMap extends React.Component {
     dispatch(updateMapCenter(newCenter))
     dispatch(toggleLocateOnMount(false))
     const distanceMoved = originalCenter.distanceTo(newCenter)
+    dispatch(toggleCurrentLocationOnMap(false))
     if (distanceMoved > 250) {
-      dispatch(toggleCurrentLocationOnMap(false))
       dispatch(fetchStops({
         latitude: parseFloat(newCenter.lat).toFixed(5),
         longitude: parseFloat(newCenter.lng).toFixed(5)
@@ -114,6 +115,7 @@ class TransitMap extends React.Component {
           <TileLayer
             url={process.env.MAPBOX_TILES_URL}
           />
+          <MapLocateControl />
           { (stops.length > 0) && (mapZoom > 13) ? markers(stops) : null }
           { showCurrentLocationOnMap &&
             <Circle

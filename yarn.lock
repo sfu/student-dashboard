@@ -5456,6 +5456,10 @@ react-hot-loader@3.0.0-beta.2:
     redbox-react "^1.2.3"
     source-map "^0.4.4"
 
+react-leaflet-control@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-leaflet-control/-/react-leaflet-control-1.2.0.tgz#eddde584caeac710ef1d412914030984904a8d0b"
+
 react-leaflet@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.0.0.tgz#801008aa3af2c4ab13b809f5e408976d12d3b684"
