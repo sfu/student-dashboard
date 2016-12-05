@@ -84,11 +84,11 @@ export default (reduxStore) => { // eslint-disable-line
           const stopObj = transit.stops.find(s => s.StopNo == stopNumber)
           if (stopObj) {
             dispatch(setSelectedStop(stopObj))
+            dispatch(updateMapZoom(18))
             dispatch(updateMapCenter(new L.latLng(
               stopObj.Latitude,
               stopObj.Longitude
             )))
-            dispatch(updateMapZoom(17))
             dispatch(fetchSchedulesForBusStop(stopNumber))
             done()
           }
@@ -109,11 +109,11 @@ export default (reduxStore) => { // eslint-disable-line
               // valid stop
               } else {
                 dispatch(setSelectedStop(stopObj))
+                dispatch(updateMapZoom(18))
                 dispatch(updateMapCenter(new L.latLng(
                   stopObj.Latitude,
                   stopObj.Longitude
                 )))
-                dispatch(updateMapZoom(17))
                 dispatch(fetchSchedulesForBusStop(stopNumber))
                 dispatch(fetchStops({
                   latitude: stopObj.Latitude,
