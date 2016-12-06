@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 import { Marker } from 'react-leaflet'
 import { connect } from 'react-redux'
 import L from 'leaflet'
-import BlueIcon from '!url!./translink_blue.svg'
-import RedIcon from '!url!./translink_red.svg'
+import BlueIcon from '!url!images/transit/translink_blue.svg'
+import RedIcon from '!url!images/transit/translink_red.svg'
 
 const TransitIcon = L.Icon.extend({
   options: {

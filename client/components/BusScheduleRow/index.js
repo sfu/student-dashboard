@@ -6,10 +6,10 @@ import {
   removeTransitBookmark
 } from 'actions/transit'
 import transformTranslinkText from 'utils/transformTranslinkText'
-import BusIcon from '!url!./bus.svg'
-import RealTimeIcon from '!url!./bus-waves.svg'
-import BookmarkIconHollow from '!url!./Bookmark.svg'
-import BookmarkIconFilled from '!url!./BookmarkFilled.svg'
+import BusIcon from '!url!images/transit/bus.svg'
+import RealTimeIcon from '!url!images/transit/bus-waves.svg'
+import BookmarkIconHollow from '!url!images/transit/Bookmark.svg'
+import BookmarkIconFilled from '!url!images/transit/BookmarkFilled.svg'
 import styles from './BusScheduleRow.css'
 
 const arrivalTimes = (schedules) => {
