@@ -21,12 +21,11 @@ var hydratedBookmarks = []
 
 if (window && window.localStorage) {
   try {
-    hydratedBookmarks = JSON.parse(localStorage.getItem('transitBookmarks'))
+    hydratedBookmarks = JSON.parse(localStorage.getItem('transitBookmarks')) || []
   } catch (e) {
     () => {}
   }
 }
-
 
 export const DEFAULT = {
   /* bookmarks */
