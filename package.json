@@ -114,6 +114,7 @@
     "express": "4.14.0",
     "express-boom": "1.0.0",
     "express-http-proxy": "^0.10.1",
+    "express-jsonschema": "^1.1.6",
     "express-request-id": "^1.1.0",
     "express-session": "1.14.1",
     "graphiql": "0.7.8",
