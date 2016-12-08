@@ -128,6 +128,7 @@
     "node-uuid": "1.4.7",
     "normalize.css": "4.2.0",
     "pg": "6.1.0",
+    "promise-redis": "^0.0.5",
     "qs": "6.2.1",
     "react": "15.3.2",
     "react-barcode": "1.1.0",

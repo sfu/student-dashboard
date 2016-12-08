@@ -13,8 +13,10 @@ import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
 import proxy from 'express-http-proxy'
 import requestId from 'express-request-id'
+const redis = require('promise-redis')()
 
 const RedisStore = ConnectRedis(session)
+const TRANSLINK_CACHE = redis.createClient(process.env.TRANSLINK_CACHE_REDIS_URL)
 const PRODUCTION = process.env.NODE_ENV === 'production'
 
 const sessionConfig = {
@@ -73,6 +75,7 @@ export const createServer = (app) => {
   if (!PRODUCTION) {
     app = createDevServer(app)
   }
+  app.set('TRANSLINK_CACHE', TRANSLINK_CACHE)
   app.set('JWT_SIGNING_CERTIFICATE', fs.readFileSync(process.env.JWT_SIGNING_CERTIFICATE))
   app.set('JWT_SIGNING_KEY', fs.readFileSync(process.env.JWT_SIGNING_KEY))
   app.set('JWT_SIGNING_ALG', 'RS512')
