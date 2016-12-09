@@ -166,7 +166,7 @@ module.exports = (env = {}) => {
         }
       })),
 
-      ifProd(new ExtractTextPlugin('[name].css'), {
+      ifProd(new ExtractTextPlugin('[name].[chunkhash].css'), {
         allChunks: false
       }),
 

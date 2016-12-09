@@ -21,7 +21,8 @@ router.get('/', loggedin, async (req, res) => {
     res.render('index', {
       manifest: JSON.parse(manifest),
       chunkManifest,
-      state
+      state,
+      production: process.env.NODE_ENV === 'production'
     })
   } catch(e) {
     debug('%s - Error rendering app: %s', e.message)

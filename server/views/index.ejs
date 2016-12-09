@@ -10,6 +10,9 @@
       window.webpackManifest = <%- chunkManifest %>
       window.STATE_BOOTSTRAP = <%- state %>
     </script>
+    <% if(production) { %>
+    <link href="<%= manifest['/assets/app.css']%>" rel="stylesheet">
+    <% } %>
   </head>
   <body>
 
