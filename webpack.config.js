@@ -7,7 +7,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const values = require('postcss-modules-values')
 const htmlWebpackTemplate = require('html-webpack-template')
-
+const ManifestPlugin = require('webpack-manifest-plugin')
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin')
+const WebpackMd5Hash = require('webpack-md5-hash')
 module.exports = (env = {}) => {
   const addItem = (add, item) => add ? item : undefined
   const ifProd = item => addItem(env.prod, item)
@@ -35,7 +37,8 @@ module.exports = (env = {}) => {
     },
 
     output: {
-      filename: '[name].js',
+      filename: env.prod ? '[name].[chunkhash].js' : '[name].js',
+      chunkFilename: env.prod ? '[name].[chunkhash].js' : '[name].js',
       path: resolve(__dirname, 'public/assets'),
       publicPath: '/assets/'
     },
@@ -132,6 +135,16 @@ module.exports = (env = {}) => {
     },
 
     plugins: removeEmpty([
+      new WebpackMd5Hash(),
+      new ChunkManifestPlugin({
+        filename: 'chunk-manifest.json',
+        manifestVariable: "webpackManifest"
+      }),
+      new ManifestPlugin({
+        fileName: 'manifest.json',
+        basePath: '/assets/',
+        writeToFileEmit: true
+      }),
       new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
       new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js', chunks: 'app' }),
       ifDev(new webpack.HotModuleReplacementPlugin()),
@@ -155,18 +168,6 @@ module.exports = (env = {}) => {
 
       ifProd(new ExtractTextPlugin('[name].css'), {
         allChunks: false
-      }),
-
-      // SFU Snap HTML (snap.html)
-      new HtmlWebpackPlugin({
-        inject: false,
-        template: './html_templates/snap.ejs',
-        title: 'SFU Snap',
-        appMountId: 'sorry',
-        mobile: true,
-        chunks: [ 'vendor', 'app' ],
-        hash: true,
-        filename: resolve(__dirname, 'public/assets/snap.html')
       }),
 
       // GraphiQL HTML (graphiql.html)

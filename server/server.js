@@ -75,6 +75,8 @@ export const createServer = (app) => {
   if (!PRODUCTION) {
     app = createDevServer(app)
   }
+  app.set('views', path.resolve(__dirname, 'views'))
+  app.set('view engine', 'ejs')
   app.set('TRANSLINK_CACHE', TRANSLINK_CACHE)
   app.set('JWT_SIGNING_CERTIFICATE', fs.readFileSync(process.env.JWT_SIGNING_CERTIFICATE))
   app.set('JWT_SIGNING_KEY', fs.readFileSync(process.env.JWT_SIGNING_KEY))
