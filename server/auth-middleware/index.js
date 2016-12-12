@@ -72,7 +72,7 @@ function authenticateCasUser(req, res, next) {
 }
 
 async function getUser(req, res, next) {
-  const { username } = req
+  const { username } = req || req.user || req.session
   debug('%s - %s - Getting user record for %s', req.id, req.originalUrl, username)
 
   try {
