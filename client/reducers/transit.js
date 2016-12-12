@@ -1,8 +1,8 @@
-import isEqual from 'lodash/isEqual'
-
 import {
-  ADD_TRANSIT_BOOKMARK,
-  REMOVE_TRANSIT_BOOKMARK,
+  SYNC_TRANSIT_BOOKMARK_START,
+  SYNC_TRANSIT_BOOKMARK_ERROR,
+  SYNC_TRANSIT_BOOKMARK_SUCCESS,
+  SET_TRANSIT_BOOKMARKS,
   FETCH_STOPS_START,
   FETCH_STOPS_SUCCESS,
   FETCH_STOPS_ERROR,
@@ -20,6 +20,8 @@ import L from 'leaflet'
 export const DEFAULT = {
   /* bookmarks */
   transitBookmarks: (window && window.STATE_BOOTSTRAP && window.STATE_BOOTSTRAP.transitBookmarks) || [],
+  syncingBookmarks: false,
+  syncBookmarksError: null,
 
   /* stops */
   fetchingStops: false,
@@ -46,38 +48,35 @@ export const DEFAULT = {
 export default (state = DEFAULT, action) => {
   const { type } = action
   switch (type) {
-    case ADD_TRANSIT_BOOKMARK: {
-      const { stop, route, destination } = action
-      if (!stop || !route || !destination) {
-        throw new TypeError('`stop`, `route`, and `destination` are required')
-      }
-      const { transitBookmarks } = state
-      const newBookmark = { stop, route, destination }
-      const nextTransitBookmarks = [ ...transitBookmarks ]
-      if (!transitBookmarks.find((bookmark) => { return isEqual(bookmark, newBookmark) })) {
-        nextTransitBookmarks.push(newBookmark)
-      }
 
+    case SYNC_TRANSIT_BOOKMARK_START:
       return {
         ...state,
-        transitBookmarks: nextTransitBookmarks
+        syncingBookmarks: true,
+        syncBookmarksError: null
       }
-    }
 
-    case REMOVE_TRANSIT_BOOKMARK: {
-      const { stop, route, destination } = action
-      if (!stop || !route || !destination) {
-        throw new TypeError('`stop`, `route`, and `destination` are required')
-      }
-      const { transitBookmarks } = state
-      const toRemove = { stop, route, destination }
-      const nextTransitBookmarks = transitBookmarks.filter(bookmark => !isEqual(bookmark, toRemove))
-
+    case SYNC_TRANSIT_BOOKMARK_SUCCESS:
       return {
         ...state,
-        transitBookmarks: nextTransitBookmarks
+        syncingBookmarks: false,
+        syncBookmarksError: null
       }
-    }
+
+    case SYNC_TRANSIT_BOOKMARK_ERROR:
+      return {
+        ...state,
+        syncingBookmarks: false,
+        syncBookmarksError: action.error
+      }
+
+    case SET_TRANSIT_BOOKMARKS:
+      return {
+        ...state,
+        syncingBookmarks: false,
+        syncBookmarksError: null,
+        transitBookmarks: action.bookmarks
+      }
 
     case FETCH_STOPS_START:
       return {
