@@ -76,7 +76,7 @@ async function getUser(req, res, next) {
   debug('%s - %s - Getting user record for %s', req.id, req.originalUrl, username)
 
   try {
-    req.user = await loadUser(username)
+    req.user = await loadUser(username, ['id', 'username', 'lastname', 'firstnames', 'commonname', 'uid', 'barcode'])
     debug(req.user ? `${req.id} - ${req.originalUrl} - Retreived user record for ${username}: ${JSON.stringify(req.user, null, 2)}` : `${req.id} - ${req.originalUrl} - No user record exists for ${username}`)
     if (req.session) {
       req.session.user = req.user

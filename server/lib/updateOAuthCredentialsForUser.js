@@ -9,7 +9,7 @@ export default async function updateOAuthCredentialsForUser(username, {access_to
       oauth_access_token: access_token,
       oauth_refresh_token: refresh_token,
       oauth_valid_until: valid_until instanceof Date ? valid_until : new Date(valid_until)
-    }).returning('*')
+    }).returning(['id', 'username', 'lastname', 'firstnames', 'commonname', 'uid', 'barcode'])
     return result.length ? result[0] : null
   } catch(e) {
     throw(e)
