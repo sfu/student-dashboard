@@ -50,10 +50,11 @@ const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) =
         src={BookmarkIcon}
         title={isBookmarked ? `Remove from transit bookmarks` : `Add to transit bookmarks`}
         onClick={() => {
+          const bookmark = {stop: stopNumber, route: schedules.RouteNo, destination}
           if (isBookmarked) {
-            dispatch(removeTransitBookmark(stopNumber, schedules.RouteNo, destination))
+            dispatch(removeTransitBookmark(bookmark))
           } else {
-            dispatch(addTransitBookmark(stopNumber, schedules.RouteNo, destination))
+            dispatch(addTransitBookmark(bookmark))
           }
         }}
       />
