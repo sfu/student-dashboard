@@ -18,7 +18,7 @@ export default async function getUserBio(username, token, req) {
     })
     return bio.data
   } catch (e) {
-    debug(`Error in getUserBio: %s`, e)
-    throw new Error(e.data)
+    debug(`Error in getUserBio: %s`, e.response.data)
+    throw new Error(e.response.data)
   }
 }
