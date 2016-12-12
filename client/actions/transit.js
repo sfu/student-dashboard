@@ -1,9 +1,15 @@
 import axios from 'axios'
 import uniqBy from 'lodash/uniqBy'
+import isEqual from 'lodash/isEqual'
 import normalizeTranslinkData from '../utils/normalizeTranslinkData'
 
 export const ADD_TRANSIT_BOOKMARK = 'ADD_TRANSIT_BOOKMARK'
 export const REMOVE_TRANSIT_BOOKMARK = 'REMOVE_TRANSIT_BOOKMARK'
+
+export const SYNC_TRANSIT_BOOKMARK_START = 'SYNC_TRANSIT_BOOKMARK_START'
+export const SYNC_TRANSIT_BOOKMARK_SUCCESS = 'SYNC_TRANSIT_BOOKMARK_SUCCESS'
+export const SYNC_TRANSIT_BOOKMARK_ERROR = 'SYNC_TRANSIT_BOOKMARK_ERROR'
+export const SET_TRANSIT_BOOKMARKS = 'SET_TRANSIT_BOOKMARKS'
 
 export const FETCH_STOPS = 'FETCH_STOPS'
 export const FETCH_STOPS_START = 'FETCH_STOPS_START'
@@ -23,21 +29,72 @@ export const FETCH_SCHEDULE_FOR_BUS_STOP_ERROR = 'FETCH_SCHEDULE_FOR_BUS_STOP_ER
 export const FETCH_SCHEDULE_FOR_BUS_STOP = 'FETCH_SCHEDULE_FOR_BUS_STOP'
 
 
-export const addTransitBookmark = (stop, route, destination) => {
+const BOOKMARKS_URL = '/api/v1/users/self/transitBookmarks'
+
+export const setTransitBookmarks = bookmarks => {
   return {
-    type: ADD_TRANSIT_BOOKMARK,
-    stop: stop.toString(),
-    route: route.toString(),
-    destination
+    type: SET_TRANSIT_BOOKMARKS,
+    bookmarks
   }
 }
 
-export const removeTransitBookmark = (stop, route, destination) => {
+export const syncTransitBookmarkStart = () => {
   return {
-    type: REMOVE_TRANSIT_BOOKMARK,
-    stop: stop.toString(),
-    route: route.toString(),
-    destination
+    type: SYNC_TRANSIT_BOOKMARK_START
+  }
+}
+
+export const syncTransitBookmarkSuccess = () => {
+  return {
+    type: SYNC_TRANSIT_BOOKMARK_SUCCESS
+  }
+}
+
+export const syncTransitBookmarkError = error => {
+  return {
+    type: SYNC_TRANSIT_BOOKMARK_ERROR,
+    error
+  }
+}
+
+export const addTransitBookmark = bookmark => {
+  return (dispatch, getState) => {
+    const currentBookmarks = getState().transit.transitBookmarks
+    // optimistic update
+    dispatch(setTransitBookmarks([...currentBookmarks, bookmark]))
+    dispatch(syncTransitBookmarkStart())
+    return axios({
+      method: 'POST',
+      url: BOOKMARKS_URL,
+      data: bookmark,
+    }).then(() => {
+      dispatch(syncTransitBookmarkSuccess())
+    }).catch(error => {
+      // reset from optimistic update
+      dispatch(setTransitBookmarks(currentBookmarks))
+      dispatch(syncTransitBookmarkError(error))
+    })
+  }
+}
+
+export const removeTransitBookmark = bookmark => {
+  return (dispatch, getState) => {
+    const currentBookmarks = getState().transit.transitBookmarks
+    // optimistic update
+    const nextBookmarks = currentBookmarks.filter(b => !isEqual(b, bookmark))
+    dispatch(setTransitBookmarks(nextBookmarks))
+    dispatch(syncTransitBookmarkStart())
+    return axios({
+      method: 'DELETE',
+      url: BOOKMARKS_URL,
+      data: bookmark,
+    }).then(() => {
+      dispatch(syncTransitBookmarkSuccess())
+    }).catch(error => {
+      // reset from optimistic update
+      dispatch(setTransitBookmarks(currentBookmarks))
+      dispatch(syncTransitBookmarkError(error))
+    })
   }
 }
 
