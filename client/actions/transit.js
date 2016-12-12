@@ -28,6 +28,10 @@ export const FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS = 'FETCH_SCHEDULE_FOR_BUS_STOP_
 export const FETCH_SCHEDULE_FOR_BUS_STOP_ERROR = 'FETCH_SCHEDULE_FOR_BUS_STOP_ERROR'
 export const FETCH_SCHEDULE_FOR_BUS_STOP = 'FETCH_SCHEDULE_FOR_BUS_STOP'
 
+export const FETCH_SCHEDULES_FOR_BOOKMARKS_START = 'FETCH_SCHEDULES_FOR_BOOKMARKS_START'
+export const FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS = 'FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS'
+export const FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR = 'FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR'
+export const FETCH_SCHEDULES_FOR_BOOKMARKS = 'FETCH_SCHEDULES_FOR_BOOKMARKS'
 
 const BOOKMARKS_URL = '/api/v1/users/self/transitBookmarks'
 
@@ -208,5 +212,18 @@ export const toggleCurrentLocationOnMap = (state = false) => {
   return {
     type: SHOW_CURRENT_LOCATION_ON_MAP,
     showCurrentLocationOnMap: state
+  }
+}
+
+export const fetchSchedulesForBookmarksStart = () => {
+  return {
+    type: FETCH_SCHEDULES_FOR_BOOKMARKS_START
+  }
+}
+
+export const fetchSchedulesForBookmarksError = error => {
+  return {
+    type: FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR,
+    error
   }
 }

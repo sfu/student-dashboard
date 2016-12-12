@@ -13,7 +13,10 @@ import {
   SET_SELECTED_STOP,
   FETCH_SCHEDULE_FOR_BUS_STOP_START,
   FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS,
-  FETCH_SCHEDULE_FOR_BUS_STOP_ERROR
+  FETCH_SCHEDULE_FOR_BUS_STOP_ERROR,
+  FETCH_SCHEDULES_FOR_BOOKMARKS_START,
+  FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS,
+  FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR,
 } from '../actions/transit'
 import L from 'leaflet'
 
@@ -22,6 +25,9 @@ export const DEFAULT = {
   transitBookmarks: (window && window.STATE_BOOTSTRAP && window.STATE_BOOTSTRAP.transitBookmarks) || [],
   syncingBookmarks: false,
   syncBookmarksError: null,
+  transitBookmarksSchedules: [],
+  fetchingSchedulesForBookmarks: false,
+  fetchSchedulesForBookmarksError: null,
 
   /* stops */
   fetchingStops: false,
@@ -148,6 +154,25 @@ export default (state = DEFAULT, action) => {
         fetchSchedulesError: action.error,
         schedulesForSelectedStop: [],
         schedulesFetchedAt: null
+      }
+    case FETCH_SCHEDULES_FOR_BOOKMARKS_START:
+      return {
+        ...state,
+        fetchingSchedulesForBookmarks: true,
+        fetchSchedulesForBookmarksError: null
+      }
+    case FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR:
+      return {
+        ...state,
+        fetchingSchedulesForBookmarks: false,
+        fetchSchedulesForBookmarksError: action.error
+      }
+    case FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS:
+      return {
+        ...state,
+        fetchingSchedulesForBookmarks: false,
+        fetchSchedulesForBookmarksError: null,
+        transitBookmarksSchedules: action.schedules
       }
     default:
       return state

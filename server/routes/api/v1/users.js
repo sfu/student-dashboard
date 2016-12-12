@@ -106,7 +106,6 @@ router.delete('/:username/transitBookmarks', bodyParser.json(), validate({body: 
   }
 })
 
-
 router.get('/:username/transitBookmarks/estimates', async (req, res) => {
   let {username} = req.params
   let user = req.username.user || req.session.user
