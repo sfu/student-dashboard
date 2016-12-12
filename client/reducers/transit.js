@@ -17,19 +17,9 @@ import {
 } from '../actions/transit'
 import L from 'leaflet'
 
-var hydratedBookmarks = []
-
-if (window && window.localStorage) {
-  try {
-    hydratedBookmarks = JSON.parse(localStorage.getItem('transitBookmarks')) || []
-  } catch (e) {
-    () => {}
-  }
-}
-
 export const DEFAULT = {
   /* bookmarks */
-  transitBookmarks: hydratedBookmarks,
+  transitBookmarks: (window && window.STATE_BOOTSTRAP && window.STATE_BOOTSTRAP.transitBookmarks) || [],
 
   /* stops */
   fetchingStops: false,

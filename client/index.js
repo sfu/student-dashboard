@@ -19,7 +19,6 @@ const store = configureStore()
 store.subscribe(() => {
   try {
     localStorage.setItem('preferences', JSON.stringify(store.getState().preferences))
-    localStorage.setItem('transitBookmarks', JSON.stringify(store.getState().transit.transitBookmarks))
   } catch(err) {
     console.error(err) // eslint-disable-line
   }
