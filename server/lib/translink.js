@@ -92,21 +92,8 @@ export const getEstimatesForBookmark = async (bookmark, cache = null) => {
 export const getEstimatesForBookmarks = async (bookmarks, cache = null) => {
   try {
     const estimates = await Promise.all(bookmarks.map(b => getEstimatesForBookmark(b, cache)))
-    console.log(estimates)
     return estimates
   } catch(e) {
     throw new Error(e)
   }
 }
-
-/*
-require('./environment')
-var redis = require('promise-redis')()
-var cache = redis.createClient()
-var tl = require('./server/lib/translink')
-
-var bookmarks = [   {stop: '58442', route: '144', destination: 'SFU'}, {stop: '58442', route: '144', destination: 'METROTOWN STN'} ]
-
-tl.getEstimatesForBookmark({stop: '58442', route: '144', destination: 'SFU'}, cache).then(e => console.log(JSON.stringify(e, null, 2))).catch(console.error)
-tl.getEstimatesForStop('50490').then(console.log).catch(console.error)
-*/
