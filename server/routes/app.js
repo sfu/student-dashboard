@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { loggedin } from '../auth-middleware'
 import { readHtmlFile } from '../lib'
+import db from '../db'
 const debug = require('debug')('snap:server:routes:app')
 
 const router = Router()
@@ -13,11 +14,14 @@ router.get('/', loggedin, async (req, res) => {
     // read in chunk-manifest.json - webpackManifest
     const chunkManifest = (await readHtmlFile('chunk-manifest.json', req.app)).toString()
 
+    const user = await db('users').where({username: req.session.user.username}).select(['transit_bookmarks_text'])
     const state = JSON.stringify({
-      transitBookmarks: JSON.parse(req.session.user.transit_bookmarks_text)
+      transitBookmarks: JSON.parse(user[0].transit_bookmarks_text)
     })
 
-    debug('%s - Rendering view for user %s', req.id, req.username)
+
+
+    debug('%s - Rendering view for user %s', req.id, req.session.username)
     res.render('index', {
       manifest: JSON.parse(manifest),
       chunkManifest,
