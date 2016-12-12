@@ -31,8 +31,9 @@ const router = Router()
 
 router.get('/:username/transitBookmarks', async (req, res) => {
   let {username} = req.params
+  let user = req.username.user || req.session.user
   if (username === 'self') {
-    username = req.user.username
+    username = user.username
   }
 
   debug('%s - Getting transit bookmarks for %s', req.id, username)
@@ -48,8 +49,9 @@ router.get('/:username/transitBookmarks', async (req, res) => {
 
 router.post('/:username/transitBookmarks', bodyParser.json(), validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
   let {username} = req.params
+  let user = req.username.user || req.session.user
   if (username === 'self') {
-    username = req.user.username
+    username = user.username
   }
 
   debug('%s - Add transit bookmark %s for user %s', req.id, JSON.stringify(req.body), username)
@@ -78,8 +80,9 @@ router.post('/:username/transitBookmarks', bodyParser.json(), validate({body: BO
 
 router.delete('/:username/transitBookmarks', bodyParser.json(), validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
   let {username} = req.params
+  let user = req.username.user || req.session.user
   if (username === 'self') {
-    username = req.user.username
+    username = user.username
   }
 
   debug('%s - Delete bookmark %s for user %s', req.id, JSON.stringify(req.body), username)
@@ -106,8 +109,9 @@ router.delete('/:username/transitBookmarks', bodyParser.json(), validate({body: 
 
 router.get('/:username/transitBookmarks/estimates', async (req, res) => {
   let {username} = req.params
+  let user = req.username.user || req.session.user
   if (username === 'self') {
-    username = req.user.username
+    username = user.username
   }
 
   try {
@@ -125,8 +129,9 @@ router.get('/:username/transitBookmarks/estimates', async (req, res) => {
 
 router.get('/:username', async (req, res) => {
   let {username} = req.params
+  let user = req.username.user || req.session.user
   if (username === 'self') {
-    username = req.user.username
+    username = user.username
   }
   debug('%s - Getting user profile for %s', req.id, username)
   if (username !== req.user.username) {
