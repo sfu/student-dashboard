@@ -29,6 +29,8 @@ const debug = require('debug')('snap:server:routes:api/v1/users')
 
 const router = Router()
 
+router.use(bodyParser.json())
+
 router.get('/:username/transitBookmarks', async (req, res) => {
   let {username} = req.params
   let user = req.username.user || req.session.user
@@ -47,7 +49,7 @@ router.get('/:username/transitBookmarks', async (req, res) => {
   }
 })
 
-router.post('/:username/transitBookmarks', bodyParser.json(), validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
+router.post('/:username/transitBookmarks', validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
   let {username} = req.params
   let user = req.username.user || req.session.user
   if (username === 'self') {
@@ -78,7 +80,7 @@ router.post('/:username/transitBookmarks', bodyParser.json(), validate({body: BO
   }
 })
 
-router.delete('/:username/transitBookmarks', bodyParser.json(), validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
+router.delete('/:username/transitBookmarks', validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
   let {username} = req.params
   let user = req.username.user || req.session.user
   if (username === 'self') {
