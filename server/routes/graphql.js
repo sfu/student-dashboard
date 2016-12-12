@@ -1,5 +1,8 @@
 import { Router } from 'express'
-import { loggedin } from '../auth-middleware'
+import {
+  loggedInWithSession,
+  redirectToLoginIfNecessary
+} from '../auth-middleware'
 import bodyParser from 'body-parser'
 import { oAuthenticatedRequest, readHtmlFile } from '../lib'
 import { sign } from 'jsonwebtoken'
@@ -8,7 +11,7 @@ const debug = require('debug')('snap:server:routes:graphql')
 
 const router = Router()
 
-router.get('/', loggedin, async (req, res, next) => {
+router.get('/', loggedInWithSession, redirectToLoginIfNecessary, async (req, res, next) => {
 
   // generate a JWT for the user for the callback to the user profile API
   const jwtPayload = {
@@ -39,7 +42,7 @@ router.get('/', loggedin, async (req, res, next) => {
   }
 })
 
-router.post('/', loggedin, bodyParser.json(), async (req, res) => {
+router.post('/', loggedInWithSession, redirectToLoginIfNecessary, bodyParser.json(), async (req, res) => {
   const {method} = req
   const payload = method === 'POST' ? req.body : {
     query: req.query.query || null,

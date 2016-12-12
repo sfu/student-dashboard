@@ -1,6 +1,12 @@
 import {Router} from 'express'
 import v1 from './v1'
-import { loggedin, getUser, provisionOrUpdateUser } from '../../auth-middleware'
+import {
+  loggedInWithSession,
+  loggedInWithJwt,
+  redirectToLoginIfNecessary,
+  getUser,
+  provisionOrUpdateUser
+} from '../../auth-middleware'
 
 const router = Router({mergeParams: true})
 
@@ -12,6 +18,13 @@ router.use(function isApiRequest(req, res, next) {
   next()
 })
 
-router.use('/v1', loggedin, getUser, provisionOrUpdateUser, v1)
+router.use('/v1',
+  loggedInWithSession,
+  loggedInWithJwt,
+  redirectToLoginIfNecessary,
+  getUser,
+  provisionOrUpdateUser,
+  v1
+)
 
 export default router

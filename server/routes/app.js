@@ -1,12 +1,15 @@
 import { Router } from 'express'
-import { loggedin } from '../auth-middleware'
+import {
+  loggedInWithSession,
+  redirectToLoginIfNecessary
+} from '../auth-middleware'
 import { readHtmlFile } from '../lib'
 import db from '../db'
 const debug = require('debug')('snap:server:routes:app')
 
 const router = Router()
 
-router.get('/', loggedin, async (req, res) => {
+router.get('/', loggedInWithSession, redirectToLoginIfNecessary, async (req, res) => {
   try {
     debug('%s - Reading webpack manifest files', req.id)
     /// read in manifest.json - use to get CSS, JS filenames
@@ -18,8 +21,6 @@ router.get('/', loggedin, async (req, res) => {
     const state = JSON.stringify({
       transitBookmarks: JSON.parse(user[0].transit_bookmarks_text)
     })
-
-
 
     debug('%s - Rendering view for user %s', req.id, req.session.username)
     res.render('index', {

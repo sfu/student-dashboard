@@ -10,6 +10,78 @@ import {
   updateOAuthCredentialsForUser
 } from '../lib/'
 
+
+// Determine if a user is logged in with a session
+// If session exists, set req.loggedIn = true for downstream middleware
+// Otherwise, set req.loggedIn = false for downstream middleware
+function loggedInWithSession(req, res, next) {
+  debug('%s - %s - `loggedInWithSession` called`', req.id, req.originalUrl)
+  if (req.loggedIn) {
+    req.username = req.session.username
+    debug('%s - %s - `loggedInWithSession` - user already logged in', req.id, req.originalUrl)
+    return next()
+  }
+
+  if (req.session.auth) {
+    debug('%s - %s - `loggedInWithSession` - found session`', req.id, req.originalUrl)
+    req.username = req.session.username
+    req.loggedIn = true
+  } else {
+    debug('%s - %s - `loggedInWithSession` - no session found', req.id, req.originalUrl)
+    req.loggedIn = false
+  }
+  next()
+}
+
+// Determine if a user is logged in with a valid JWT
+// If so, set req.loggedIn = true for downstream middleware
+// Otherwise, set req.loggedIn = false for downstream middleware
+async function loggedInWithJwt(req, res, next) {
+  debug('%s - %s - `loggedInWithJwt` called', req.id, req.originalUrl)
+
+  if (req.loggedIn) {
+    debug('%s - %s - `loggedInWithJwt` - user already logged in', req.id, req.originalUrl)
+    return next()
+  }
+
+  let token = req.headers.authorization
+  token = token ? token.split(' ') : undefined
+
+  if (!token || (token && token[0].toLowerCase() !== 'bearer')) {
+    debug('%s - %s - `loggedInWithJwt` - invalid or missing token', req.id, req.originalUrl)
+    req.loggedIn = false
+    next()
+  } else {
+    try {
+      debug('%s - %s - validating JWT', req.id, req.originalUrl)
+      const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
+      if (!payload) {
+        debug('%s - %s - invalid JWT', req.id, req.originalUrl)
+        req.loggedIn = false
+      } else {
+        debug('%s - %s - valid JWT', req.id, req.originalUrl)
+        req.jwtPayload = payload
+        req.username = payload.sub
+        debug('%s - %s - JWT sub: %s', req.id, req.originalUrl, req.username)
+        req.loggedIn = true
+      }
+      next()
+    } catch(e) {
+      req.loggedIn = false
+      debug('%s - %s - JWT error: %s', req.id, req.originalUrl, e)
+      next(e)
+    }
+  }
+}
+
+function redirectToLoginIfNecessary(req, res, next) {
+  if (req.loggedIn) {
+    next()
+  } else {
+    res.redirectToLogin()
+  }
+}
+
 // Determine if a user is logged in
 // If the user has a valid session, then they're logged in
 // If the request is an API request, and a Bearer token is present, then they're logged in
@@ -72,7 +144,7 @@ function authenticateCasUser(req, res, next) {
 }
 
 async function getUser(req, res, next) {
-  const { username } = req || req.user || req.session
+  const { username } = req
   debug('%s - %s - Getting user record for %s', req.id, req.originalUrl, username)
 
   try {
@@ -192,6 +264,9 @@ function handleSingleSignout(req, res, next) {
 
 
 export {
+  loggedInWithSession,
+  loggedInWithJwt,
+  redirectToLoginIfNecessary,
   loggedin,
   authenticateCasUser,
   handleSingleSignout,
