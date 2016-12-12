@@ -139,10 +139,10 @@ router.get('/:username', async (req, res) => {
     return
   }
 
-  const user = (await db('users').where({username}))[0]
-  if (user) {
-    Object.keys(user).filter(k => k.indexOf('oauth_') === 0).forEach(k => { delete user[k] })
-    res.send(user)
+  const userRecord = (await db('users').where({username}))[0]
+  if (userRecord) {
+    Object.keys(userRecord).filter(k => k.indexOf('oauth_') === 0).forEach(k => { delete user[k] })
+    res.send(userRecord)
   } else {
     res.boom.notFound()
   }
