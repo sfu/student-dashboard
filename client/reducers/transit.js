@@ -25,7 +25,8 @@ export const DEFAULT = {
   transitBookmarks: (window && window.STATE_BOOTSTRAP && window.STATE_BOOTSTRAP.transitBookmarks) || [],
   syncingBookmarks: false,
   syncBookmarksError: null,
-  transitBookmarksSchedules: [],
+  transitBookmarksSchedules: {},
+  transitBookmarksSchedulesFetchedAt: null,
   fetchingSchedulesForBookmarks: false,
   fetchSchedulesForBookmarksError: null,
 
@@ -172,7 +173,8 @@ export default (state = DEFAULT, action) => {
         ...state,
         fetchingSchedulesForBookmarks: false,
         fetchSchedulesForBookmarksError: null,
-        transitBookmarksSchedules: action.schedules
+        transitBookmarksSchedules: action.schedules,
+        transitBookmarksSchedulesFetchedAt: action.transitBookmarksSchedulesFetchedAt
       }
     default:
       return state
