@@ -233,6 +233,14 @@ export const fetchSchedulesForBookmarksStart = () => {
   }
 }
 
+export const fetchSchedulesForBookmarksSuccess = schedules => {
+  return {
+    type: FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS,
+    schedules,
+    transitBookmarksSchedulesFetchedAt: Date.now()
+  }
+
+}
 export const fetchSchedulesForBookmarksError = error => {
   return {
     type: FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR,
