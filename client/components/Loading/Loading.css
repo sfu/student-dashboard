@@ -7,6 +7,11 @@
   align-items: center;
 }
 
+.spinner {
+  height: 40px;
+  width: 40px;
+}
+
 .title {
   font-size: .8em;
   font-weight: normal;

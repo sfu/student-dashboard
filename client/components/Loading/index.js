@@ -5,7 +5,9 @@ import styles from './Loading.css'
 const Loading = ({ title }) => {
   return (
     <div className={styles.container}>
-      <LoadingSpinnerIcon />
+      <div className={styles.spinner}>
+        <LoadingSpinnerIcon />
+      </div>
       <h1 className={styles.title}>{title}</h1>
     </div>
   )
