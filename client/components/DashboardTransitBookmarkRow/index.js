@@ -11,8 +11,8 @@ const renderStops = (stops, isFetching) => stops.map((stop, i) => {
   const { number, onStreet, atStreet, nextArrival} = stop
   const time =  nextArrival.ExpectedCountdown < 2 ? 'Now' : `${nextArrival.ExpectedCountdown} min`
   return (
-    <Link className={styles.link} to={`/transit/${number}`}>
-      <li key={i} className={styles.listItem}>
+    <Link key={i} className={styles.link} to={`/transit/${number}`}>
+      <li className={styles.listItem}>
         <div className={styles.container}>
           <div className={styles.stopInfo}>
             <p>{`${transformTranslinkText(onStreet)} / ${transformTranslinkText(atStreet)}`}</p>
