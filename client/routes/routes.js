@@ -11,7 +11,8 @@ import {
   fetchSchedulesForBusStop,
   toggleLocateOnMount,
   fetchStop,
-  fetchStops
+  fetchStops,
+  fetchSchedulesForBookmarks
 } from 'actions/transit'
 
 import styles from 'components/App/App.css'
@@ -51,7 +52,19 @@ export default (reduxStore) => { // eslint-disable-line
       },
       title: 'Dashboard',
       queries: ViewerQueries,
-      render
+      render,
+      onEnter({params}, replace, done) {
+        const { dispatch } = reduxStore
+        const { transit } = reduxStore.getState()
+        const { transitBookmarks } = transit
+        // if no bookmarks, then don't bother calling fetch on them
+        if (!transitBookmarks.length) {
+          done()
+        } else {
+          dispatch(fetchSchedulesForBookmarks())
+          done()
+        }
+      }
     },
     childRoutes: [
       {
