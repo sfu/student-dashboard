@@ -87,6 +87,12 @@ export default (reduxStore) => { // eslint-disable-line
           const { dispatch } = reduxStore
           const { transit } = reduxStore.getState()
 
+          const { transitBookmarks } = transit
+          // if no bookmarks, then don't bother calling fetch on them
+          if (transitBookmarks.length) {
+            dispatch(fetchSchedulesForBookmarks())
+          }
+
           if (!stopNumber) { return done() }
 
           // set locateOnMount to false

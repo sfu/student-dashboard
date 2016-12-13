@@ -48,8 +48,8 @@ class _Dashboard extends React.Component {
         </Widget>
         {
           !!transit.transitBookmarks.length && (
-            <Widget title="My Transit Bookmarks">
-              <DashboardTransitBookmarks />
+            <Widget title="My Busses">
+              <div style={{margin: '1em'}}><DashboardTransitBookmarks /></div>
             </Widget>
           )
         }

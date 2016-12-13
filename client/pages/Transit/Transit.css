@@ -1,0 +1,12 @@
+@value sfured from 'styles/color.css';
+
+.myBussesHeader {
+  border-bottom: 2px solid sfured;
+}
+
+.myBusses {
+  color: sfured;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: capitalize;
+}
