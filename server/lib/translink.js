@@ -82,6 +82,8 @@ export const getEstimatesForBookmark = async (bookmark, cache = null) => {
     return {
       ...bookmark,
       stopName,
+      onStreet: stopInfo.OnStreet,
+      atStreet: stopInfo.AtStreet,
       schedules: stopEstimate[0].Schedules.filter(s => s.Destination === destination)
     }
   } catch (e) {
@@ -92,7 +94,25 @@ export const getEstimatesForBookmark = async (bookmark, cache = null) => {
 export const getEstimatesForBookmarks = async (bookmarks, cache = null) => {
   try {
     const estimates = await Promise.all(bookmarks.map(b => getEstimatesForBookmark(b, cache)))
-    return estimates
+    const buckets = {}
+    estimates.forEach(e => {
+      const key = `${e.route}:::${e.destination.replace(/ /g, '_')}`
+      if (!buckets.hasOwnProperty(key)) {
+        buckets[key] = {
+          route: e.route,
+          destination: e.destination,
+          stops: []
+        }
+      }
+      buckets[key].stops.push({
+        number: e.stop,
+        name: e.stopName,
+        onStreet: e.onStreet,
+        atStreet: e.atStreet,
+        nextArrival: e.schedules[0]
+      })
+    })
+    return buckets
   } catch(e) {
     throw new Error(e)
   }
