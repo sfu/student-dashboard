@@ -1,0 +1,94 @@
+@value sfured, sfublack from 'styles/color.css';
+
+.row {
+  display: flex;
+  margin-bottom: 1em;
+  align-items: flex-start;
+  border-bottom: 1px solid #D8D8D8;
+}
+
+.row:last-of-type {
+  border-bottom: none;
+}
+
+.busIcon {
+  width: 25px;
+  height: 25px;
+}
+
+.routeInfo {
+  margin-left: .5em;
+  flex-grow: 1;
+}
+
+.route {
+  color: sfured;
+  font-size: 1.25em;
+  margin: 0;
+}
+
+.destination {
+  text-transform: capitalize;
+  margin: 0;
+  font-weight: normal;
+  font-size: .8em;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin-left: -2em;
+}
+
+.listItem {
+  background-image: url('!url!images/transit/translink_blue.svg');
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+  background-size: 1em;
+  padding-left: 1.5em;
+  margin-bottom: .5em;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.stopInfo {
+  /*flex-grow: 0;*/
+}
+
+.stopInfo > p {
+  margin: 0;
+  font-size: .8em;
+}
+
+.nextArrivalTime {
+  flex-grow: 1;
+  color: sfured;
+  font-size: .8em;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 1.25em;
+}
+
+.realTimeIcon {
+  height: .5em;
+  position: relative;
+  top: -8px;
+  transform: scaleX(-1) rotate(-15deg);
+  filter: FlipH;
+}
+
+.linkContainer {
+
+}
+
+.linkCaret {
+  height: 15px;
+}
+
+.link {
+  text-decoration: none;
+  color: sfublack;
+}
