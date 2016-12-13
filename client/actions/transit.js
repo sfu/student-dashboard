@@ -215,6 +215,18 @@ export const toggleCurrentLocationOnMap = (state = false) => {
   }
 }
 
+export const fetchSchedulesForBookmarks = () => {
+  return dispatch => {
+    dispatch(fetchSchedulesForBookmarksStart())
+    const url = '/api/v1/users/self/transitBookmarks/estimates'
+    return axios.get(url).then(response => {
+      dispatch(fetchSchedulesForBookmarksSuccess(response.data))
+    }).catch(error => {
+      dispatch(fetchSchedulesForBookmarksError(error.response.data))
+    })
+  }
+}
+
 export const fetchSchedulesForBookmarksStart = () => {
   return {
     type: FETCH_SCHEDULES_FOR_BOOKMARKS_START
