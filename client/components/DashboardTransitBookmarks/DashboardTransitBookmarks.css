@@ -1,0 +1,30 @@
+@value sfublue from 'styles/color.css';
+
+
+.container {
+  margin: 1em;
+}
+
+.scheduleControls {
+  margin: 1em 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.refreshButton {
+  -webkit-appearance: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  font-size: .7em;
+  color: sfublue;
+  text-decoration: underline;
+}
+
+.fetchedAt {
+  font-size: .7em;
+  text-transform: uppercase;
+  font-weight: lighter;
+  margin: 0;
+}
