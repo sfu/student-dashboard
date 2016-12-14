@@ -12,21 +12,38 @@ class TransitStopSearch extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmitFocus = this.handleSubmitFocus.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
   }
 
   handleSubmit = (ev) => {
     const { dispatch, transit } = this.props
     ev.preventDefault()
-    ev.persist()
     const stopNumber = transit.searchForStopFieldValue
     if (!stopNumber) { return false }
     dispatch(searchForStop(stopNumber, this.context.router))
-    ev.target.firstChild.blur()
   }
 
   handleChange = (ev) => {
     ev.preventDefault()
     this.props.dispatch(updateStopSearchFieldValue(ev.target.value))
+  }
+
+  handleSubmitFocus = (ev) => {
+    this.handleSubmit(ev)
+    ev.target.blur()
+  }
+
+  handleKeyDown = (ev) => {
+    const { keyCode } = ev
+    if ( keyCode === 13 ) {
+      ev.target.blur()
+    }
+  }
+
+  handleFocus = () => {
+    this.props.dispatch(updateStopSearchFieldValue(''))
   }
 
   render() {
@@ -42,16 +59,17 @@ class TransitStopSearch extends React.Component {
     } = this.props.transit
     return (
       <div className={styles.container}>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            onChange={this.handleChange}
-            className={styles.input}
-            type="tel"
-            placeholder="Search for Bus Stop"
-            value={searchForStopFieldValue}
-            onClick={() => {this.props.dispatch(updateStopSearchFieldValue(''))}}
-          />
-        </form>
+        <input
+          className={styles.input}
+          type="number"
+          pattern="[0-9]*"
+          placeholder="Search for Bus Stop"
+          value={searchForStopFieldValue}
+          onChange={this.handleChange}
+          onFocus={this.handleFocus}
+          onKeyDown={this.handleKeyDown}
+          onBlur={this.handleSubmit}
+        />
         {renderError(searchingForStopError)}
       </div>
     )
