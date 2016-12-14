@@ -17,6 +17,10 @@ import {
   FETCH_SCHEDULES_FOR_BOOKMARKS_START,
   FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS,
   FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR,
+  SEARCH_FOR_STOP_START,
+  SEARCH_FOR_STOP_SUCCESS,
+  SEARCH_FOR_STOP_ERROR,
+  SEARCH_FOR_STOP_UPDATE_FIELD_VALUE
 } from '../actions/transit'
 import L from 'leaflet'
 
@@ -29,6 +33,11 @@ export const DEFAULT = {
   transitBookmarksSchedulesFetchedAt: null,
   fetchingSchedulesForBookmarks: false,
   fetchSchedulesForBookmarksError: null,
+
+  /* stop search */
+  searchingForStop: false,
+  searchForStopFieldValue: '',
+  searchingForStopError: null,
 
   /* stops */
   fetchingStops: false,
@@ -175,6 +184,30 @@ export default (state = DEFAULT, action) => {
         fetchSchedulesForBookmarksError: null,
         transitBookmarksSchedules: action.schedules,
         transitBookmarksSchedulesFetchedAt: action.transitBookmarksSchedulesFetchedAt
+      }
+    case SEARCH_FOR_STOP_START:
+      return {
+        ...state,
+        searchingForStop: true,
+        searchingForStopError: null
+      }
+    case SEARCH_FOR_STOP_SUCCESS:
+      return {
+        ...state,
+        searchingForStop: false,
+        searchingForStopError: null,
+        stops: action.stops
+      }
+    case SEARCH_FOR_STOP_ERROR:
+      return {
+        ...state,
+        searchingForStop: false,
+        searchingForStopError: action.error
+      }
+    case SEARCH_FOR_STOP_UPDATE_FIELD_VALUE:
+      return {
+        ...state,
+        searchForStopFieldValue: action.value
       }
     default:
       return state

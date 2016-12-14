@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import TransitMap from 'components/TransitMap'
 import BusSchedules from 'components/BusSchedules'
 import DashboardTransitBookmarks from 'components/DashboardTransitBookmarks'
+import TransitStopSearch from 'components/TransitStopSearch'
 import styles from './Transit.css'
 
 const mapStateToProps = state => ({
@@ -12,6 +13,7 @@ const mapStateToProps = state => ({
 const Transit = ({transit}) => {
   return (
     <div>
+      <TransitStopSearch />
       <TransitMap />
       {!transit.selectedStop && !!Object.keys(transit.transitBookmarksSchedules).length &&
         <div>

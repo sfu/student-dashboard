@@ -33,6 +33,12 @@ export const FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS = 'FETCH_SCHEDULES_FOR_BOOKMA
 export const FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR = 'FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR'
 export const FETCH_SCHEDULES_FOR_BOOKMARKS = 'FETCH_SCHEDULES_FOR_BOOKMARKS'
 
+export const SEARCH_FOR_STOP_START = 'SEARCH_FOR_STOP_START'
+export const SEARCH_FOR_STOP_SUCCESS = 'SEARCH_FOR_STOP_START'
+export const SEARCH_FOR_STOP_ERROR = 'SEARCH_FOR_STOP_ERROR'
+export const SEARCH_FOR_STOP_UPDATE_FIELD_VALUE = 'SEARCH_FOR_STOP_UPDATE_FIELD_VALUE'
+
+
 const BOOKMARKS_URL = '/api/v1/users/self/transitBookmarks'
 
 export const setTransitBookmarks = bookmarks => {
@@ -76,7 +82,7 @@ export const addTransitBookmark = bookmark => {
     }).catch(error => {
       // reset from optimistic update
       dispatch(setTransitBookmarks(currentBookmarks))
-      dispatch(syncTransitBookmarkError(error))
+      dispatch(syncTransitBookmarkError(error.response.data))
     })
   }
 }
@@ -97,7 +103,7 @@ export const removeTransitBookmark = bookmark => {
     }).catch(error => {
       // reset from optimistic update
       dispatch(setTransitBookmarks(currentBookmarks))
-      dispatch(syncTransitBookmarkError(error))
+      dispatch(syncTransitBookmarkError(error.response.data))
     })
   }
 }
@@ -111,7 +117,7 @@ export const fetchStop = (stop) => {
       const nextState = uniqBy(getState().transit.stops.concat(newStop), 'StopNo')
       dispatch(fetchStopsSuccess(nextState))
     }).catch((error) => {
-      dispatch(fetchStopsError(error))
+      dispatch(fetchStopsError(error.response.data))
     })
   }
 }
@@ -126,7 +132,7 @@ export const fetchStops = (coords, radius) => {
       const nextState = uniqBy(getState().transit.stops.concat(response.data), 'StopNo')
       dispatch(fetchStopsSuccess(nextState))
     }).catch((error) => {
-      dispatch(fetchStopsError(error))
+      dispatch(fetchStopsError(error.response.data))
     })
   }
 }
@@ -245,5 +251,50 @@ export const fetchSchedulesForBookmarksError = error => {
   return {
     type: FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR,
     error
+  }
+}
+
+export const searchForStopStart = () => {
+  return {
+    type: SEARCH_FOR_STOP_START
+  }
+}
+
+export const searchForStopError = error => {
+  return {
+    type: SEARCH_FOR_STOP_ERROR,
+    error
+  }
+}
+
+export const searchForStopSuccess = stops => {
+  return {
+    type: SEARCH_FOR_STOP_SUCCESS,
+    stops
+  }
+}
+
+export const updateStopSearchFieldValue = value => {
+  return {
+    type: SEARCH_FOR_STOP_UPDATE_FIELD_VALUE,
+    value
+  }
+}
+
+export const searchForStop = (stop, router = undefined) => {
+  return (dispatch, getState) => {
+    dispatch(searchForStopStart())
+    const STOP_URL = `/translink/stops/${stop}`
+    return axios.get(STOP_URL).then((response) => {
+      const newStop = response.data
+      const nextState = uniqBy(getState().transit.stops.concat(newStop), 'StopNo')
+      dispatch(searchForStopSuccess(nextState))
+      if (router) {
+        router.push(`/transit/${stop}`)
+      }
+    }).catch((error) => {
+      // dispatch(updateStopSearchFieldValue(''))
+      dispatch(searchForStopError(error.response.data))
+    })
   }
 }
