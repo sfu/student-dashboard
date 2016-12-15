@@ -16,13 +16,6 @@ import { fetchLibraryHours } from 'actions/library'
 import configureStore from './configureStore'
 
 const store = configureStore()
-store.subscribe(() => {
-  try {
-    localStorage.setItem('preferences', JSON.stringify(store.getState().preferences))
-  } catch(err) {
-    console.error(err) // eslint-disable-line
-  }
-})
 
 Relay.injectNetworkLayer(
   new Relay.DefaultNetworkLayer('/graphql', {
