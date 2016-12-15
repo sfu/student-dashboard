@@ -146,7 +146,11 @@ module.exports = (env = {}) => {
         writeToFileEmit: true
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
-      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js', chunks: 'app' }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: env.prod ? '[name].[chunkhash].js' : '[name].js',
+        chunks: 'app'
+      }),
       ifDev(new webpack.HotModuleReplacementPlugin()),
 
       ifProd(new webpack.optimize.DedupePlugin()),
