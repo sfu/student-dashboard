@@ -23,9 +23,11 @@ const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   name: process.env.SESSION_COOKIE_NAME || 'connect.sid',
   cookie: {
-    secure: true
+    secure: true,
+    maxAge: 2592000000
   },
   resave: false,
+  rolling: true,
   saveUninitialized: false,
   store: new RedisStore({
     url: process.env.SESSION_STORE_REDIS_URL
