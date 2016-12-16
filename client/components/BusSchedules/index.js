@@ -7,13 +7,18 @@ import formatTime from 'utils/formatTime'
 import { fetchSchedulesForBusStop } from 'actions/transit'
 import styles from './BusSchedules.css'
 
-const mapStateToProps = state => ({ transit: state.transit })
+const mapStateToProps = state => {
+  return {
+    transit: state.transit,
+    timeFormat: state.preferences.preferenceData.timeFormat
+  }
+}
 
 const scheduleRows = (stop, schedules) => {
   return schedules.map((schedule, i) => <BusScheduleRow stopNumber={stop.toString()} busNumber={schedule.RouteNo} schedules={schedule} key={i} />)
 }
 
-const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
+const BusSchedules = ({transit, selectedStop, schedules, dispatch, timeFormat}) => {
   const refresh = stop => {
     dispatch(fetchSchedulesForBusStop(stop))
   }
@@ -30,7 +35,7 @@ const BusSchedules = ({transit, selectedStop, schedules, dispatch}) => {
           transit.schedulesFetchedAt &&
           <div className={styles.scheduleControls}>
             <p className={styles.fetchedAt}>
-              Prediction as of {formatTime(transit.schedulesFetchedAt)}
+              Prediction as of {formatTime(transit.schedulesFetchedAt, timeFormat)}
             </p>
             <button className={styles.refreshButton} onClick={() => {refresh(selectedStop.StopNo)}}>Refresh</button>
           </div>
@@ -49,6 +54,7 @@ BusSchedules.propTypes = {
   selectedStop: PropTypes.object.isRequired,
   schedules: PropTypes.array.isRequired,
   transit: PropTypes.object.isRequired,
+  timeFormat: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 

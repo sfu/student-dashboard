@@ -1,4 +1,5 @@
 import React, { PropTypes }  from 'react'
+import { connect } from 'react-redux'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import formatTimeRange from 'utils/formatTimeRange'
 import { REST_TO_ABBR_DAYS_MAP } from 'const'
@@ -8,7 +9,7 @@ import moment from 'moment'
 
 import styles from './MyCourses.css'
 
-const ClassSchedule = ({schedule}) => {
+const ClassSchedule = ({ schedule, timeFormat }) => {
   const { startTime, endTime, days, buildingCode, roomNumber } = schedule
   const start = {
     hour: leftPad(startTime, 4, 0).substr(0, 2),
@@ -39,14 +40,15 @@ const ClassSchedule = ({schedule}) => {
   return (
     <div className={styles.classSchedule}>
       <span className={styles.classDays}>{classDays}</span>
-      <span className={styles.classTimes}>{startTime && endTime ? formatTimeRange(startMoment, endMoment) : null}</span>
+      <span className={styles.classTimes}>{startTime && endTime ? formatTimeRange(startMoment, endMoment, timeFormat) : null}</span>
       {location(schedule)}
     </div>
   )
 }
 
 ClassSchedule.propTypes = {
+  timeFormat: PropTypes.string.isRequired,
   schedule: PropTypes.object.isRequired
 }
 
-export default ClassSchedule
+export default connect(state => ({ timeFormat: state.preferences.preferenceData.timeFormat }))(ClassSchedule)

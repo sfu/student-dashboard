@@ -1,4 +1,5 @@
 import React, { PropTypes }  from 'react'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import formatTimeRange from 'utils/formatTimeRange'
@@ -13,7 +14,7 @@ const itemLocation = (item) => {
   }
 }
 
-const ScheduleItem = ({item}) => {
+const ScheduleItem = ({ item, timeFormat }) => {
   const classTypes = Object.keys(CLASS_TYPES)
   let title, details
   let type = classTypes.indexOf(item.type) >= 0 ? CLASS_TYPES[item.type] : item.type
@@ -44,13 +45,14 @@ const ScheduleItem = ({item}) => {
         <span className={styles.activityName}>{title}</span>
         <span>{details}</span>
       </td>
-      <td className={styles.activityTime}><span>{formatTimeRange(moment(item.start_at), moment(item.end_at))}</span></td>
+      <td className={styles.activityTime}><span>{formatTimeRange(moment(item.start_at), moment(item.end_at), timeFormat)}</span></td>
     </tr>
   )
 }
 
 ScheduleItem.propTypes = {
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  timeFormat: PropTypes.string.isRequired
 }
 
-export default ScheduleItem
+export default connect(state => ({ timeFormat: state.preferences.preferenceData.timeFormat }))(ScheduleItem)

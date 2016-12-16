@@ -14,7 +14,6 @@ const renderRows = (schedules) => {
   return rows.length ? rows : null
 }
 
-
 class DashboardTransitBookmarks extends Component {
   refresh() {
     this.props.dispatch(fetchSchedulesForBookmarks())
@@ -25,13 +24,14 @@ class DashboardTransitBookmarks extends Component {
       transitBookmarksSchedules,
       transitBookmarksSchedulesFetchedAt,
      } = this.props.transit
+     const { timeFormat } = this.props
     return (
       <div className={styles.container}>
         {
           transitBookmarksSchedulesFetchedAt && (
           <div className={styles.scheduleControls}>
             <p className={styles.fetchedAt}>
-              Predictions as of {formatTime(transitBookmarksSchedulesFetchedAt)}
+              Predictions as of {formatTime(transitBookmarksSchedulesFetchedAt, timeFormat)}
             </p>
             <button className={styles.refreshButton} onClick={() => {this.refresh()}}>Refresh</button>
           </div>
@@ -45,12 +45,14 @@ class DashboardTransitBookmarks extends Component {
 
 DashboardTransitBookmarks.propTypes = {
   transit: PropTypes.object.isRequired,
+  timeFormat: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    transit: state.transit
+    transit: state.transit,
+    timeFormat: state.preferences.preferenceData.timeFormat
   }
 }
 
