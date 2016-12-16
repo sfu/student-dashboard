@@ -37,7 +37,11 @@ export const updatePreference = (key, value) => {
   return (dispatch, getState) => {
     const currentPreferences = getState().preferences.preferenceData
     // optimistic update
-    dispatch(setPreferences([...currentPreferences, {key, value}]))
+    const nextPreferences = {
+      ...currentPreferences,
+      [key]: value
+    }
+    dispatch(setPreferences(nextPreferences))
     dispatch(syncPreferencesStart())
     return axios({
       method: 'POST',
