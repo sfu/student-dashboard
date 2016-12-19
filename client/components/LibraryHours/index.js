@@ -2,6 +2,7 @@ import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import { TIME_SEPARATOR } from 'const/timeFormat'
 import leftPad from 'utils/leftPad'
+import libraryIsOpen from 'utils/libraryIsOpen'
 
 import styles from './LibraryHours.css'
 
@@ -49,7 +50,7 @@ const LibraryHours = ({ hours, timeFormat }) => {
                 <span>{location.campus}</span>
               </div>
               <div className={styles.col2}>
-                <span className={styles.openClosed}>{location.in_range ? 'Open' : 'Closed'}</span>
+                <span className={styles.openClosed}>{libraryIsOpen(location) ? 'Open' : 'Closed'}</span>
                 <span>
                   {openHours(location)}
                 </span>
