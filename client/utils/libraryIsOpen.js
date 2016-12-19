@@ -1,6 +1,6 @@
 import convert from './convertLibraryTimeStringTo24Hours'
+import dateFromTimeString from './dateFromTimeString'
 import isWithinRange from 'date-fns/is_within_range'
-
 /*
   The Library Hours API (api.lib.sfu.ca/hours/summary) contains an `in_range
   property which is supposed to indicate if the current time is within the
@@ -12,14 +12,6 @@ import isWithinRange from 'date-fns/is_within_range'
     * if in_range === true:
       * sanity check current time is between `open_time` and `close_time`
 */
-
-const dateFromTimeString = str => {
-  const d = new Date()
-  const t = str.split(':')
-  d.setHours(t[0])
-  d.setMinutes(t[1])
-  return d
-}
 
 export default location => {
   const {
