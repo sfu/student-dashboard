@@ -1,8 +1,11 @@
 import test from 'ava'
-import {mockReq, mockRes} from 'sinon-express-mock'
+import { mockReq, mockRes } from 'sinon-express-mock'
 import sinon from 'sinon'
-import {provisionOrUpdateUser, __RewireAPI__ as RewireAPI} from '../index' // eslint-disable-line
-import db from '../../db'
+import {
+  provisionOrUpdateUser,
+  __RewireAPI__ as RewireAPI // eslint-disable-line
+} from '../index'
+const tracker = require('mock-knex').getTracker()
 
 const FAKEUSERBIO = {
   uid: 12345,
@@ -34,15 +37,15 @@ const FAKEOAUTH = {
   valid_until: 0
 }
 
-const insertFakeUser = async () => {
-  const res = await db('users').insert(FAKEUSER).returning('*')
-  return res[0]
-}
-
-test.beforeEach('Reset the database', async () => {
-  await db.migrate.rollback()
-  await db.migrate.latest()
-
+test.beforeEach('Setup mocks', async () => {
+  tracker.install()
+  tracker.on('query', q => {
+     q.response([{
+       ...FAKEUSER,
+       ...FAKEOAUTH,
+       uid: '1234-5678-9012-3456'
+     }])
+  })
   // rewire the getUserBio function called by provisionOrUpdateUser
   RewireAPI.__Rewire__('getUserBio', function() {
     return Promise.resolve(FAKEUSERBIO)
@@ -52,6 +55,10 @@ test.beforeEach('Reset the database', async () => {
   RewireAPI.__Rewire__('getAccessToken', () => {
     return Promise.resolve({data: FAKEOAUTH})
   })
+})
+
+test.afterEach('Teardown', () => {
+  tracker.uninstall()
 })
 
 test('Provision a user when none exists', async t => {
@@ -66,9 +73,8 @@ test('Provision a user when none exists', async t => {
 })
 
 test('Call next() when a user already exists, do not update', async t => {
-  const fakeUser = await insertFakeUser()
   const req = mockReq({
-    user: fakeUser,
+    user: { ...FAKEUSER, ...FAKEOAUTH },
   })
   const res = mockRes()
   const next = sinon.spy()
@@ -77,11 +83,10 @@ test('Call next() when a user already exists, do not update', async t => {
 })
 
 test('Should call next when is an API request', async t => {
-  const fakeUser = await insertFakeUser()
   const req = mockReq({
     isApiRequest: true,
     username: 'fakeuser',
-    user: fakeUser
+    user: { ...FAKEUSER, ...FAKEOAUTH },
   })
   const res = mockRes()
   const next = sinon.spy()

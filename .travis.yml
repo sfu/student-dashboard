@@ -4,10 +4,6 @@ node_js:
 branches:
   except:
     - /^greenkeeper-.*$/
-services:
-  - postgresql
-before_script:
-  - psql -c 'create database student_dashboard_test;' -U postgres
 notifications:
   slack:
     on_pull_requests: false

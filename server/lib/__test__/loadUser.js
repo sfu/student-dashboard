@@ -1,30 +1,46 @@
 import test from 'ava'
 import loadUser from '../loadUser'
-import db from '../../db'
+const tracker = require('mock-knex').getTracker()
 
-test.before('Reset the database', async () => {
-  await db.migrate.rollback()
-  await db.migrate.latest()
+test.beforeEach('Install tracker', async () => {
+  tracker.install()
 })
 
-test.serial('loadUser returns `null` when no matching user found', async t => {
+test.afterEach('Reset the database', async () => {
+  tracker.uninstall()
+})
+
+
+test('loadUser returns `null` when no matching user found', async t => {
+  tracker.on('query', q => {
+    q.response([])
+  })
+
   const user = await loadUser('fakeuser')
   t.is(user, null)
 })
 
-test.serial('loadUser returns a user when one is found', async t => {
-  await db('users').insert({
-    username: 'fakeuser',
-    lastname: 'User',
-    firstnames: 'Fake',
-    barcode: '12345'
+test('loadUser returns a user when one is found', async t => {
+  tracker.on('query', q => {
+    q.response([{
+      username: 'fakeuser',
+      lastname: 'User',
+      firstnames: 'Fake',
+      barcode: '12345'
+    }])
   })
 
   const user = await loadUser('fakeuser')
   t.is(user.username, 'fakeuser')
 })
 
-test.serial('loadUser returns a user with only specified fields', async t => {
+test('loadUser returns a user with only specified fields', async t => {
+  tracker.on('query', q => {
+    q.response([{
+      id: 1,
+      username: 'fakeuser'
+    }])
+  })
   const user = await loadUser('fakeuser', ['id', 'username'])
   const keys = Object.keys(user)
   t.true(keys.includes('id'))
