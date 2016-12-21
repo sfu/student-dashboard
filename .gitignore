@@ -13,3 +13,4 @@ data/schema.json
 tmp/*
 !tmp/.gitkeep
 html/snap.html
+*.tap
