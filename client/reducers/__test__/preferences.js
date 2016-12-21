@@ -6,22 +6,57 @@ test('Default', t => {
   t.deepEqual(nextState, DEFAULT)
 })
 
-test('GET_PREFERENCES', t => {
+test('SYNC_PREFERENCES_START', t => {
   const nextState = preferences(DEFAULT, {
-    type: 'GET_PREFERENCES'
-  })
-  t.deepEqual(nextState, DEFAULT)
-})
-
-test('SET_PREFERENCE', t => {
-  const nextState = preferences(DEFAULT, {
-    type: 'SET_PREFERENCE',
-    preference: 'timeFormat',
-    value: '24h'
+    type: 'SYNC_PREFERENCES_START'
   })
   const expected = {
     ...DEFAULT,
-    timeFormat: '24h'
+    syncingPreferences: true,
+    syncPreferencesError: null
+  }
+  t.deepEqual(nextState, expected)
+})
+
+test('SYNC_PREFERENCES_SUCCESS', t => {
+  const nextState = preferences(DEFAULT, {
+    type: 'SYNC_PREFERENCES_SUCCESS'
+  })
+  const expected = {
+    ...DEFAULT,
+    syncingPreferences: false,
+    syncPreferencesError: null
+  }
+  t.deepEqual(nextState, expected)
+})
+
+test('SYNC_PREFERENCES_ERROR', t => {
+  const nextState = preferences(DEFAULT, {
+    type: 'SYNC_PREFERENCES_ERROR',
+    error: 'something went boom'
+  })
+  const expected = {
+    ...DEFAULT,
+    syncingPreferences: false,
+    syncPreferencesError: 'something went boom'
+  }
+  t.deepEqual(nextState, expected)
+})
+
+test('SET_PREFERENCES', t => {
+  const nextState = preferences(DEFAULT, {
+    type: 'SET_PREFERENCES',
+    preferences: {
+      somePref: 'someValue'
+    }
+  })
+  const expected = {
+    ...DEFAULT,
+    syncingPreferences: false,
+    syncPreferencesError: null,
+    preferenceData: {
+      somePref: 'someValue'
+    }
   }
   t.deepEqual(nextState, expected)
 })
