@@ -15,6 +15,7 @@ test('FETCH_LIBRARY_HOURS_START', t => {
 })
 
 test('FETCH_LIBRARY_HOURS_SUCCESS', t => {
+  const now = Date.now()
   const startState = {
     ...DEFAULT,
     hours: {
@@ -31,7 +32,7 @@ test('FETCH_LIBRARY_HOURS_SUCCESS', t => {
       fetching: false,
       error: null,
       data: ['something'],
-      lastUpdated: Date.now()
+      lastUpdated: now
     }
   }
 
@@ -39,7 +40,7 @@ test('FETCH_LIBRARY_HOURS_SUCCESS', t => {
     type: 'FETCH_LIBRARY_HOURS_SUCCESS',
     payload: {
       data: ['something'],
-      lastUpdated: Date.now()
+      lastUpdated: now
     }
   })
 
