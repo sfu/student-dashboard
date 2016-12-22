@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import Relay from 'react-relay'
 import { Provider } from 'react-redux'
 import {Router, browserHistory, applyRouterMiddleware} from 'react-router'
+import ReactGA from 'react-ga'
 import useRelay from 'react-router-relay'
 import routes from './routes/routes'
 
@@ -15,6 +16,8 @@ import { toggleHeaderNav } from 'actions/header'
 import { fetchLibraryHours } from 'actions/library'
 import configureStore from './configureStore'
 
+const { NODE_ENV, GOOGLE_ANALYTICS_CODE } = process.env
+
 const store = configureStore()
 
 Relay.injectNetworkLayer(
@@ -23,7 +26,7 @@ Relay.injectNetworkLayer(
   })
 )
 
-if (process.env.NODE_ENV !== 'production') {
+if (NODE_ENV !== 'production') {
   const RelayNetworkDebug = require('react-relay/lib/RelayNetworkDebug')
   RelayNetworkDebug.init()
 }
@@ -37,6 +40,18 @@ browserHistory.listen(({pathname}) => {
   }
 })
 
+if (GOOGLE_ANALYTICS_CODE) {
+  ReactGA.initialize(GOOGLE_ANALYTICS_CODE, {
+    debug: NODE_ENV !== 'production'
+  })
+}
+
+const logPageView = () => {
+  if (GOOGLE_ANALYTICS_CODE) {
+    ReactGA.set({ page: window.location.pathname })
+    ReactGA.pageview(window.location.pathname)
+  }
+}
 
 const RootElement = document.getElementById('sorry')
 ReactDOM.render(
@@ -46,6 +61,7 @@ ReactDOM.render(
       render={applyRouterMiddleware(useRelay)}
       environment={Relay.Store}
       routes={routes(store)}
+      onUpdate={logPageView}
     />
   </Provider>,
   RootElement
