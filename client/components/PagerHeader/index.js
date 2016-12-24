@@ -1,4 +1,6 @@
 import React, { PropTypes }  from 'react'
+import GAEvent from 'utils/GAEvent'
+
 import styles from './PagerHeader.css'
 
 const PagerHeader = ({
@@ -6,14 +8,27 @@ const PagerHeader = ({
   forwardDisabled,
   backDisabled,
   buttonHandler,
-  currentPage
+  currentPage,
+  gaCategory
 }) => {
+  const onClickHandler = (page, direction) => {
+    buttonHandler(page)
+    if (gaCategory) {
+      GAEvent({
+        category: gaCategory,
+        action: 'change page',
+        label: `${direction} button`,
+        value: page
+      })
+    }
+  }
+
   return (
     <div className={styles.header}>
       <button
         disabled={backDisabled}
         className={styles.pagerButton}
-        onClick={() => {buttonHandler(currentPage - 1)}}
+        onClick={() => {onClickHandler(currentPage - 1, 'back')}}
         >
           &lt;
         </button>
@@ -21,7 +36,7 @@ const PagerHeader = ({
       <button
         disabled={forwardDisabled}
         className={styles.pagerButton}
-        onClick={() => {buttonHandler(currentPage + 1)}}
+        onClick={() => {onClickHandler(currentPage + 1, 'forward')}}
       >
         &gt;
       </button>
@@ -39,7 +54,8 @@ PagerHeader.propTypes = {
   forwardDisabled: PropTypes.bool.isRequired,
   backDisabled: PropTypes.bool.isRequired,
   buttonHandler: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired
+  currentPage: PropTypes.number.isRequired,
+  gaCategory: PropTypes.string
 }
 
 export default PagerHeader

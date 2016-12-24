@@ -7,7 +7,8 @@ export default React.createClass({
     children: PropTypes.element.isRequired,
     pagerTitles: PropTypes.array.isRequired,
     pageCount: PropTypes.number.isRequired,
-    startAtPage: PropTypes.number.isRequired
+    startAtPage: PropTypes.number.isRequired,
+    gaCategory: PropTypes.string
   },
 
   getInitialState() {
@@ -23,7 +24,7 @@ export default React.createClass({
   },
 
   render() {
-    const {children, pagerTitles, pageCount} = this.props
+    const {children, pagerTitles, pageCount, gaCategory} = this.props
     const childrenWithProps = React.Children.map(children, (child) => React.cloneElement(child, {
         selectedDay: this.state.currentPage,
       })
@@ -36,12 +37,14 @@ export default React.createClass({
           backDisabled={this.state.currentPage === 0}
           forwardDisabled={this.state.currentPage === (this.props.pageCount - 1)}
           buttonHandler={this.setPage}
+          gaCategory={gaCategory}
          />
         {childrenWithProps}
         <PagerDots
           count={pageCount}
           activeDot={this.state.currentPage}
           dotClickHandler={this.setPage}
+          gaCategory={gaCategory}
         />
       </div>
     )

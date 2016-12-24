@@ -2,10 +2,16 @@ import React, { PropTypes }  from 'react'
 import PagerDot from 'components/PagerDot'
 import styles from './PagerDots.css'
 
-const PagerDots = ({ count, activeDot, dotClickHandler }) => {
+const PagerDots = ({ count, activeDot, dotClickHandler, gaCategory }) => {
   const dots = [...Array(count).keys()].map((arr, idx) => {
     return (
-      <PagerDot dotClickHandler={dotClickHandler} active={idx === activeDot} idx={idx} key={idx} />
+      <PagerDot
+        dotClickHandler={dotClickHandler}
+        active={idx === activeDot}
+        idx={idx}
+        key={idx}
+        gaCategory={gaCategory}
+      />
     )
   })
 
@@ -19,7 +25,8 @@ const PagerDots = ({ count, activeDot, dotClickHandler }) => {
 PagerDots.propTypes = {
   count: PropTypes.number.isRequired,
   activeDot: PropTypes.number.isRequired,
-  dotClickHandler: PropTypes.func.isRequired
+  dotClickHandler: PropTypes.func.isRequired,
+  gaCategory: PropTypes.string
 }
 
 export default PagerDots
