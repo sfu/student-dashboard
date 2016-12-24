@@ -4,6 +4,7 @@ import moment from 'moment'
 import calcTermForDate from 'utils/calcTermForDate'
 import Collapse from 'react-collapse'
 import { presets } from 'react-motion'
+import GAEvent from 'utils/GAEvent'
 
 import styles from './HelloTile.css'
 
@@ -25,6 +26,10 @@ export const _HelloTile = React.createClass({
     const nextHide = !this.state.hide
     this.setState({
       hide: nextHide
+    })
+    GAEvent({
+      category: 'HelloTile',
+      action: nextHide ? 'hide' : 'show'
     })
   },
 
