@@ -42,6 +42,7 @@ class _Dashboard extends React.Component {
             pagerTitles={[...Array(7).keys()].map(d => d === today ? 'Today' : moment().day(d).format('dddd, MMMM DD'))}
             pageCount={7}
             startAtPage={selectedDay}
+            gaCategory='WeekAtAGlance'
           >
             <WeekAtAGlance schedule={viewer} selectedDay={selectedDay} />
           </Pageable>
