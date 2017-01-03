@@ -15,7 +15,11 @@ const _Courses = React.createClass({
     return (
       <div>
         <Widget title="My Courses">
-          <MyCourses courseSchedule={viewer} term={calcTermForDate()}/>
+          <MyCourses
+            courseSchedule={viewer}
+            term={calcTermForDate()}
+            gaCategory="MyCourses"
+          />
         </Widget>
         <Widget title="My Assignments & Exams">
           <MyAssignmentsExams assignmentExamSchedule={viewer} />

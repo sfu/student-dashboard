@@ -16,7 +16,8 @@ export const _MyCourses = React.createClass({
   propTypes: {
     courseSchedule: PropTypes.object.isRequired,
     term: PropTypes.string,
-    relay: PropTypes.object.isRequired
+    relay: PropTypes.object.isRequired,
+    gaCategory: PropTypes.string
   },
 
   getInitialState() {
@@ -98,6 +99,7 @@ export const _MyCourses = React.createClass({
           buttonHandler={this.buttonHandler}
           backDisabled={this.state.currentPage === 0}
           forwardDisabled={this.state.currentPage === 2}
+          gaCategory={this.props.gaCategory}
         />
         <div>
           {getContent()}
@@ -106,10 +108,10 @@ export const _MyCourses = React.createClass({
           count={3}
           activeDot={this.state.currentPage}
           dotClickHandler={this.buttonHandler}
+          gaCategory={this.props.gaCategory}
         />
       </div>
     )
-
   }
 })
 
