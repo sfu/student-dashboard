@@ -1,5 +1,5 @@
 import React, { PropTypes }  from 'react'
-import GAEvent from 'utils/GAEvent'
+import ReactGA from 'react-ga'
 import styles from './PagerDot.css'
 import cx from 'classnames'
 
@@ -8,7 +8,7 @@ const PagerDot = ({ active = false, idx, dotClickHandler, gaCategory }) => {
   const onClickHandler = page => {
     dotClickHandler(page)
     if (gaCategory) {
-      GAEvent({
+      ReactGA.event({
         category: gaCategory,
         action: 'change page',
         label: 'PagerDot',

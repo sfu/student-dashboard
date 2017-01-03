@@ -1,6 +1,5 @@
 import React, { PropTypes }  from 'react'
-import GAEvent from 'utils/GAEvent'
-
+import ReactGA from 'react-ga'
 import styles from './PagerHeader.css'
 
 const PagerHeader = ({
@@ -14,7 +13,7 @@ const PagerHeader = ({
   const onClickHandler = (page, direction) => {
     buttonHandler(page)
     if (gaCategory) {
-      GAEvent({
+      ReactGA.event({
         category: gaCategory,
         action: 'change page',
         label: `${direction} button`,

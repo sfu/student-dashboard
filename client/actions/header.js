@@ -1,5 +1,4 @@
-import GAEvent from 'utils/GAEvent'
-
+import ReactGA from 'react-ga'
 export const TOGGLE_HEADER_NAV = 'TOGGLE_HEADER_NAV'
 
 export const toggleHeaderNav = () => {
@@ -7,7 +6,7 @@ export const toggleHeaderNav = () => {
     dispatch({
       type: TOGGLE_HEADER_NAV,
     })
-    GAEvent({
+    ReactGA.event({
       category: 'Header',
       action: TOGGLE_HEADER_NAV,
       label: getState().header.showNav ? 'close' : 'open'
