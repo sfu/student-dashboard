@@ -2,6 +2,7 @@ import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
+import { OutboundLink } from 'react-ga'
 import formatTimeRange from 'utils/formatTimeRange'
 import styles from './ScheduleItem.css'
 import { CLASS_TYPES } from 'const'
@@ -34,7 +35,16 @@ const ScheduleItem = ({ item, timeFormat }) => {
   } else {
     details = (
       <span>
-        <a href={item.url}>{item.title}</a>
+        {
+          item.url ?
+          <OutboundLink
+            eventLabel={item.url}
+            to={item.url}
+          >
+            {item.title}
+          </OutboundLink>
+          : <span>{item.title}</span>
+        }
       </span>
     )
   }

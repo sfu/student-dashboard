@@ -1,10 +1,17 @@
 import React, { PropTypes }  from 'react'
+import { OutboundLink } from 'react-ga'
 import styles from './MyLibrary.css'
 
 const MyLibrary = ({barcode, fines, checkedOut, holds}) => {
   const checkedOutItemsList = checkedOut.map((item, index) =>
     <li className={styles.listItem} key={index}>
-      <a href={item.link}>{item.title}</a><br/>
+      <OutboundLink
+        eventLabel={item.link}
+        to={item.link}
+      >
+        {item.title}
+      </OutboundLink>
+      <br/>
       <span className={styles.due}>Due {item.due_printable}</span>
     </li>
   )
@@ -12,7 +19,13 @@ const MyLibrary = ({barcode, fines, checkedOut, holds}) => {
 
   const holdItemsList = holds.map((item, index) => (
     <li className={styles.listItem} key={index}>
-      <a href={item.link}>{item.title}</a><br/>
+      <OutboundLink
+        eventLabel={item.link}
+        to={item.link}
+      >
+        {item.title}
+      </OutboundLink>
+      <br/>
       <span>Status: {item.status}</span><br/>
       <span>Pickup: {item.pickup}</span>
     </li>
