@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import styles from './NavTile.css'
 
 const NavTile = ({LinkTo, Title, Icon, OnlyActiveOnIndex = false, placement }) => {
-  const sendEvent = (ev) => {
+  const tracker = ev => {
     ev.stopPropagation()
     ReactGA.event({
       category: `NavTile_${placement}`,
@@ -14,7 +14,12 @@ const NavTile = ({LinkTo, Title, Icon, OnlyActiveOnIndex = false, placement }) =
   }
   return (
     <div className={styles.tileContainer}>
-      <Link onClick={sendEvent} to={LinkTo} activeClassName={styles.active} onlyActiveOnIndex={OnlyActiveOnIndex}>
+      <Link
+        to={LinkTo}
+        activeClassName={styles.active}
+        onlyActiveOnIndex={OnlyActiveOnIndex}
+        onClick={tracker}
+      >
         <div className={styles.tile}>
           <div className={styles.icon}><Icon /></div>
           <div className={styles.title}>{Title}</div>
