@@ -5,7 +5,7 @@ import styles from './HeaderNavGrid.css'
 const HeaderNavGrid = () => {
   return (
     <div className={styles.container}>
-      <NavGrid />
+      <NavGrid placement="Header" />
     </div>
   )
 }

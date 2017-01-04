@@ -5,7 +5,7 @@ import styles from './DashboardNavGrid.css'
 const HeaderNavGrid = () => {
   return (
     <div className={styles.container}>
-      <NavGrid />
+      <NavGrid placement="Dashboard"/>
     </div>
   )
 }
