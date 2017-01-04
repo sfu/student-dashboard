@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import LoadingSpinnerIcon from 'components/LoadingSpinnerIcon'
 import BusIcon from '!url!images/transit/bus.svg'
 import CaretRight from '!url!images/transit/caret_right.svg'
@@ -10,8 +11,21 @@ import transformTranslinkText from 'utils/transformTranslinkText'
 const renderStops = (stops, isFetching) => stops.map((stop, i) => {
   const { number, onStreet, atStreet, nextArrival} = stop
   const time =  nextArrival.ExpectedCountdown < 2 ? 'Now' : `${nextArrival.ExpectedCountdown} min`
+  const tracker = ev => {
+    ev.stopPropagation()
+    ReactGA.event({
+      category: 'DashboardTransitBookmarkRow',
+      action: 'click_bookmark',
+      label: number
+    })
+  }
   return (
-    <Link key={i} className={styles.link} to={`/transit/${number}`}>
+    <Link
+      key={i}
+      className={styles.link}
+      to={`/transit/${number}`}
+      onClick={tracker}
+    >
       <li className={styles.listItem}>
         <div className={styles.container}>
           <div className={styles.stopInfo}>
