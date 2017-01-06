@@ -1,6 +1,7 @@
 import axios from 'axios'
 import uniqBy from 'lodash/uniqBy'
 import isEqual from 'lodash/isEqual'
+import ReactGA from 'react-ga'
 import normalizeTranslinkData from '../utils/normalizeTranslinkData'
 
 export const ADD_TRANSIT_BOOKMARK = 'ADD_TRANSIT_BOOKMARK'
@@ -79,6 +80,11 @@ export const addTransitBookmark = bookmark => {
       data: bookmark,
     }).then(() => {
       dispatch(syncTransitBookmarkSuccess())
+      ReactGA.event({
+        category: 'Transit',
+        action: ADD_TRANSIT_BOOKMARK,
+        label: bookmark.stop
+      })
     }).catch(error => {
       // reset from optimistic update
       dispatch(setTransitBookmarks(currentBookmarks))
@@ -100,6 +106,11 @@ export const removeTransitBookmark = bookmark => {
       data: bookmark,
     }).then(() => {
       dispatch(syncTransitBookmarkSuccess())
+      ReactGA.event({
+        category: 'Transit',
+        action: REMOVE_TRANSIT_BOOKMARK,
+        label: bookmark.stop
+      })
     }).catch(error => {
       // reset from optimistic update
       dispatch(setTransitBookmarks(currentBookmarks))
@@ -282,6 +293,11 @@ export const updateStopSearchFieldValue = value => {
 }
 
 export const searchForStop = (stop, router = undefined) => {
+  ReactGA.event({
+    category: 'Transit',
+    action: 'SEARCH_FOR_STOP',
+    label: stop
+  })
   return (dispatch, getState) => {
     dispatch(searchForStopStart())
     const STOP_URL = `/translink/stops/${stop}`
@@ -293,7 +309,6 @@ export const searchForStop = (stop, router = undefined) => {
         router.push(`/transit/${stop}`)
       }
     }).catch((error) => {
-      // dispatch(updateStopSearchFieldValue(''))
       dispatch(searchForStopError(error.response.data))
     })
   }

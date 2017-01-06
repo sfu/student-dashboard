@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactGA from 'react-ga'
 import BusScheduleRow from 'components/BusScheduleRow'
 import transformTranslinkText from 'utils/transformTranslinkText'
 import Loading from 'components/Loading'
@@ -20,6 +21,11 @@ const scheduleRows = (stop, schedules) => {
 
 const BusSchedules = ({transit, selectedStop, schedules, dispatch, timeFormat}) => {
   const refresh = stop => {
+    ReactGA.event({
+      category: 'Transit',
+      action: 'Refresh Schedules for Stop',
+      label: stop.toString()
+    })
     dispatch(fetchSchedulesForBusStop(stop))
   }
   const stopName = `${transformTranslinkText(selectedStop.OnStreet)} / ${transformTranslinkText(selectedStop.AtStreet)}`
@@ -43,11 +49,11 @@ const BusSchedules = ({transit, selectedStop, schedules, dispatch, timeFormat}) 
         }
         {transit.fetchSchedulesError && transit.fetchSchedulesError.Code === '3005' &&
         <p style={{textAlign: 'center'}}>No upcoming departures for this stop.</p>
-        }
-        {scheduleRows(selectedStop.StopNo, schedules)}
-      </div>
+      }
+      {scheduleRows(selectedStop.StopNo, schedules)}
     </div>
-  )
+  </div>
+)
 }
 
 BusSchedules.propTypes = {

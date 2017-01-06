@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Marker } from 'react-leaflet'
 import { connect } from 'react-redux'
 import L from 'leaflet'
+import ReactGA from 'react-ga'
 import BlueIcon from '!url!images/transit/translink_blue.svg'
 import RedIcon from '!url!images/transit/translink_red.svg'
 
@@ -33,6 +34,11 @@ const BusStopMarker = ({ stop, dispatch, transit }, { router }) => {
       zIndexOffset={selectedStop && selectedStop.StopNo === stop.StopNo ? 1000 : 0}
       draggable={false}
       onClick={() => {
+        ReactGA.event({
+          category: 'Transit',
+          action: 'Transit Stop Click',
+          label: stop.StopNo.toString()
+        })
         router.push(`/transit/${stop.StopNo}`)
       }}
     />

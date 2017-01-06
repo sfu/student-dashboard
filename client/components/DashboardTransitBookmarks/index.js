@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import formatTime from 'utils/formatTime'
 import { fetchSchedulesForBookmarks } from 'actions/transit'
 
@@ -15,7 +16,17 @@ const renderRows = (schedules) => {
 }
 
 class DashboardTransitBookmarks extends Component {
+  constructor() {
+    super()
+
+    this.refresh = this.refresh.bind(this)
+  }
+
   refresh() {
+    ReactGA.event({
+      category: 'Transit',
+      action: 'Refresh DashboardTransitBookmarks'
+    })
     this.props.dispatch(fetchSchedulesForBookmarks())
   }
 
@@ -23,18 +34,18 @@ class DashboardTransitBookmarks extends Component {
     const {
       transitBookmarksSchedules,
       transitBookmarksSchedulesFetchedAt,
-     } = this.props.transit
-     const { timeFormat } = this.props
+    } = this.props.transit
+    const { timeFormat } = this.props
     return (
       <div className={styles.container}>
         {
           transitBookmarksSchedulesFetchedAt && (
-          <div className={styles.scheduleControls}>
-            <p className={styles.fetchedAt}>
-              Predictions as of {formatTime(transitBookmarksSchedulesFetchedAt, timeFormat)}
-            </p>
-            <button className={styles.refreshButton} onClick={() => {this.refresh()}}>Refresh</button>
-          </div>
+            <div className={styles.scheduleControls}>
+              <p className={styles.fetchedAt}>
+                Predictions as of {formatTime(transitBookmarksSchedulesFetchedAt, timeFormat)}
+              </p>
+              <button className={styles.refreshButton} onClick={this.refresh}>Refresh</button>
+            </div>
           )
         }
         {renderRows(transitBookmarksSchedules)}
