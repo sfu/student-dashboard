@@ -1,4 +1,4 @@
-import { TOGGLE_HEADER_NAV } from 'actions/header'
+import { TOGGLE_HEADER_NAV } from '../actions/header'
 
 export const DEFAULT = {
   showNav: false
