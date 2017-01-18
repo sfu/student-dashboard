@@ -1,5 +1,10 @@
 @value sfured from 'styles/color.css';
 
+body {
+  margin: 0 auto;
+  max-width: 43em;
+}
+
 a {
   color: sfured;
 }
