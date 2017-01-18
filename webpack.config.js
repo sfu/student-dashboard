@@ -192,7 +192,8 @@ module.exports = (env = {}) => {
           GRAPHQL_SERVER: JSON.stringify(process.env.GRAPHQL_SERVER),
           ROOMFINDER_URL: JSON.stringify(process.env.ROOMFINDER_URL || 'https://its-arcgis-web.its.sfu.ca/apps/sfuroomfinder_ios/'),
           MAPBOX_TILES_URL: JSON.stringify(process.env.MAPBOX_TILES_URL),
-          GOOGLE_ANALYTICS_CODE: JSON.stringify(process.env.GOOGLE_ANALYTICS_CODE)
+          GOOGLE_ANALYTICS_CODE: JSON.stringify(process.env.GOOGLE_ANALYTICS_CODE),
+          BUILD: JSON.stringify(process.env.BUILD) || undefined
         }
       })
     ])
