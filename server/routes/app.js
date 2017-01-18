@@ -31,7 +31,7 @@ router.get('/', loggedInWithSession, redirectToLoginIfNecessary, async (req, res
       production: process.env.NODE_ENV === 'production'
     })
   } catch(e) {
-    debug('%s - Error rendering app: %s', e.message)
+    debug('%s - Error rendering app: %s', req.id, e.message)
     res.boom.badImplementation()
   }
 })
