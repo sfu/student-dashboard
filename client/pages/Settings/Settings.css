@@ -1,0 +1,11 @@
+.container {
+  margin: 1em;
+}
+
+.aboutText {
+  font-size: .8em;
+}
+
+.copyright, .build {
+  font-size: .65em;
+}
