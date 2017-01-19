@@ -19,7 +19,7 @@ const PagerDot = ({ active = false, idx, dotClickHandler, gaCategory }) => {
   return (
     <button onClick={() => {onClickHandler(idx)}} className={className} key={idx}>
       <svg height="16px" width="16px">
-        <circle cx="8" cy="8" r={active ? 8 : 4} />
+        <circle cx="8" cy="8" r={active ? 7 : 4} />
       </svg>
     </button>
   )
