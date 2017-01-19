@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const Transit = ({transit}) => {
   return (
-    <div>
+    <div className={styles.transit}>
       <TransitStopSearch />
       <TransitMap />
       {!transit.selectedStop && !!Object.keys(transit.transitBookmarksSchedules).length &&

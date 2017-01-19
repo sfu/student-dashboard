@@ -3,7 +3,7 @@ import Relay from 'react-relay'
 import { Widget } from 'components/Widget'
 import LibaryHours from 'components/LibraryHours'
 import MyLibrary from 'components/MyLibrary'
-
+import styles from './Library.css'
 const _Library = React.createClass({
   propTypes: {
     viewer: PropTypes.object
@@ -12,7 +12,7 @@ const _Library = React.createClass({
   render() {
     const { barcode, library } = this.props.viewer
     return (
-      <div>
+      <div className={styles.library}>
         <Widget title="Library Hours">
           <LibaryHours />
         </Widget>

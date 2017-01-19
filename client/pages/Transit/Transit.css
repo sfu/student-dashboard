@@ -1,5 +1,9 @@
 @value sfured from 'styles/color.css';
 
+.transit {
+  margin-bottom: 2em;
+}
+
 .myBussesHeader {
   border-bottom: 2px solid sfured;
 }

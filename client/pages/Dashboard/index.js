@@ -9,6 +9,7 @@ import DashboardNavGrid from 'components/DashboardNavGrid'
 import DashboardTransitBookmarks from 'components/DashboardTransitBookmarks'
 import { fetchSchedulesForBookmarks } from 'actions/transit'
 import moment from 'moment'
+import styles from './Dashboard.css'
 
 class _Dashboard extends React.Component {
   constructor() {
@@ -35,7 +36,7 @@ class _Dashboard extends React.Component {
     const today = moment().day()
     const selectedDay = !isNaN(start_at) && (start_at >= 0 && start_at <= 6) ? parseInt(start_at) : today
     return (
-      <div>
+      <div className={styles.dashboard}>
         <HelloTile helloTileSchedule={viewer} names={viewer} />
         <Widget title="My Week at a Glance">
           <Pageable

@@ -6,7 +6,7 @@ import styles from './Settings.css'
 
 const Settings = () => {
   return (
-    <div>
+    <div className={styles.settings}>
       <Widget title="General Settings">
         <div className={styles.container}>
           <SettingsSelect

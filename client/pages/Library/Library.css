@@ -1,5 +1,9 @@
 @value sfured, sfublue from 'styles/color.css';
 
+.library {
+  margin-bottom: 2em;
+}
+
 .h3 {
   color: sfured;
   font-weight: 300;

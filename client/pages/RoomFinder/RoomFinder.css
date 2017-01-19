@@ -1,5 +1,5 @@
 .roomFinder {
   width: 100%;
-  height: 450px;
+  height: calc(100vh - 175px);
   border: none;
 }
