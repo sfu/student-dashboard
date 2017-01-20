@@ -10,7 +10,7 @@ import transformTranslinkText from 'utils/transformTranslinkText'
 
 const renderStops = (stops, isFetching) => stops.map((stop, i) => {
   const { number, onStreet, atStreet, nextArrival} = stop
-  const time =  nextArrival.ExpectedCountdown < 2 ? 'Now' : `${nextArrival.ExpectedCountdown} min`
+  const time =  !nextArrival ? 'Unknown' : nextArrival.ExpectedCountdown < 2 ? 'Now' : `${nextArrival.ExpectedCountdown} min`
   const tracker = ev => {
     ev.stopPropagation()
     ReactGA.event({
