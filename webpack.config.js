@@ -1,4 +1,4 @@
-require('./environment')
+ require('./environment')
 
 const {resolve} = require('path')
 const webpack = require('webpack')
@@ -26,6 +26,7 @@ module.exports = (env = {}) => {
       vendor: [
         'react',
         'react-dom',
+        'react-ga',
         'react-relay',
         'react-router',
         'redux',
