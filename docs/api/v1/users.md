@@ -47,9 +47,9 @@ Returns a user object.
 #### Example Request
 
 ```bash
-curl https://snap.sfu.ca/api/v1/users/self \
+curl https://api.its.sfu.ca/snap/api/v1/users/self \
   -X GET \
-  -H 'Authorization: Bearer <...JWT...>'
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>'
 ```
 
 #### Example Response
@@ -75,9 +75,9 @@ Returns an array of transit bookmark objects.
 #### Example Request
 
 ```bash
-curl https://snap.sfu.ca/api/v1/users/self/transitBookmarks \
+curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
   -X GET \
-  -H 'Authorization: Bearer <...JWT...>'
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>'
 ```
 
 #### Example Response
@@ -142,9 +142,9 @@ No validation of the actual bookmark is performed; it is possible to pass a well
 #### Example Request
 
 ```bash
-curl https://snap.sfu.ca/api/v1/users/self/transitBookmarks \
+curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
   -X POST \
-  -H 'Authorization: Bearer <...JWT...>' \
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>' \
   -d '{"stop":"51861","route":"145","destination":"PRODUCTION STN"}'
 ```
 
@@ -203,9 +203,9 @@ The JSON payload must conform to the following schema:
 ```
 
 ```bash
-curl https://snap.sfu.ca/api/v1/users/self/transitBookmarks \
+curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
   -X DELETE \
-  -H 'Authorization: Bearer <...JWT...>' \
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>' \
   -d '{"stop":"51861","route":"145","destination":"PRODUCTION STN"}'
 ```
 
