@@ -13,6 +13,8 @@ import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
 import proxy from 'express-http-proxy'
 import requestId from 'express-request-id'
+import methodOverride from 'method-override'
+
 const redis = require('promise-redis')()
 
 const RedisStore = ConnectRedis(session)
@@ -84,6 +86,7 @@ export const createServer = (app) => {
   app.set('JWT_SIGNING_KEY', fs.readFileSync(process.env.JWT_SIGNING_KEY))
   app.set('JWT_SIGNING_ALG', 'RS512')
   app.use(session(sessionConfig))
+  app.use(methodOverride('X-HTTP-Method-Override'))
   app.use(helmet())
   app.use(requestId())
   app.use(express.static(path.resolve(__dirname, '../public')))

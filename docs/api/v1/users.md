@@ -202,11 +202,22 @@ The JSON payload must conform to the following schema:
 }
 ```
 
+This route can also be sent as a `POST` with a `X-HTTP-Method-Override: DELETE` header, for clients that do not support `DELETE` or that do not support sending a body with a `DELETE`.
+
+#### Example Request
 ```bash
+# Using DELETE Method
 curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
   -X DELETE \
   -H 'Authorization: Bearer <...ACCESS_TOKEN...>' \
   -d '{"stop":"51861","route":"145","destination":"PRODUCTION STN"}'
+
+# Using POST Method with X-HTTP-Method-Override header
+curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
+  -X POST
+  -H 'X-HTTP-Method-Override: DELETE' \
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>' \
+  -d '{"route": "209","stop": "50490","destination": "VANCOUVER"}'
 ```
 
 #### Example Response
