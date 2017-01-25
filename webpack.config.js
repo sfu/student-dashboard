@@ -4,8 +4,6 @@ const {resolve} = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const autoprefixer = require('autoprefixer')
-const values = require('postcss-modules-values')
 const htmlWebpackTemplate = require('html-webpack-template')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin')
@@ -47,88 +45,126 @@ module.exports = (env = {}) => {
     devtool: env.prod ? 'source-map' : 'eval',
 
     resolve: {
-      extensions: ['', '.js', '.jsx'],
+      extensions: ['*', '.js', '.jsx'],
       modules: [
         resolve(__dirname, 'client'),
         resolve(__dirname, 'queries'),
         resolve(__dirname, 'node_modules')
       ]
     },
-    postcss() {
-      return [values, autoprefixer]
+
+    resolveLoader: {
+      moduleExtensions: ['-loader']
     },
 
     module: {
-      loaders: removeEmpty([
+      rules: removeEmpty([
         {
           test: /\.html$/,
-          loader: 'html',
-          query: {
-            interpolate: true,
-            minimize: false
+          use: {
+            loader: 'html-loader',
+            query: {
+              interpolate: true,
+              minimize: false
+            }
           }
         },
 
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'babel',
-          query: {
-            plugins: removeEmpty([
-              ifDev('react-hot-loader/babel'),
-              resolve(__dirname, './babelRelayPlugin.js'),
-              'transform-class-properties',
-              'transform-object-rest-spread'
-            ]),
-            presets: [
-              ['es2015', {modules: false}],
-              'react'
-            ],
-            babelrc: false
+          use: {
+            loader: 'babel-loader',
+            query: {
+              plugins: removeEmpty([
+                ifDev('react-hot-loader/babel'),
+                resolve(__dirname, './babelRelayPlugin.js'),
+                'transform-class-properties',
+                'transform-object-rest-spread'
+              ]),
+              presets: [
+                ['es2015', {modules: false}],
+                'react'
+              ],
+              babelrc: false
+            }
+
           }
         },
 
         {
           test: /\.(png)$/,
-          loader: 'url'
+          use: ['url-loader']
         },
 
         {
           test: /\.svg$/,
-          loader: 'babel?presets[]=es2015,presets[]=react!svg-react'
+          use: [
+            {
+              loader: 'babel-loader',
+              query: {
+                presets: ['es2015', 'react']
+              }
+            },
+            'svg-react'
+          ]
         },
 
         ifProd({
           test: /node_modules\/graphiql\/graphiql\.css$/,
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: 'css'
+          use: ExtractTextPlugin.extract({
+            fallbackLoader: { loader: 'style-loader' },
+            loader: [ 'css-loader' ]
           })
         }),
 
         ifDev({
           test: /node_modules\/graphiql\/graphiql\.css$/,
-          loaders: [
-            'file?name=[name].[ext]'
-          ]
+          use: {
+            loader: 'file-loader',
+            query: {
+              name: '[name].[ext]'
+            }
+          }
         }),
 
         ifProd({
           test: /\.css$/,
           exclude: [/graphiql\.css$/],
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+          use: ExtractTextPlugin.extract({
+            fallbackLoader: { loader: 'style-loader' },
+            loader: [
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  importLoaders: 1,
+                  localIdentName: '[hash:base64:7]'
+                }
+              }
+            ]
           })
         }),
 
         ifDev({
           test: /\.css$/,
           exclude: [/graphiql\.css$/],
-          loaders: [
-            'style?sourceMap',
-            'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-            'postcss-loader'
+          use: [
+            {
+              loader: 'style-loader',
+              query: { sourceMap: true }
+            },
+            {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            }
           ]
         })
 
@@ -153,9 +189,6 @@ module.exports = (env = {}) => {
         chunks: 'app'
       }),
       ifDev(new webpack.HotModuleReplacementPlugin()),
-
-      ifProd(new webpack.optimize.DedupePlugin()),
-      ifProd(new webpack.optimize.OccurrenceOrderPlugin()),
 
       ifProd(new webpack.LoaderOptionsPlugin({
         minimize: true,
