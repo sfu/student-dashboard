@@ -2,7 +2,8 @@ import React, { PropTypes }  from 'react'
 import PagerHeader from 'components/PagerHeader'
 import PagerDots from 'components/PagerDots'
 
-export default React.createClass({
+
+const Pageable = React.createClass({
   propTypes: {
     children: PropTypes.element.isRequired,
     pagerTitles: PropTypes.array.isRequired,
@@ -50,3 +51,5 @@ export default React.createClass({
     )
   }
 })
+
+export default Pageable

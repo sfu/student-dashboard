@@ -9,11 +9,11 @@ import {
 // start and end are moment() objects
 export default (start, end, format='12h') => {
 
-  if (!start instanceof moment) {
+  if (!(start instanceof moment)) {
     throw new TypeError('`start` must be a `moment` object')
   }
 
-  if (!end instanceof moment) {
+  if (!(end instanceof moment)) {
     throw new TypeError('`end` must be a `moment` object')
   }
 
