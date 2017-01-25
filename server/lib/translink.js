@@ -69,7 +69,7 @@ export const getEstimatesForStop = async (stop, options = {}) => {
 }
 
 export const getEstimatesForBookmark = async (bookmark, cache = null) => {
-  const DEBUG_PREFIX = `getEstimatesForBookmark ${bookmark}`
+  const DEBUG_PREFIX = `getEstimatesForBookmark ${JSON.stringify(bookmark)}`
   debug(DEBUG_PREFIX)
   const { stop, route, destination } = bookmark
   try {
@@ -78,13 +78,13 @@ export const getEstimatesForBookmark = async (bookmark, cache = null) => {
     const stopName = stopInfo.Name
 
     // get estimates for stop with route
-    const stopEstimate = await getEstimatesForStop(stop, { route })
+    const stopEstimate = await getEstimatesForStop(stop, { RouteNo: route })
     return {
       ...bookmark,
       stopName,
       onStreet: stopInfo.OnStreet,
       atStreet: stopInfo.AtStreet,
-      schedules: stopEstimate[0].Schedules.filter(s => s.Destination === destination)
+      schedules: stopEstimate[0].Schedules.filter(s => s.Destination.toLowerCase() === destination.toLowerCase())
     }
   } catch (e) {
     throw new Error(e)
