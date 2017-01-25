@@ -27,10 +27,12 @@ const arrivalTimes = (schedules) => {
   })
 }
 
-
 const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) => {
   const destination = schedules.Schedules[0].Destination
-  const isBookmarked = !!transitBookmarks.find((bookmark) => isEqual(bookmark, {stop: stopNumber, route: schedules.RouteNo, destination }))
+  const isBookmarked = !!transitBookmarks.find((bookmark) => isEqual(
+    {...bookmark, destination: bookmark.destination.toLowerCase()},
+    {stop: stopNumber, route: schedules.RouteNo, destination: destination.toLowerCase()}
+  ))
   const BookmarkIcon = isBookmarked ? BookmarkIconFilled : BookmarkIconHollow
   return (
     <div className={styles.row}>
