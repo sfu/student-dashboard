@@ -67,7 +67,7 @@ router.post('/:username/transitBookmarks', validate({body: BOOKMARK_SCHEMA}), as
     debug('%s - Already Bookmarked? %s', req.id, alreadyBookmarked)
     if (!alreadyBookmarked) {
       debug('%s - New bookmark - adding to existing bookmarks', req.id)
-
+      req.body.destination = req.body.destination.toUpperCase()
       nextBookmarks.push(req.body)
       const result = await db('users').where({username}).update({transit_bookmarks_text: JSON.stringify(nextBookmarks)})
       debug('%s - DB update result: %s', req.id, result)
@@ -92,7 +92,7 @@ router.delete('/:username/transitBookmarks', validate({body: BOOKMARK_SCHEMA}), 
     // get existing bookmarks from db
     const bookmarksText = (await db('users').where({username}).select('transit_bookmarks_text'))[0]
     const bookmarksJson = JSON.parse(bookmarksText.transit_bookmarks_text)
-
+    req.body.destination = req.body.destination.toUpperCase()
     const nextBookmarks = bookmarksJson.filter(b => !isEqual(b, req.body))
     if (!isEqual(nextBookmarks, bookmarksJson)) {
       const nextBookmarksText = JSON.stringify(nextBookmarks)
