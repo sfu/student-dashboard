@@ -37,6 +37,10 @@
   font-size: .75em;
 }
 
+.classSchedule span {
+  display: inline-block;
+}
+
 .classDays {
   font-weight: bold;
   color: sfured;
