@@ -141,6 +141,9 @@ module.exports = (env = {}) => {
                   importLoaders: 1,
                   localIdentName: '[hash:base64:7]'
                 }
+              },
+              {
+                loader: 'postcss-loader'
               }
             ]
           })
