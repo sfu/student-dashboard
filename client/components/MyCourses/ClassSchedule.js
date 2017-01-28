@@ -2,10 +2,10 @@ import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import formatTimeRange from 'utils/formatTimeRange'
+import dateForHoursAndMinutes from 'utils/dateForHoursAndMinutes'
 import { REST_TO_ABBR_DAYS_MAP } from 'const'
 
 import leftPad from 'utils/leftPad'
-import moment from 'moment'
 
 import styles from './MyCourses.css'
 
@@ -20,8 +20,8 @@ const ClassSchedule = ({ schedule, timeFormat }) => {
     minute: leftPad(endTime, 4, 0).substr(2)
   }
 
-  const startMoment = moment().hour(start.hour).minute(start.minute)
-  const endMoment = moment().hour(end.hour).minute(end.minute)
+  const startDate = dateForHoursAndMinutes(start.hour, start.minute)
+  const endDate = dateForHoursAndMinutes(end.hour, end.minute)
 
   const location = (schedule) => {
     const location = schedule.campus.toLowerCase() === 'burnaby' && buildingCode && roomNumber ?
@@ -40,7 +40,7 @@ const ClassSchedule = ({ schedule, timeFormat }) => {
   return (
     <div className={styles.classSchedule}>
       <span className={styles.classDays}>{classDays}</span>
-      <span className={styles.classTimes}>{startTime && endTime ? formatTimeRange(startMoment, endMoment, timeFormat) : null}</span>
+      <span className={styles.classTimes}>{startTime && endTime ? formatTimeRange(startDate, endDate, timeFormat) : null}</span>
       {location(schedule)}
     </div>
   )

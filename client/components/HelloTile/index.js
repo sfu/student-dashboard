@@ -1,6 +1,8 @@
 import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
-import moment from 'moment'
+import formatDate from 'date-fns/format'
+import startOfDay from 'date-fns/start_of_day'
+import endOfDay from 'date-fns/end_of_day'
 import calcTermForDate from 'utils/calcTermForDate'
 import Collapse from 'react-collapse'
 import { presets } from 'react-motion'
@@ -9,7 +11,7 @@ import ReactGA from 'react-ga'
 import styles from './HelloTile.css'
 
 export const _HelloTile = React.createClass({
-  today: moment().day(),
+  today: new Date().getDay(),
 
   propTypes: {
     names: PropTypes.object,
@@ -37,7 +39,7 @@ export const _HelloTile = React.createClass({
     if (typeof type === 'string') {
       type = [type]
     }
-    return data.filter(i => moment(i.start_at).day() === this.today && type.indexOf(i.type) >= 0).length
+    return data.filter(i => new Date(i.start_at).getDay() === this.today && type.indexOf(i.type) >= 0).length
   },
 
   youHave(data) {
@@ -106,8 +108,8 @@ export const _HelloTile = React.createClass({
 export const HelloTile = Relay.createContainer(_HelloTile, {
   initialVariables: {
     term: calcTermForDate(),
-    scheduleStartAt: moment().startOf('day').format('YYYY-MM-DD'),
-    scheduleEndAt: moment().endOf('day').format('YYYY-MM-DD')
+    scheduleStartAt: formatDate(startOfDay(new Date()), 'YYYY-MM-DD'),
+    scheduleEndAt: formatDate(endOfDay(new Date()), 'YYYY-MM-DD')
   },
 
   fragments: {

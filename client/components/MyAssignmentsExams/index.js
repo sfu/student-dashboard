@@ -1,6 +1,7 @@
 import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
-import moment from 'moment'
+import formatDate from 'date-fns/format'
+import getYear from 'date-fns/get_year'
 import calcTermForDate from 'utils/calcTermForDate'
 import termNameForCode from 'utils/termNameForCode'
 import ScheduleTable from './ScheduleTable'
@@ -16,15 +17,16 @@ import styles from './MyAssignmentsExams.css'
 const currentTermEndDate = () => {
   const currentTerm = calcTermForDate().substr(3)
   const dates = TERM_DATES[TERM_CODES_TO_NAMES[currentTerm]]
-  const currentYear = moment().year()
-  return moment(`${currentYear}-${dates.end.month}-${dates.end.day} 23:59:59`)
+  const currentYear = getYear(new Date())
+  const dateStr = `${currentYear}-${dates.end.month}-${dates.end.day} 23:59:59`
+  return formatDate(new Date(dateStr), 'YYYY-MM-DD')
 }
 
 const createAssignmentsExamsGrouped = (scheduleForRangeInTerm) => {
   const assignmentsExamsGrouped = {}
   scheduleForRangeInTerm.filter(s => s.type === 'assignment' || s.type === 'exam')
   .forEach(item => {
-    const groupName = moment(item.end_at).format('YYYY-MM-DD')
+    const groupName = formatDate(new Date(item.end_at), 'YYYY-MM-DD')
     if (!assignmentsExamsGrouped.hasOwnProperty(groupName)) {
       assignmentsExamsGrouped[groupName] = []
     }
@@ -45,7 +47,7 @@ export const _MyAssignmentsExams = ({ assignmentExamSchedule: { scheduleForRange
     .map((item, i) => <MyAssignmentsExamsScheduleItem item={item} key={i} />)
 
     return (
-      <ScheduleTable date={moment(date).format('dddd, MMMM D')} key={i}>
+      <ScheduleTable date={formatDate(new Date(date), 'dddd, MMMM D')} key={i}>
         {items}
       </ScheduleTable>
     )
@@ -65,8 +67,8 @@ _MyAssignmentsExams.propTypes = {
 export const MyAssignmentsExams = Relay.createContainer(_MyAssignmentsExams, {
   initialVariables: {
     term: calcTermForDate(),
-    rangeStart: moment().format('YYYY-MM-DD'),
-    rangeEnd: currentTermEndDate().format('YYYY-MM-DD')
+    rangeStart: formatDate(new Date(), 'YYYY-MM-DD'),
+    rangeEnd: currentTermEndDate()
   },
   fragments: {
     assignmentExamSchedule: () => Relay.QL`

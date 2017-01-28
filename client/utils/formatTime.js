@@ -1,4 +1,4 @@
-import moment from 'moment'
+import formatDate from 'date-fns/format'
 import {
   TIME_FORMAT_12H_WITH_PERIOD,
   TIME_FORMAT_24H
@@ -6,5 +6,5 @@ import {
 
 export default (timestamp, format='12h') => {
   const timeFormat = format === '12h' ? TIME_FORMAT_12H_WITH_PERIOD : TIME_FORMAT_24H
-  return moment(timestamp).format(timeFormat)
+  return formatDate(timestamp, timeFormat)
 }

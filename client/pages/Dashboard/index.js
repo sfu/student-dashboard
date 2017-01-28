@@ -8,7 +8,10 @@ import { WeekAtAGlance } from 'components/WeekAtAGlance'
 import DashboardNavGrid from 'components/DashboardNavGrid'
 import DashboardTransitBookmarks from 'components/DashboardTransitBookmarks'
 import { fetchSchedulesForBookmarks } from 'actions/transit'
-import moment from 'moment'
+import formatDate from 'date-fns/format'
+import startOfWeek from 'date-fns/start_of_week'
+import endOfWeek from 'date-fns/end_of_week'
+import eachDay from 'date-fns/each_day'
 import styles from './Dashboard.css'
 
 class _Dashboard extends React.Component {
@@ -33,14 +36,16 @@ class _Dashboard extends React.Component {
   render() {
     const {transit, viewer, location: { query }} = this.props
     const { start_at } = query
-    const today = moment().day()
+    const todayDate = new Date()
+    const today = todayDate.getDay()
+    const daysInWeek = eachDay(startOfWeek(todayDate), endOfWeek(todayDate)).map(d => formatDate(d, 'dddd, MMMM DD'))
     const selectedDay = !isNaN(start_at) && (start_at >= 0 && start_at <= 6) ? parseInt(start_at) : today
     return (
       <div className={styles.dashboard}>
         <HelloTile helloTileSchedule={viewer} names={viewer} />
         <Widget title="My Week at a Glance">
           <Pageable
-            pagerTitles={[...Array(7).keys()].map(d => d === today ? 'Today' : moment().day(d).format('dddd, MMMM DD'))}
+            pagerTitles={[...Array(7).keys()].map(d => d === today ? 'Today' : daysInWeek[d])}
             pageCount={7}
             startAtPage={selectedDay}
             gaCategory='WeekAtAGlance'

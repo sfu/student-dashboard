@@ -1,6 +1,5 @@
 import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import { RoomFinderLink } from 'components/RoomFinderLink'
 import { OutboundLink } from 'react-ga'
 import formatTimeRange from 'utils/formatTimeRange'
@@ -55,7 +54,7 @@ const ScheduleItem = ({ item, timeFormat }) => {
         <span className={styles.activityName}>{title}</span>
         <span>{details}</span>
       </td>
-      <td className={styles.activityTime}><span>{formatTimeRange(moment(item.start_at), moment(item.end_at), timeFormat)}</span></td>
+      <td className={styles.activityTime}><span>{formatTimeRange(new Date(item.start_at), new Date(item.end_at), timeFormat)}</span></td>
     </tr>
   )
 }

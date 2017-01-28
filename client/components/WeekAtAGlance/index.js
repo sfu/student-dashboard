@@ -1,6 +1,8 @@
 import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
-import moment from 'moment'
+import formatDate from 'date-fns/format'
+import startOfWeek from 'date-fns/start_of_week'
+import endOfWeek from 'date-fns/end_of_week'
 import calcTermForDate from 'utils/calcTermForDate'
 import styles from './WeekAtAGlance.css'
 import ScheduleTable from './ScheduleTable'
@@ -8,7 +10,7 @@ import WeekAtAGlanceScheduleItem from 'components/WeekAtAGlanceScheduleItem'
 
 export const _WeekAtAGlance = ({schedule, selectedDay}) => {
   const items = schedule.scheduleForRangeInTerm
-              .filter((item) => moment(item.start_at).day() === selectedDay)
+              .filter((item) => new Date(item.start_at).getDay() === selectedDay)
               .map((item, i) => (<WeekAtAGlanceScheduleItem key={i} item={item}/>))
 
 
@@ -27,8 +29,8 @@ _WeekAtAGlance.propTypes = {
 export const WeekAtAGlance = Relay.createContainer(_WeekAtAGlance, {
   initialVariables: {
     term: calcTermForDate(),
-    scheduleStartAt: moment().startOf('week').format('YYYY-MM-DD'),
-    scheduleEndAt: moment().endOf('week').format('YYYY-MM-DD')
+    scheduleStartAt: formatDate(startOfWeek(new Date()), 'YYYY-MM-DD'),
+    scheduleEndAt: formatDate(endOfWeek(new Date()), 'YYYY-MM-DD')
   },
   fragments: {
     schedule: () => Relay.QL`

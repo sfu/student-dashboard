@@ -29,8 +29,7 @@ module.exports = (env = {}) => {
         'react-router',
         'redux',
         'react-redux',
-        'redux-thunk',
-        'moment'
+        'redux-thunk'
       ],
       graphiql: resolve(__dirname, 'graphiql/index.js')
     },

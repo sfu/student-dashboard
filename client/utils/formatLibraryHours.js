@@ -1,4 +1,3 @@
-import moment from 'moment'
 import formatTimeRange from './formatTimeRange'
 import convert from './convertLibraryTimeStringTo24Hours'
 import dateFromTimeString from './dateFromTimeString'
@@ -19,8 +18,8 @@ export default (location, format = '12h') => {
   }
 
   return formatTimeRange(
-    moment(dateFromTimeString(convert(open_time))),
-    moment(dateFromTimeString(convert(close_time))),
+    dateFromTimeString(convert(open_time)),
+    dateFromTimeString(convert(close_time)),
     format
   )
 }
