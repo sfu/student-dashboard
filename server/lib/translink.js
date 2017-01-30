@@ -37,8 +37,8 @@ export const getStop = async (stop, cache = null) => {
     }
     return stopInfo.data
   } catch(e) {
-    debug(`${DEBUG_PREFIX}: error fetching stop from API: %s`, e.response.data)
-    throw new Error(e.response.data)
+    debug(`${DEBUG_PREFIX}: error fetching stop from API: %s`, JSON.stringify(e.response.data))
+    throw new Error(JSON.stringify(e.response.data))
   }
 }
 
@@ -63,8 +63,11 @@ export const getEstimatesForStop = async (stop, options = {}) => {
     })
     return estimatesResp.data
   } catch(e) {
-    debug(`${DEBUG_PREFIX}: error fetching stop estimates from API: %s`, e.response.data)
-    throw new Error(e.response.data)
+    if (e.response.status === 404) {
+      // either invalid stop, or bus isn't stoping at this stop within some imaginary range
+    }
+    debug(`${DEBUG_PREFIX}: error fetching stop estimates from API: %s`, JSON.stringify(e.response.data))
+    throw new Error(JSON.stringify(e.response.data))
   }
 }
 
@@ -78,7 +81,7 @@ export const getEstimatesForBookmark = async (bookmark, cache = null) => {
     const stopName = stopInfo.Name
 
     // get estimates for stop with route
-    const stopEstimate = await getEstimatesForStop(stop, { RouteNo: route })
+    const stopEstimate = await getEstimatesForStop(stop, { TimeFrame: 1440, RouteNo: route })
     return {
       ...bookmark,
       stopName,
