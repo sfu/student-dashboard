@@ -1,26 +1,25 @@
-import test from 'ava'
 import loadUser from '../loadUser'
 const tracker = require('mock-knex').getTracker()
 
-test.beforeEach('Install tracker', async () => {
+beforeEach(async () => {
   tracker.install()
 })
 
-test.afterEach('Reset the database', async () => {
+afterEach(async () => {
   tracker.uninstall()
 })
 
 
-test('loadUser returns `null` when no matching user found', async t => {
+it('loadUser returns `null` when no matching user found', async () => {
   tracker.on('query', q => {
     q.response([])
   })
 
   const user = await loadUser('fakeuser')
-  t.is(user, null)
+  expect(user).toBe(null)
 })
 
-test('loadUser returns a user when one is found', async t => {
+it('loadUser returns a user when one is found', async () => {
   tracker.on('query', q => {
     q.response([{
       username: 'fakeuser',
@@ -31,10 +30,10 @@ test('loadUser returns a user when one is found', async t => {
   })
 
   const user = await loadUser('fakeuser')
-  t.is(user.username, 'fakeuser')
+  expect(user.username).toBe('fakeuser')
 })
 
-test('loadUser returns a user with only specified fields', async t => {
+it('loadUser returns a user with only specified fields', async () => {
   tracker.on('query', q => {
     q.response([{
       id: 1,
@@ -43,7 +42,7 @@ test('loadUser returns a user with only specified fields', async t => {
   })
   const user = await loadUser('fakeuser', ['id', 'username'])
   const keys = Object.keys(user)
-  t.true(keys.includes('id'))
-  t.true(keys.includes('username'))
-  t.false(keys.includes('lastname'))
+  expect(keys.includes('id')).toBe(true)
+  expect(keys.includes('username')).toBe(true)
+  expect(keys.includes('lastname')).toBe(false)
 })

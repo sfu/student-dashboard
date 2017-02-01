@@ -1,12 +1,11 @@
-import test from 'ava'
 import preferences, { DEFAULT } from '../preferences'
 
-test('Default', t => {
+it('Default', () => {
   const nextState = preferences(undefined, {})
-  t.deepEqual(nextState, DEFAULT)
+  expect(nextState).toEqual(DEFAULT)
 })
 
-test('SYNC_PREFERENCES_START', t => {
+it('SYNC_PREFERENCES_START', () => {
   const nextState = preferences(DEFAULT, {
     type: 'SYNC_PREFERENCES_START'
   })
@@ -15,10 +14,10 @@ test('SYNC_PREFERENCES_START', t => {
     syncingPreferences: true,
     syncPreferencesError: null
   }
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('SYNC_PREFERENCES_SUCCESS', t => {
+it('SYNC_PREFERENCES_SUCCESS', () => {
   const nextState = preferences(DEFAULT, {
     type: 'SYNC_PREFERENCES_SUCCESS'
   })
@@ -27,10 +26,10 @@ test('SYNC_PREFERENCES_SUCCESS', t => {
     syncingPreferences: false,
     syncPreferencesError: null
   }
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('SYNC_PREFERENCES_ERROR', t => {
+it('SYNC_PREFERENCES_ERROR', () => {
   const nextState = preferences(DEFAULT, {
     type: 'SYNC_PREFERENCES_ERROR',
     error: 'something went boom'
@@ -40,10 +39,10 @@ test('SYNC_PREFERENCES_ERROR', t => {
     syncingPreferences: false,
     syncPreferencesError: 'something went boom'
   }
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('SET_PREFERENCES', t => {
+it('SET_PREFERENCES', () => {
   const nextState = preferences(DEFAULT, {
     type: 'SET_PREFERENCES',
     preferences: {
@@ -58,5 +57,5 @@ test('SET_PREFERENCES', t => {
       somePref: 'someValue'
     }
   }
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })

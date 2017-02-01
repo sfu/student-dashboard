@@ -1,8 +1,7 @@
-import test from 'ava'
 import formatLibraryHours from '../formatLibraryHours'
 import { TIME_SEPARATOR } from '../../const/timeFormat'
 
-test('Open All Day', t => {
+it('Open All Day', () => {
   const location = {
     "in_range": true,
     "location": "Bennett Library",
@@ -11,10 +10,10 @@ test('Open All Day', t => {
     "open_time": "12:00AM",
     "closed_all_day": false
   }
-  t.is((formatLibraryHours(location)), 'Open 24-Hours')
+  expect(formatLibraryHours(location)).toBe('Open 24-Hours')
 })
 
-test('Closed All Day', t => {
+it('Closed All Day', () => {
   const location = {
     "in_range": true,
     "location": "Bennett Library",
@@ -23,10 +22,10 @@ test('Closed All Day', t => {
     "open_time": "12:00AM",
     "closed_all_day": true
   }
-  t.is((formatLibraryHours(location)), 'Closed All Day')
+  expect(formatLibraryHours(location)).toBe('Closed All Day')
 })
 
-test('Specific Hours, 12h', t => {
+it('Specific Hours, 12h', () => {
   const location = {
     "in_range": true,
     "location": "Bennett Library",
@@ -36,10 +35,10 @@ test('Specific Hours, 12h', t => {
     "closed_all_day": false
   }
   const expected = `10:00 AM ${TIME_SEPARATOR} 5:00 PM`
-  t.is(formatLibraryHours(location), expected)
+  expect(formatLibraryHours(location)).toBe(expected)
 })
 
-test('Specific Hours, 12h, same meridiem', t => {
+it('Specific Hours, 12h, same meridiem', () => {
   const location = {
     "in_range": true,
     "location": "Bennett Library",
@@ -49,10 +48,10 @@ test('Specific Hours, 12h, same meridiem', t => {
     "closed_all_day": false
   }
   const expected = `1:00 ${TIME_SEPARATOR} 5:00 PM`
-  t.is(formatLibraryHours(location), expected)
+  expect(formatLibraryHours(location)).toBe(expected)
 })
 
-test('Specific Hours, 24h', t => {
+it('Specific Hours, 24h', () => {
   const location = {
     "in_range": true,
     "location": "Bennett Library",
@@ -62,5 +61,5 @@ test('Specific Hours, 24h', t => {
     "closed_all_day": false
   }
   const expected = `10:00 ${TIME_SEPARATOR} 17:00`
-  t.is(formatLibraryHours(location, '24h'), expected)
+  expect(formatLibraryHours(location, '24h')).toBe(expected)
 })

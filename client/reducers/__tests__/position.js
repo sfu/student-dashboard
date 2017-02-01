@@ -1,19 +1,18 @@
-import test from 'ava'
 import position, { DEFAULT } from '../position'
 
-test('returns default state when no action passed', t => {
+it('returns default state when no action passed', () => {
   const nextState = position(undefined, {})
-  t.deepEqual(nextState, DEFAULT)
+  expect(nextState).toEqual(DEFAULT)
 })
 
-test('GET_POSITION_START', t => {
+it('GET_POSITION_START', () => {
   const nextState = position(DEFAULT, { type: 'GET_POSITION_START' })
   const expected = Object.assign({}, DEFAULT)
   expected.locating = true
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('GET_POSITION_ERROR', t => {
+it('GET_POSITION_ERROR', () => {
   const nextState = position(DEFAULT, {
     type: 'GET_POSITION_ERROR',
     error: {code: 2, message: ''}
@@ -23,10 +22,10 @@ test('GET_POSITION_ERROR', t => {
   expected.error = { code: 2, message: '' }
   expected.lastUpdated = null
   expected.coords = null
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('GET_POSITION_SUCCESS', t => {
+it('GET_POSITION_SUCCESS', () => {
   const now = Date.now()
   const nextState = position(DEFAULT, {
     type: 'GET_POSITION_SUCCESS',
@@ -47,5 +46,5 @@ test('GET_POSITION_SUCCESS', t => {
 
   }
 
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })

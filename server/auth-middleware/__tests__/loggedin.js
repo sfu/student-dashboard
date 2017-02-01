@@ -1,20 +1,19 @@
-import test from 'ava'
 import sinon from 'sinon'
 import {mockReq, mockRes} from 'sinon-express-mock'
 
 import {loggedin, __RewireAPI__ as AsyncLoggedinAPI} from '../index' // eslint-disable-line
 
 // Session tests
-test('Calling `loggedin` with no session should redirect', t => {
+it('Calling `loggedin` with no session should redirect', () => {
   const next = sinon.spy()
   const req = mockReq()
   const res = mockRes({ redirectToLogin: sinon.spy() })
   loggedin(req, res, next)
-  t.true(res.redirectToLogin.calledOnce)
-  t.false(next.calledOnce)
+  expect(res.redirectToLogin.calledOnce).toBe(true)
+  expect(next.calledOnce).toBe(false)
 })
 
-test('Calling `loggedin` with a session should call `next`', async t => {
+it('Calling `loggedin` with a session should call `next`', async () => {
   const next = sinon.spy()
   const req = mockReq({
     session: { auth: { status: true } },
@@ -22,12 +21,12 @@ test('Calling `loggedin` with a session should call `next`', async t => {
   })
   const res = mockRes()
   loggedin(req, res, next)
-  t.true(next.calledOnce)
-  t.is(next.getCall(0).args.length, 0)
+  expect(next.calledOnce).toBe(true)
+  expect(next.getCall(0).args.length).toBe(0)
 })
 
 // JWT tests
-test('Calling `loggedin` as an API req and with a JWT should call `next` with no error', async t => {
+it('Calling `loggedin` as an API req and with a JWT should call `next` with no error', async () => {
   AsyncLoggedinAPI.__Rewire__('verifyJwt', () => {
     return Promise.resolve({
       sub: "fakeymcfakeuser",
@@ -48,13 +47,13 @@ test('Calling `loggedin` as an API req and with a JWT should call `next` with no
     }
   })
   await loggedin(req, mockRes(), next)
-  t.true(next.calledOnce)
-  t.is(req.username, 'fakeymcfakeuser')
-  t.is(next.getCall(0).args.length, 0)
+  expect(next.calledOnce).toBe(true)
+  expect(req.username).toBe('fakeymcfakeuser')
+  expect(next.getCall(0).args.length).toBe(0)
   AsyncLoggedinAPI.__ResetDependency__('verifyJwt')
 })
 
-test('Calling `loggedin` as an API req and with an invalid JWT should call `next` with an` error', async t => {
+it('Calling `loggedin` as an API req and with an invalid JWT should call `next` with an` error', async () => {
   const next = sinon.spy()
   const req = mockReq({
     isApiRequest: true,
@@ -67,11 +66,11 @@ test('Calling `loggedin` as an API req and with an invalid JWT should call `next
     }
   })
   await loggedin(req, mockRes(), next)
-  t.true(next.calledOnce)
-  t.is(next.getCall(0).args.length, 1)
+  expect(next.calledOnce).toBe(true)
+  expect(next.getCall(0).args.length).toBe(1)
 })
 
-test('Calling `loggedin` as an API req without a token should call res.redirectToLogin', async t => {
+it('Calling `loggedin` as an API req without a token should call res.redirectToLogin', async () => {
   const req = mockReq({
     isApiRequest: true,
     session: {},
@@ -83,10 +82,10 @@ test('Calling `loggedin` as an API req without a token should call res.redirectT
     redirectToLogin: sinon.spy()
   })
   await loggedin(req, res, () => {})
-  t.true(res.redirectToLogin.calledOnce)
+  expect(res.redirectToLogin.calledOnce).toBe(true)
 })
 
-test('Calling `loggedin` as an API req with a non-bearer token should call res.redirectToLogin', async t => {
+it('Calling `loggedin` as an API req with a non-bearer token should call res.redirectToLogin', async () => {
   const req = mockReq({
     isApiRequest: true,
     session: {},
@@ -100,5 +99,5 @@ test('Calling `loggedin` as an API req with a non-bearer token should call res.r
     redirectToLogin: sinon.spy()
   })
   await loggedin(req, res, () => {})
-  t.true(res.redirectToLogin.calledOnce)
+  expect(res.redirectToLogin.calledOnce).toBe(true)
 })

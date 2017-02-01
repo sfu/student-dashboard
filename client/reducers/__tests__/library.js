@@ -1,20 +1,19 @@
-import test from 'ava'
 import { default as library, DEFAULT } from '../library'
 
-test('returns default state when no action passed', t => {
+it('returns default state when no action passed', () => {
   const nextState = library(undefined, {})
-  t.deepEqual(nextState, DEFAULT)
+  expect(nextState).toEqual(DEFAULT)
 })
 
-test('FETCH_LIBRARY_HOURS_START', t => {
+it('FETCH_LIBRARY_HOURS_START', () => {
   const nextState = library(DEFAULT, { type: 'FETCH_LIBRARY_HOURS_START' })
   const expected = Object.assign({}, DEFAULT)
   expected.hours.fetching = true
   expected.hours.error = null
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('FETCH_LIBRARY_HOURS_SUCCESS', t => {
+it('FETCH_LIBRARY_HOURS_SUCCESS', () => {
   const now = Date.now()
   const startState = {
     ...DEFAULT,
@@ -44,10 +43,10 @@ test('FETCH_LIBRARY_HOURS_SUCCESS', t => {
     }
   })
 
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })
 
-test('FETCH_LIBRARY_HOURS_ERROR', t => {
+it('FETCH_LIBRARY_HOURS_ERROR', () => {
   const startState = {
     ...DEFAULT,
     hours: {
@@ -75,5 +74,5 @@ test('FETCH_LIBRARY_HOURS_ERROR', t => {
     }
   })
 
-  t.deepEqual(nextState, expected)
+  expect(nextState).toEqual(expected)
 })

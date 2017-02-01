@@ -18,8 +18,8 @@
     "validate-webpack": "npm run validate-webpack:dev && npm run validate-webpack:prod",
     "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
     "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
-    "test": "NODE_ENV=test ava -v -s --no-cache",
-    "test:watch": "npm run test -- -w",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "npm run test -- --watch",
     "deps:reinstall": "rimraf node_modules && npm i --no-optional",
     "db": "node -r ./environment.js node_modules/.bin/knex --knexfile ./server/db/knexfile.js --",
     "db:migrate": "npm run db migrate:latest",
@@ -29,16 +29,14 @@
     "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test",
     "generate-schema": "node -r ./environment.js ./scripts/buildSchema.js"
   },
-  "ava": {
-    "files": [
-      "**/__test__/*.js"
-    ],
-    "require": [
+  "jest": {
+    "testEnvironment": "node",
+    "testResultsProcessor": "./node_modules/jest-junit",
+    "setupFiles": [
       "./environment.js",
       "babel-register",
       "./testHelperBrowserEnv.js"
-    ],
-    "babel": "inherit"
+    ]
   },
   "repository": {
     "type": "git",
@@ -55,10 +53,10 @@
   ],
   "devDependencies": {
     "autoprefixer": "6.7.0",
-    "ava": "0.17.0",
     "babel-cli": "6.22.2",
     "babel-core": "6.22.1",
     "babel-eslint": "7.1.1",
+    "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
     "babel-plugin-dedent": "2.0.0",
     "babel-plugin-rewire": "1.0.0",
@@ -78,6 +76,7 @@
     "eslint": "3.14.1",
     "eslint-import-resolver-webpack": "0.8.1",
     "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jest": "1.0.2",
     "eslint-plugin-jsx-a11y": "3.0.2",
     "eslint-plugin-react": "6.9.0",
     "extract-text-webpack-plugin": "2.0.0-rc.0",
@@ -86,6 +85,8 @@
     "html-loader": "0.4.4",
     "html-webpack-plugin": "2.26.0",
     "html-webpack-template": "6.0.1",
+    "jest": "18.1.0",
+    "jest-junit": "1.1.0",
     "mock-knex": "0.3.7",
     "nodemon": "1.11.0",
     "pg-connection-string": "0.1.3",

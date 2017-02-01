@@ -1,8 +1,7 @@
-import test from 'ava'
 import sinon from 'sinon'
 import libraryIsOpen from '../libraryIsOpen'
 
-test('false if closed_all_day', t => {
+it('false if closed_all_day', () => {
   const location = {
     "in_range": true,
     "location": "Fraser Library",
@@ -11,10 +10,10 @@ test('false if closed_all_day', t => {
     "open_time": "12:00AM",
     "closed_all_day": true
   }
-  t.false(libraryIsOpen(location))
+  expect(libraryIsOpen(location)).toBe(false)
 })
 
-test('true if open_all_day', t => {
+it('true if open_all_day', () => {
   const location = {
     "in_range": true,
     "location": "Bennett Library",
@@ -23,10 +22,10 @@ test('true if open_all_day', t => {
     "open_time": "12:00AM",
     "closed_all_day": false
   }
-  t.true(libraryIsOpen(location))
+  expect(libraryIsOpen(location)).toBe(true)
 })
 
-test('true if in_range AND actually in range', t => {
+it('true if in_range AND actually in range', () => {
   const clock = sinon.useFakeTimers(new Date(2016,11,19,12,0,0).getTime())
   const location = {
     "in_range": true,
@@ -36,11 +35,11 @@ test('true if in_range AND actually in range', t => {
     "open_time": "10:00AM",
     "closed_all_day": false
   }
-  t.true(libraryIsOpen(location))
+  expect(libraryIsOpen(location)).toBe(true)
   clock.restore()
 })
 
-test('false if in_range AND NOT actually in range', t => {
+it('false if in_range AND NOT actually in range', () => {
   const clock = sinon.useFakeTimers(new Date(2016,11,19,9,0,0).getTime())
   const location = {
     "in_range": true,
@@ -50,6 +49,6 @@ test('false if in_range AND NOT actually in range', t => {
     "open_time": "10:00AM",
     "closed_all_day": false
   }
-  t.false(libraryIsOpen(location))
+  expect(libraryIsOpen(location)).toBe(false)
   clock.restore()
 })

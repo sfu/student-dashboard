@@ -19,7 +19,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "rules": {
     "space-before-function-paren": [ 2, "never" ],
@@ -30,7 +31,8 @@
   },
   "plugins": [
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "jest"
   ],
   "settings": {
     "import/resolver": "webpack",

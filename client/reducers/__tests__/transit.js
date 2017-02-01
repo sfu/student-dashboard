@@ -1,7 +1,6 @@
-import test from 'ava'
 import transit, { DEFAULT } from '../transit'
 
-test('Default', t => {
+it('Default', () => {
   const nextState = transit(undefined, {})
-  t.deepEqual(nextState, DEFAULT)
+  expect(nextState).toEqual(DEFAULT)
 })

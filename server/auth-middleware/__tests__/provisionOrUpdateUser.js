@@ -1,4 +1,3 @@
-import test from 'ava'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import sinon from 'sinon'
 import {
@@ -37,7 +36,7 @@ const FAKEOAUTH = {
   valid_until: 0
 }
 
-test.beforeEach('Setup mocks', async () => {
+beforeEach(async () => {
   tracker.install()
   tracker.on('query', q => {
      q.response([{
@@ -57,32 +56,32 @@ test.beforeEach('Setup mocks', async () => {
   })
 })
 
-test.afterEach('Teardown', () => {
+afterEach(() => {
   tracker.uninstall()
 })
 
-test('Provision a user when none exists', async t => {
+it('Provision a user when none exists', async () => {
   const req = mockReq({
     username: 'fakeuser'
   })
   const res = mockRes()
   const next = sinon.spy()
   await provisionOrUpdateUser(req, res, next)
-  t.is(req.user.username, 'fakeuser')
-  t.truthy(req.user.uid)
+  expect(req.user.username).toBe('fakeuser')
+  expect(req.user.uid).toBeTruthy()
 })
 
-test('Call next() when a user already exists, do not update', async t => {
+it('Call next() when a user already exists, do not update', async () => {
   const req = mockReq({
     user: { ...FAKEUSER, ...FAKEOAUTH },
   })
   const res = mockRes()
   const next = sinon.spy()
   await provisionOrUpdateUser(req, res, next)
-  t.true(next.calledOnce)
+  expect(next.calledOnce).toBe(true)
 })
 
-test('Should call next when is an API request', async t => {
+it('Should call next when is an API request', async () => {
   const req = mockReq({
     isApiRequest: true,
     username: 'fakeuser',
@@ -91,5 +90,5 @@ test('Should call next when is an API request', async t => {
   const res = mockRes()
   const next = sinon.spy()
   await provisionOrUpdateUser(req, res, next)
-  t.true(next.calledOnce)
+  expect(next.calledOnce).toBe(true)
 })
