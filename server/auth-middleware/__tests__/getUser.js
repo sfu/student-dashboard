@@ -2,57 +2,60 @@ import { mockReq, mockRes} from 'sinon-express-mock'
 import { getUser } from '../index'
 const tracker = require('mock-knex').getTracker()
 
-const FAKEUSER = {
-  username: 'fakeuser',
-  lastname: 'User',
-  firstnames: 'Fake',
-  barcode: '12345'
-}
+describe('getUser', () => {
+  const FAKEUSER = {
+    username: 'fakeuser',
+    lastname: 'User',
+    firstnames: 'Fake',
+    barcode: '12345'
+  }
 
-beforeEach(() => {
-  tracker.install()
-})
-
-afterEach(() => {
-  tracker.uninstall()
-})
-
-it('req.user should be null when user does not exist - session', async () => {
-  tracker.on('query', q => {
-     q.response([])
+  beforeEach(() => {
+    tracker.install()
   })
 
-  const req = mockReq({ username: 'fakeuser', session: { auth: { username: 'fakeuser' } } })
-  await getUser(req, mockRes(), () => {})
-  expect(req.user).toBe(null)
-})
-
-it('req.user should be null when user does not exist - req.username', async () => {
-  tracker.on('query', q => {
-     q.response([])
+  afterEach(() => {
+    tracker.uninstall()
   })
 
-  const req = mockReq({ username: 'fakeuser'})
-  await getUser(req, mockRes(), () => {})
-  expect(req.user).toBe(null)
-})
+  it('req.user should be null when user does not exist - session', async () => {
+    tracker.on('query', q => {
+       q.response([])
+    })
 
-it('req.user should not be null when user exists - session', async () => {
-  tracker.on('query', q => {
-     q.response([FAKEUSER])
+    const req = mockReq({ username: 'fakeuser', session: { auth: { username: 'fakeuser' } } })
+    await getUser(req, mockRes(), () => {})
+    expect(req.user).toBe(null)
   })
 
-  const req = mockReq({ username: 'fakeuser', session: { auth: { username: 'fakeuser' } } })
-  await getUser(req, mockRes(), () => {})
-  expect(req.user).not.toBe(null)
-})
+  it('req.user should be null when user does not exist - req.username', async () => {
+    tracker.on('query', q => {
+       q.response([])
+    })
 
-it('req.user should not be null when user exists - req.username', async () => {
-  tracker.on('query', q => {
-     q.response([FAKEUSER])
+    const req = mockReq({ username: 'fakeuser'})
+    await getUser(req, mockRes(), () => {})
+    expect(req.user).toBe(null)
   })
 
-  const req = mockReq({ username: 'fakeuser'})
-  await getUser(req, mockRes(), () => {})
-  expect(req.user).not.toBe(null)
+  it('req.user should not be null when user exists - session', async () => {
+    tracker.on('query', q => {
+       q.response([FAKEUSER])
+    })
+
+    const req = mockReq({ username: 'fakeuser', session: { auth: { username: 'fakeuser' } } })
+    await getUser(req, mockRes(), () => {})
+    expect(req.user).not.toBe(null)
+  })
+
+  it('req.user should not be null when user exists - req.username', async () => {
+    tracker.on('query', q => {
+       q.response([FAKEUSER])
+    })
+
+    const req = mockReq({ username: 'fakeuser'})
+    await getUser(req, mockRes(), () => {})
+    expect(req.user).not.toBe(null)
+  })
+
 })
