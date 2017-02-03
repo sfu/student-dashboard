@@ -1,13 +1,11 @@
 import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
+import { connect } from 'react-redux'
 import formatDate from 'date-fns/format'
 import startOfDay from 'date-fns/start_of_day'
 import endOfDay from 'date-fns/end_of_day'
 import calcTermForDate from 'utils/calcTermForDate'
-import Collapse from 'react-collapse'
-import { presets } from 'react-motion'
-import ReactGA from 'react-ga'
-
+import { toggleHelloTile } from 'actions/helloTile'
 import styles from './HelloTile.css'
 
 export const _HelloTile = React.createClass({
@@ -15,24 +13,8 @@ export const _HelloTile = React.createClass({
 
   propTypes: {
     names: PropTypes.object,
-    helloTileSchedule: PropTypes.object
-  },
-
-  getInitialState() {
-    return {
-      hide: false
-    }
-  },
-
-  toggleHide() {
-    const nextHide = !this.state.hide
-    this.setState({
-      hide: nextHide
-    })
-    ReactGA.event({
-      category: 'HelloTile',
-      action: nextHide ? 'hide' : 'show'
-    })
+    helloTileSchedule: PropTypes.object,
+    toggle: PropTypes.func
   },
 
   numberOfItemsOfType(data, type) {
@@ -82,31 +64,33 @@ export const _HelloTile = React.createClass({
   },
 
   render() {
-    const {names, helloTileSchedule} = this.props
+    const { names, helloTileSchedule, toggle } = this.props
     const name = names.commonname ? names.commonname : names.firstnames
 
     return (
-      <Collapse
-        isOpened={!this.state.hide}
-        springConfig={presets.stiff}
-      >
       <div className={styles.helloTile}>
         <p className={styles.p}>Hello, <b>{name}</b>.</p>
         <p className={styles.p}>{this.youHave(helloTileSchedule.scheduleForRangeInTerm)}</p>
         <div className={styles.buttonContainer}>
         <button
-          onClick={this.toggleHide}
+          onClick={toggle}
           className={styles.button}
         >Got it!</button>
         </div>
       </div>
-      </Collapse>
     )
   }
 })
 
-export const HelloTile = Relay.createContainer(_HelloTile, {
-  initialVariables: {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggle: () => {
+      dispatch(toggleHelloTile())
+    }
+  }
+}
+
+export const HelloTile = connect(state => state, mapDispatchToProps)(Relay.createContainer(_HelloTile, { initialVariables: {
     term: calcTermForDate(),
     scheduleStartAt: formatDate(startOfDay(new Date()), 'YYYY-MM-DD'),
     scheduleEndAt: formatDate(endOfDay(new Date()), 'YYYY-MM-DD')
@@ -130,3 +114,4 @@ export const HelloTile = Relay.createContainer(_HelloTile, {
     `
   }
 })
+)

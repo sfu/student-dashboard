@@ -1,5 +1,7 @@
 import React, { PropTypes }  from 'react'
 import Relay from 'react-relay'
+import Collapse from 'react-collapse'
+import { presets } from 'react-motion'
 import { connect } from 'react-redux'
 import { Widget } from 'components/Widget'
 import Pageable from 'components/Pageable'
@@ -34,7 +36,7 @@ class _Dashboard extends React.Component {
   }
 
   render() {
-    const {transit, viewer, location: { query }} = this.props
+    const { helloTile, transit, viewer, location: { query } } = this.props
     const { start_at } = query
     const todayDate = new Date()
     const today = todayDate.getDay()
@@ -42,7 +44,9 @@ class _Dashboard extends React.Component {
     const selectedDay = !isNaN(start_at) && (start_at >= 0 && start_at <= 6) ? parseInt(start_at) : today
     return (
       <div className={styles.dashboard}>
-        <HelloTile helloTileSchedule={viewer} names={viewer} />
+        <Collapse isOpened={!helloTile.hide} springConfig={presets.stiff}>
+          <HelloTile helloTileSchedule={viewer} names={viewer} />
+        </Collapse>
         <Widget title="My Week at a Glance">
           <Pageable
             pagerTitles={[...Array(7).keys()].map(d => d === today ? 'Today' : daysInWeek[d])}
@@ -63,7 +67,6 @@ class _Dashboard extends React.Component {
         <DashboardNavGrid />
       </div>
     )
-
   }
 }
 
@@ -71,10 +74,14 @@ _Dashboard.propTypes = {
   viewer: PropTypes.object,
   location: PropTypes.object,
   transit: PropTypes.object.isRequired,
+  helloTile: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({ transit: state.transit })
+const mapStateToProps = state => ({
+   transit: state.transit,
+   helloTile: state.helloTile
+ })
 
 export default connect(mapStateToProps)(Relay.createContainer(_Dashboard, {
   fragments: {
