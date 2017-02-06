@@ -18,8 +18,8 @@ const currentTermEndDate = () => {
   const currentTerm = calcTermForDate().substr(3)
   const dates = TERM_DATES[TERM_CODES_TO_NAMES[currentTerm]]
   const currentYear = getYear(new Date())
-  const dateStr = `${currentYear}-${dates.end.month}-${dates.end.day} 23:59:59`
-  return formatDate(new Date(dateStr), 'YYYY-MM-DD')
+  const endDate = new Date(currentYear, parseInt(dates.end.month)-1, parseInt(dates.end.day), 23, 59, 59)
+  return formatDate(endDate, 'YYYY-MM-DD')
 }
 
 const createAssignmentsExamsGrouped = (scheduleForRangeInTerm) => {
