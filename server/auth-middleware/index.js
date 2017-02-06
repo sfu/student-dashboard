@@ -2,7 +2,7 @@ const debug = require('debug')('snap:server:authMiddleware')
 import cas from '../cas-client'
 import { getAccessToken, validateAccessToken } from '../oauth'
 import db from '../db'
-import uuid from 'node-uuid'
+import uuid from 'uuid'
 import {
   verifyJwt,
   loadUser,

@@ -134,7 +134,6 @@
     "leaflet": "1.0.3",
     "lodash": "4.17.4",
     "method-override": "2.3.7",
-    "node-uuid": "1.4.7",
     "normalize.css": "5.0.0",
     "pg": "6.1.2",
     "promise-redis": "0.0.5",
@@ -155,6 +154,7 @@
     "redis": "2.6.5",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
-    "url": "0.11.0"
+    "url": "0.11.0",
+    "uuid": "3.0.1"
   }
 }

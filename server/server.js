@@ -1,6 +1,6 @@
 import express from 'express'
 import session from 'express-session'
-import uuid from 'node-uuid'
+import uuid from 'uuid'
 import helmet from 'helmet'
 import path from 'path'
 import fs from 'fs'
