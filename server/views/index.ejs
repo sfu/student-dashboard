@@ -8,9 +8,10 @@
     <!--[if IE]><link rel="shortcut icon" href="/favicon.ico"/><![endif]-->
 
     <title>SFU Snap</title>
-    <script>
+    <script nonce="<%= nonce %>">
       window.webpackManifest = <%- chunkManifest %>
       window.STATE_BOOTSTRAP = <%- state %>
+      window.__webpack_nonce__ = '<%- nonce %>'
     </script>
     <% if(production) { %>
     <link href="<%= manifest['/assets/app.css']%>" rel="stylesheet">
@@ -24,7 +25,7 @@
         they're in the div so they get blown away when
         the app mounts
       -->
-      <style>
+      <style nonce="<%= nonce %>">
         body {
           margin: 0;
         }

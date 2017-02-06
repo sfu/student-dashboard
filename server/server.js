@@ -14,12 +14,19 @@ import boom from 'express-boom'
 import proxy from 'express-http-proxy'
 import requestId from 'express-request-id'
 import methodOverride from 'method-override'
+import cspDirectives from './cspDirectives'
 
 const redis = require('promise-redis')()
 
 const RedisStore = ConnectRedis(session)
 const TRANSLINK_CACHE = redis.createClient(process.env.TRANSLINK_CACHE_REDIS_URL)
 const PRODUCTION = process.env.NODE_ENV === 'production'
+
+const generateNonce = (req, res, next) => {
+  const rhyphen = /-/g
+  res.locals.nonce = uuid.v4().replace(rhyphen, ``)
+  next()
+}
 
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
@@ -87,7 +94,14 @@ export const createServer = (app) => {
   app.set('JWT_SIGNING_ALG', 'RS512')
   app.use(session(sessionConfig))
   app.use(methodOverride('X-HTTP-Method-Override'))
-  app.use(helmet())
+  app.use(generateNonce)
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: cspDirectives,
+      reportOnly: process.env.CSP_REPORT_ONLY === 'true' ? true : false,
+      upgradeInsecureRequests: true
+    }
+  }))
   app.use(requestId())
   app.use(express.static(path.resolve(__dirname, '../public')))
   app.use(boom())
