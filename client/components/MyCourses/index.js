@@ -5,6 +5,7 @@ import { CLASS_TYPES } from 'const'
 import calcTermForDate from 'utils/calcTermForDate'
 import previousOrNextTerm from 'utils/previousOrNextTerm'
 import termNameForCode from 'utils/termNameForCode'
+import Swipeable from 'components/Swipeable'
 import PagerHeader from 'components/PagerHeader'
 import PagerDots from 'components/PagerDots'
 import Loading from 'components/Loading'
@@ -91,26 +92,36 @@ export const _MyCourses = React.createClass({
         return classList
       }
     }
+    const backDisabled = this.state.currentPage === 0
+    const forwardDisabled = this.state.currentPage === 2
     return (
-      <div className={styles.myCourses}>
-        <PagerHeader
-          title={termNameForCode(this.state.currentTerm)}
-          currentPage={this.state.currentPage}
-          buttonHandler={this.buttonHandler}
-          backDisabled={this.state.currentPage === 0}
-          forwardDisabled={this.state.currentPage === 2}
-          gaCategory={this.props.gaCategory}
-        />
-        <div>
-          {getContent()}
+      <Swipeable
+        currentPage={this.state.currentPage}
+        forwardDisabled={forwardDisabled}
+        backDisabled={backDisabled}
+        swipeHandler={this.buttonHandler}
+        gaCategory={this.props.gaCategory}
+      >
+        <div className={styles.myCourses}>
+          <PagerHeader
+            title={termNameForCode(this.state.currentTerm)}
+            currentPage={this.state.currentPage}
+            buttonHandler={this.buttonHandler}
+            backDisabled={this.state.currentPage === 0}
+            forwardDisabled={this.state.currentPage === 2}
+            gaCategory={this.props.gaCategory}
+          />
+          <div>
+            {getContent()}
+          </div>
+          <PagerDots
+            count={3}
+            activeDot={this.state.currentPage}
+            dotClickHandler={this.buttonHandler}
+            gaCategory={this.props.gaCategory}
+          />
         </div>
-        <PagerDots
-          count={3}
-          activeDot={this.state.currentPage}
-          dotClickHandler={this.buttonHandler}
-          gaCategory={this.props.gaCategory}
-        />
-      </div>
+      </Swipeable>
     )
   }
 })
