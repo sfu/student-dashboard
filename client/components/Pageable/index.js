@@ -1,7 +1,7 @@
 import React, { PropTypes }  from 'react'
+import Swipeable from 'components/Swipeable'
 import PagerHeader from 'components/PagerHeader'
 import PagerDots from 'components/PagerDots'
-
 
 const Pageable = React.createClass({
   propTypes: {
@@ -30,24 +30,34 @@ const Pageable = React.createClass({
         selectedDay: this.state.currentPage,
       })
     )
+    const backDisabled = this.state.currentPage === 0
+    const forwardDisabled = this.state.currentPage === (this.props.pageCount - 1)
     return (
-      <div>
-        <PagerHeader
-          currentPage={this.state.currentPage}
-          title={pagerTitles[this.state.currentPage]}
-          backDisabled={this.state.currentPage === 0}
-          forwardDisabled={this.state.currentPage === (this.props.pageCount - 1)}
-          buttonHandler={this.setPage}
-          gaCategory={gaCategory}
-         />
-        {childrenWithProps}
-        <PagerDots
-          count={pageCount}
-          activeDot={this.state.currentPage}
-          dotClickHandler={this.setPage}
-          gaCategory={gaCategory}
-        />
-      </div>
+      <Swipeable
+        currentPage={this.state.currentPage}
+        forwardDisabled={forwardDisabled}
+        backDisabled={backDisabled}
+        swipeHandler={this.setPage}
+        gaCategory={gaCategory}
+      >
+        <div>
+          <PagerHeader
+            currentPage={this.state.currentPage}
+            title={pagerTitles[this.state.currentPage]}
+            backDisabled={backDisabled}
+            forwardDisabled={forwardDisabled}
+            buttonHandler={this.setPage}
+            gaCategory={gaCategory}
+           />
+          {childrenWithProps}
+          <PagerDots
+            count={pageCount}
+            activeDot={this.state.currentPage}
+            dotClickHandler={this.setPage}
+            gaCategory={gaCategory}
+          />
+        </div>
+      </Swipeable>
     )
   }
 })
