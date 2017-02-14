@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react'
 import { Widget } from 'components/Widget'
 import SettingsSelect from 'components/SettingsSelect'

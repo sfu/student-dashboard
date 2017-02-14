@@ -11,6 +11,7 @@ const RoomFinder = ({location: {query: {building, room}}}) => {
   return (
     <div>
       <iframe
+        title="roomfinder"
         className={styles.roomFinder}
         src={roomFinderUrl.format()}
       />
