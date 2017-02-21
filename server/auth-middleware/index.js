@@ -54,6 +54,7 @@ async function loggedInWithJwt(req, res, next) {
   } else {
     try {
       debug('%s - %s - validating JWT', req.id, req.originalUrl)
+      debug(token)
       const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
       if (!payload) {
         debug('%s - %s - invalid JWT', req.id, req.originalUrl)
