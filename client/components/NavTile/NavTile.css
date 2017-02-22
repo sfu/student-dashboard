@@ -1,9 +1,5 @@
 @value sfured, sfugold, sfublue from 'styles/color.css';
 
-.tileContainer {
-  margin-bottom: .5em;
-}
-
 .tileContainer a {
   text-decoration: none;
 }
@@ -11,9 +7,25 @@
 .tile {
   background-color: sfured;
   height: 100px;
-  width: 100px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+/*
+  <NavGrid> uses display: grid where possible,
+  and flexbox as a fallback. For browsers that
+  don't support grid, we need to tweak the tiles
+  a bit.
+*/
+@supports not(display: grid) {
+  .tileContainer {
+    margin-bottom: .5em;
+  }
+
+  .tile {
+    width: 100px;
+  }
 }
 
 .active .tile {
