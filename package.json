@@ -122,7 +122,7 @@
     "graphql-docs": "0.2.0",
     "helmet": "3.4.0",
     "jsonwebtoken": "7.3.0",
-    "knex": "0.12.6",
+    "knex": "0.12.7",
     "leaflet": "1.0.3",
     "lodash": "4.17.4",
     "method-override": "2.3.7",
