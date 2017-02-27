@@ -1,0 +1,13 @@
+{
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "/client\/components/"
+  ],
+  "testEnvironment": "node",
+  "testResultsProcessor": "./node_modules/jest-junit",
+  "setupFiles": [
+    "./environment.js",
+    "babel-register",
+    "./testHelperBrowserEnv.js"
+  ]
+}

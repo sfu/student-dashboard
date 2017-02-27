@@ -18,8 +18,9 @@
     "validate-webpack": "npm run validate-webpack:dev && npm run validate-webpack:prod",
     "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
     "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "npm run test -- --watch",
+    "test": "npm run test:unit && npm run test:components",
+    "test:components": "NODE_ENV=test jest --config jest.components.json",
+    "test:unit": "NODE_ENV=test jest --config jest.unit.json",
     "deps:reinstall": "rimraf node_modules && npm i --no-optional",
     "db": "node -r ./environment.js node_modules/.bin/knex --knexfile ./server/db/knexfile.js --",
     "db:migrate": "npm run db migrate:latest",
@@ -28,15 +29,6 @@
     "db:init": "node -r babel-register -r ./environment.js ./server/db/init.js",
     "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test",
     "generate-schema": "node -r ./environment.js ./scripts/buildSchema.js"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testResultsProcessor": "./node_modules/jest-junit",
-    "setupFiles": [
-      "./environment.js",
-      "babel-register",
-      "./testHelperBrowserEnv.js"
-    ]
   },
   "repository": {
     "type": "git",
