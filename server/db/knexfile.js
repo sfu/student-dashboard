@@ -5,6 +5,7 @@ if (!process.env.DATABASE_URL) {
 }
 
 module.exports = {
+  debug: process.env.KNEX_DEBUG || false,
   client: 'postgresql',
   connection: process.env.DATABASE_URL,
   migrations: {
