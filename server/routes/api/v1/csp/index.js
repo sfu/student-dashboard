@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import bodyParser from 'body-parser'
-import db from '../../../db'
+import db from '../../../../db'
 const debug = require('debug')('snap:server:routes:api/v1/csp')
 
 const router = Router()

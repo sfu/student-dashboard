@@ -8,7 +8,8 @@ const routesFiles = fs.readdirSync(__dirname)
                       .filter(f => f !== 'index.js')
                       .map(f => f.replace(/\.[^/.]+$/, ""))
 
-// for each file in routesFile, mount it at /${filename} (e.g. users.js gets mounted at /users)
+// for each directory in routesFile, mount its index.js file at /${dirname}
+// (e.g. users/index.js gets mounted at /users)
 routesFiles.forEach(r => {
   router.use(`/${r}`, require(`./${r}`).default)
 })
