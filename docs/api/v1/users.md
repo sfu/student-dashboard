@@ -84,11 +84,13 @@ curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
 ```json
 [
   {
+    "id": 1,
     "stop": "50490",
     "route": "209",
     "destination": "VANCOUVER"
   },
   {
+    "id": 2,
     "stop": "50490",
     "route": "004",
     "destination": "UBC"
@@ -103,7 +105,9 @@ Add a transit bookmark for a user and return the new list of all bookmarks.
 
 #### Usage notes
 
-The new bookmark will be merged with the user's existing bookmarks. The array of bookmarks is unique'd when saving; no duplicate bookmarks will be saved.
+The new bookmark will be merged with the user's existing bookmarks. Bookmark uniqueness is enforced at the database level; the combination of `user_id`, `stop`, `route`, and `destination` fields must be unique.
+
+The `destination` field is UPPERCASED when saving to the database. This is to ensure consistency with Translink's data, which always uses uppercase for the destination.
 
 The JSON payload must conform to the following schema:
 
@@ -129,7 +133,7 @@ The JSON payload must conform to the following schema:
 }
 ```
 
-No validation of the actual bookmark is performed; it is possible to pass a well-formed, but invalid bookmark. For example, the following is not a real bookmark, but since it passes the schema test it would be saved.
+No validation of the actual bookmark is performed; it is possible to pass a well-formed, but invalid bookmark. For example, the following is not a real stop, route, or destination, but since it passes the schema test it would be saved.
 
 ```json
 {
@@ -152,16 +156,19 @@ curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
 ```json
 [
   {
+    "id": 1,
     "stop": "50490",
     "route": "209",
     "destination": "VANCOUVER"
   },
   {
+    "id": 2,
     "stop": "50490",
     "route": "004",
     "destination": "UBC"
   },
   {
+    "id": 3,
     "stop": "51861",
     "route": "145",
     "destination": "PRODUCTION STN"
@@ -169,7 +176,50 @@ curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
 ]
 ```
 
-## Delete a transit bookmark for a user
+## Delete a transit bookmark for a user by ID
+### DELETE /api/v1/users/:username/transitBookmarks/:id
+
+Delete a transit bookmark with a given ID for a user and return the new list of all bookmarks.
+
+#### Usage notes
+
+A 404 is returned if no bookmark with the provided ID is present in the database.
+
+This route can also be sent as a `POST` with a `X-HTTP-Method-Override: DELETE` header, for clients that do not support `DELETE`.
+
+#### Example Request
+```bash
+# Using DELETE Method
+curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks/1 \
+  -X DELETE \
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>' \
+
+# Using POST Method with X-HTTP-Method-Override header
+curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks/1 \
+  -X POST
+  -H 'X-HTTP-Method-Override: DELETE' \
+  -H 'Authorization: Bearer <...ACCESS_TOKEN...>' \
+```
+
+#### Example Response
+```json
+[
+  {
+    "id": 2,
+    "stop": "50490",
+    "route": "209",
+    "destination": "VANCOUVER"
+  },
+  {
+    "id": 3,
+    "stop": "50490",
+    "route": "004",
+    "destination": "UBC"
+  }
+]
+```
+
+## DEPRECATED Delete a transit bookmark for a user (by body)
 ### DELETE /api/v1/users/:username/transitBookmarks
 
 Delete a transit bookmark for a user and return the new list of all bookmarks.
@@ -224,11 +274,13 @@ curl https://api.its.sfu.ca/snap/api/v1/users/self/transitBookmarks \
 ```json
 [
   {
+    "id": 2,
     "stop": "50490",
     "route": "209",
     "destination": "VANCOUVER"
   },
   {
+    "id": 3,
     "stop": "50490",
     "route": "004",
     "destination": "UBC"
