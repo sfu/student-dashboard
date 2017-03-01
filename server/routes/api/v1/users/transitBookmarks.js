@@ -104,7 +104,7 @@ router.delete('/:id', ownsBookmark, async (req, res) => {
   debug('%s - Delete bookmark by ID %s for user %s', req.id, id, username)
 
   try {
-    // await db(TRANSIT_BOOKMARKS_TABLE).where({ id }).del()
+    await db(TRANSIT_BOOKMARKS_TABLE).where({ id }).del()
     const nextBookmarks = await(getBookmarksForUser(user.id))
     res.send(nextBookmarks)
   } catch(e) {
@@ -124,8 +124,7 @@ router.get('/estimates', async (req, res) => {
   try {
     debug('%s - Getting transit bookmark estimates for %s', req.id, username)
     const cache = req.app.get('TRANSLINK_CACHE')
-    const bookmarksText = (await db('users').where({username}).select('transit_bookmarks_text'))[0]
-    const bookmarks = JSON.parse(bookmarksText.transit_bookmarks_text)
+    const bookmarks = await getBookmarksForUser(user.id)
     const estimates = await getEstimatesForBookmarks(bookmarks, cache)
     res.send(estimates)
   } catch (e) {
