@@ -5,7 +5,8 @@ API for accessing information about a user
 * [Get a user profile](#get-a-user-profile)
 * [Get a user's transit bookmarks](#get-a-users-transit-bookmarks)
 * [Add a transit bookmark for a user](#add-a-transit-bookmark-for-a-user)
-* [Delete a transit bookmark for a user](#delete-a-transit-bookmark-for-a-user)
+* [Delete a transit bookmark for a user by ID](#delete-a-transit-bookmark-for-a-user-by-id)
+* DEPRECATED [Delete a transit bookmark for a user](#deprecated-delete-a-transit-bookmark-for-a-user-by-body)
 
 **Usage notes:**
 
