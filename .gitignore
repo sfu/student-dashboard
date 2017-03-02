@@ -14,4 +14,4 @@ tmp/*
 !tmp/.gitkeep
 html/snap.html
 *.tap
-junit.xml
+junit*.xml
