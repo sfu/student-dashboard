@@ -1,6 +1,5 @@
 import axios from 'axios'
 import uniqBy from 'lodash/uniqBy'
-import isEqual from 'lodash/isEqual'
 import ReactGA from 'react-ga'
 import normalizeTranslinkData from '../utils/normalizeTranslinkData'
 
@@ -78,8 +77,9 @@ export const addTransitBookmark = bookmark => {
       method: 'POST',
       url: BOOKMARKS_URL,
       data: bookmark,
-    }).then(() => {
+    }).then((result) => {
       dispatch(syncTransitBookmarkSuccess())
+      dispatch(setTransitBookmarks(result.data))
       ReactGA.event({
         category: 'Transit',
         action: ADD_TRANSIT_BOOKMARK,
@@ -94,18 +94,19 @@ export const addTransitBookmark = bookmark => {
 }
 
 export const removeTransitBookmark = bookmark => {
+  const { id } = bookmark
   return (dispatch, getState) => {
     const currentBookmarks = getState().transit.transitBookmarks
     // optimistic update
-    const nextBookmarks = currentBookmarks.filter(b => !isEqual(b, bookmark))
+    const nextBookmarks = currentBookmarks.filter(b => b.id !== id)
     dispatch(setTransitBookmarks(nextBookmarks))
     dispatch(syncTransitBookmarkStart())
     return axios({
       method: 'DELETE',
-      url: BOOKMARKS_URL,
-      data: bookmark,
-    }).then(() => {
+      url: `${BOOKMARKS_URL}/${id}`
+    }).then((result) => {
       dispatch(syncTransitBookmarkSuccess())
+      dispatch(setTransitBookmarks(result.data))
       ReactGA.event({
         category: 'Transit',
         action: REMOVE_TRANSIT_BOOKMARK,

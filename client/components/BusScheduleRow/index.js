@@ -29,11 +29,19 @@ const arrivalTimes = (schedules) => {
 
 const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) => {
   const destination = schedules.Schedules[0].Destination
-  const isBookmarked = !!transitBookmarks.find((bookmark) => isEqual(
-    {...bookmark, destination: bookmark.destination.toLowerCase()},
-    {stop: stopNumber, route: schedules.RouteNo, destination: destination.toLowerCase()}
-  ))
-  const BookmarkIcon = isBookmarked ? BookmarkIconFilled : BookmarkIconHollow
+
+  const bookmarkForStop = transitBookmarks.find(bookmark => {
+    const clone = {...bookmark, destination: bookmark.destination.toLowerCase()}
+    delete clone.id
+    return isEqual(
+      clone,
+      {stop: stopNumber, route: schedules.RouteNo, destination: destination.toLowerCase()}
+    )
+  })
+
+  const id = bookmarkForStop ? bookmarkForStop.id : null
+
+  const BookmarkIcon = bookmarkForStop ? BookmarkIconFilled : BookmarkIconHollow
   return (
     <div className={styles.row}>
       <img src={BusIcon} alt="Bus Icon" className={styles.busIcon} />
@@ -50,13 +58,12 @@ const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) =
         type="image"
         className={styles.bookmarkButton}
         src={BookmarkIcon}
-        title={isBookmarked ? `Remove from transit bookmarks` : `Add to transit bookmarks`}
+        title={bookmarkForStop ? `Remove from transit bookmarks` : `Add to transit bookmarks`}
         onClick={() => {
-          const bookmark = {stop: stopNumber, route: schedules.RouteNo, destination}
-          if (isBookmarked) {
-            dispatch(removeTransitBookmark(bookmark))
+          if (bookmarkForStop) {
+            dispatch(removeTransitBookmark(bookmarkForStop))
           } else {
-            dispatch(addTransitBookmark(bookmark))
+            dispatch(addTransitBookmark({stop: stopNumber, route: schedules.RouteNo, destination}))
           }
         }}
       />
