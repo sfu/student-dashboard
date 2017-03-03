@@ -39,8 +39,6 @@ const BusScheduleRow = ({ stopNumber, schedules, transitBookmarks, dispatch }) =
     )
   })
 
-  const id = bookmarkForStop ? bookmarkForStop.id : null
-
   const BookmarkIcon = bookmarkForStop ? BookmarkIconFilled : BookmarkIconHollow
   return (
     <div className={styles.row}>
