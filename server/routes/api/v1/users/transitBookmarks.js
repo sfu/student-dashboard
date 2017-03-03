@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { validate } from 'express-jsonschema'
 import bodyParser from 'body-parser'
-
+import isEqual from 'lodash/isEqual'
 import {
   BOOKMARK_SCHEMA,
   TRANSIT_BOOKMARKS_TABLE,
@@ -77,19 +77,22 @@ router.delete('/', validate({body: BOOKMARK_SCHEMA}), async (req, res) => {
 
   debug('%s - Delete bookmark %s for user %s', req.id, JSON.stringify(req.body), username)
   try {
-    const bookmark = await db(TRANSIT_BOOKMARKS_TABLE).where({
-      user_id: user.id,
-      ...req.body
-    }).first()
-    if (!bookmark) {
-      return res.boom.notFound()
+    // get existing bookmarks from db
+    const bookmarksText = (await db('users').where({username}).select('transit_bookmarks_text'))[0]
+    const bookmarksJson = JSON.parse(bookmarksText.transit_bookmarks_text)
+    req.body.destination = req.body.destination.toUpperCase()
+    const nextBookmarks = bookmarksJson.filter(b => !isEqual(b, req.body))
+    if (!isEqual(nextBookmarks, bookmarksJson)) {
+      const nextBookmarksText = JSON.stringify(nextBookmarks)
+      debug('%s - Saving new bookmarks to DB: %s', req.id, nextBookmarksText)
+      const result = await db('users').where({username}).update({transit_bookmarks_text: nextBookmarksText})
+      debug('%s - DB update result: %s', req.id, result)
     }
-    await db(TRANSIT_BOOKMARKS_TABLE).where({ id: bookmark.id }).del()
-    const nextBookmarks = await getBookmarksForUser(user.id)
     res.send(nextBookmarks)
   } catch (e) {
     debug('%s - Error deleting transit bookmark: %s', req.id, e.message)
     res.boom.badImplementation()
+
   }
 })
 
