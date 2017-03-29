@@ -1,7 +1,24 @@
+/* Use flexbox for browsers that don't support grid */
 .grid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+}
+
+
+/* Use CSS Grid Layout for supporting browsers */
+@supports (display: grid) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: .5em;
+  }
+
+  @media (min-width: 350px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
 }
