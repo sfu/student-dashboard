@@ -17,7 +17,7 @@ const Transit = ({transit}) => {
       <TransitMap />
       {!transit.selectedStop && !!Object.keys(transit.transitBookmarksSchedules).length &&
         <div>
-          <div className={styles.myBussesHeader}><h1 className={styles.myBusses}>My Busses</h1></div>
+          <div className={styles.myBusesHeader}><h1 className={styles.myBuses}>My Buses</h1></div>
           <DashboardTransitBookmarks />
         </div>
       }
