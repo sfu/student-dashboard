@@ -77,9 +77,12 @@ async function loggedInWithJwt(req, res, next) {
 }
 
 function redirectToLoginIfNecessary(req, res, next) {
+  debug('%s - %s - `redirectToLoginIfNecessary` called', req.id, req.originalUrl)
   if (req.loggedIn) {
+    debug('%s - %s - `redirectToLoginIfNecessary` - logged in', req.id, req.originalUrl)
     next()
   } else {
+    debug('%s - %s - `redirectToLoginIfNecessary` - redirecting to login', req.id, req.originalUrl)
     res.redirectToLogin()
   }
 }
