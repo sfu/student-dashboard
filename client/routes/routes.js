@@ -151,7 +151,6 @@ export default (reduxStore) => { // eslint-disable-line
         getComponent(location, cb) {
           System.import('pages/Library').then(loadRoute(cb)).catch(errorLoading)
         },
-        queries: ViewerQueries,
         onEnter(nextState, replace, done) {
           const { dispatch } = reduxStore
           dispatch(fetchLibraryHours())
