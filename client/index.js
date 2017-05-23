@@ -13,7 +13,6 @@ import routes from './routes/routes'
 // import Renderer from './routes/router'
 
 import { toggleHeaderNav } from 'actions/header'
-import { fetchLibraryHours } from 'actions/library'
 import configureStore from './configureStore'
 
 const { NODE_ENV, GOOGLE_ANALYTICS_CODE } = process.env
