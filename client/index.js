@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Relay from 'react-relay'
 import { Provider } from 'react-redux'
-import {Router, browserHistory, applyRouterMiddleware} from 'react-router'
+import { Router, browserHistory, applyRouterMiddleware } from 'react-router'
 import ReactGA from 'react-ga'
 import useRelay from 'react-router-relay'
 import routes from './routes/routes'
@@ -31,12 +31,9 @@ if (NODE_ENV !== 'production') {
   RelayNetworkDebug.init()
 }
 
-browserHistory.listen(({pathname}) => {
+browserHistory.listen(() => {
   if (store.getState().header.showNav) {
     store.dispatch(toggleHeaderNav())
-  }
-  if (pathname === '/library') {
-    store.dispatch(fetchLibraryHours())
   }
 })
 

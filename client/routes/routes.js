@@ -14,6 +14,7 @@ import {
   fetchStops,
   fetchSchedulesForBookmarks
 } from 'actions/transit'
+import { fetchLibraryHours } from 'actions/library'
 
 import styles from 'components/App/App.css'
 
@@ -151,6 +152,11 @@ export default (reduxStore) => { // eslint-disable-line
           System.import('pages/Library').then(loadRoute(cb)).catch(errorLoading)
         },
         queries: ViewerQueries,
+        onEnter(nextState, replace, done) {
+          const { dispatch } = reduxStore
+          dispatch(fetchLibraryHours())
+          done()
+        },
         render
       },
       {

@@ -16,7 +16,7 @@ const LibraryHours = ({ hours, timeFormat }) => {
   return  (
     <div className={styles.libraryHours}>
       {
-        hours.fetching  ? <p>Checking Libary Hours...</p> :
+        hours.fetching ? <p>Checking Libary Hours...</p> :
         <ul className={styles.libraryHoursList}>
           {hours.data.map((location, index) => (
             <li className={styles.libraryHoursListItem} key={index}>
