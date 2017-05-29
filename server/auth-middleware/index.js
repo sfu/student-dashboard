@@ -125,8 +125,9 @@ async function loggedin(req, res, next) {
 }
 
 function authenticateCasUser(req, res, next) {
-    cas.authenticate(req, res, (err, status, username, extended) => {
-        if (err) {
+  cas.authenticate(req, res, (err, status, username, extended) => {
+    username = username.trim()
+    if (err) {
       debug('%s - %s - Error authenticating user with CAS: %s', req.id, req.originalUrl, err)
       next(err)
     } else {
