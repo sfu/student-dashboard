@@ -54,7 +54,6 @@ async function loggedInWithJwt(req, res, next) {
   } else {
     try {
       debug('%s - %s - validating JWT', req.id, req.originalUrl)
-      debug('%s - %s - JWT issued by %s', req.id, req.originalUrl, req.headers['X-API-Gateway'])
       debug(token[1])
       const payload = await verifyJwt(token[1], req.app.get('JWT_SIGNING_CERTIFICATE'))
       if (!payload) {
