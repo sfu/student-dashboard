@@ -236,20 +236,24 @@ async function provisionOrUpdateUser(req, res, next) {
     const { username, lastname, firstnames, commonname, barcode } = bio
     const { access_token, refresh_token, valid_until } = oauthCredentials
 
-    const payload = {
-      username,
-      lastname,
-      firstnames,
-      commonname,
-      barcode,
-      uid: uuid.v4(),
-      oauth_access_token: access_token || null,
-      oauth_refresh_token: refresh_token || null,
-      oauth_valid_until: valid_until ? new Date(valid_until) : null
-    }
     debug('%s - %s - Attempting to create user record in DB', req.id, req.originalUrl)
-    const user = await db('users').insert(payload).returning('*')
-    req.user = req.session.user = user ? user[0] : null
+    const user = await db.raw(
+      `INSERT INTO "users" ("username", "lastname", "firstnames", "commonname", "barcode", "uid", "oauth_access_token", "oauth_refresh_token", "oauth_valid_until")
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+       ON CONFLICT (username) DO UPDATE SET updated_at = now()::timestamp RETURNING *`,
+      [
+        username,
+        lastname,
+        firstnames,
+        commonname,
+        barcode,
+        uuid.v4(),
+        access_token || null,
+        refresh_token || null,
+        valid_until ? new Date(valid_until) : null
+      ]
+    )
+    req.user = req.session.user = user.rows ? user.rows[0] : null
     debug(`${req.id} - ${JSON.stringify(req.user, null, 2)}`)
     next()
   } catch (e) {
