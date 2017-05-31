@@ -40,11 +40,11 @@ describe('provisionOrUpdateUser', () => {
   beforeEach(async () => {
     tracker.install()
     tracker.on('query', q => {
-       q.response([{
+       q.response({ rows: [{
          ...FAKEUSER,
          ...FAKEOAUTH,
          uid: '1234-5678-9012-3456'
-       }])
+       }]})
     })
     // rewire the getUserBio function called by provisionOrUpdateUser
     RewireAPI.__Rewire__('getUserBio', function() {
