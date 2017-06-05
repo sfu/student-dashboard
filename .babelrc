@@ -1,11 +1,14 @@
 {
   "presets": [
-    "node6",
-    "react"
+    ["env", {
+      "targets": {
+        "node": true
+      },
+      "modules": "commonjs"
+    }]
   ],
   "plugins": [
     "dedent",
-    "transform-async-to-generator",
     "transform-object-rest-spread"
   ],
   "env": {

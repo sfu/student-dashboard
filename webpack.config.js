@@ -82,8 +82,15 @@ module.exports = (env = {}) => {
                 'transform-object-rest-spread'
               ]),
               presets: [
-                ['es2015', {modules: false}],
-                'react'
+                'react',
+                [
+                  'env', {
+                    targets: {
+                      browsers: 'last 2 versions'
+                    },
+                    modules: false
+                  }
+                ]
               ],
               babelrc: false
             }
