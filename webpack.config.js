@@ -105,15 +105,7 @@ module.exports = (env = {}) => {
 
         {
           test: /\.svg$/,
-          use: [
-            {
-              loader: 'babel-loader',
-              query: {
-                presets: ['es2015', 'react']
-              }
-            },
-            'svg-react'
-          ]
+          use: [ 'svg-react' ]
         },
 
         ifProd({

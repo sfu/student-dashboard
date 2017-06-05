@@ -1,29 +1,29 @@
-<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <defs>
     <path id="library_a" d="M10.895 0l10.143 4.515H.752z"/>
     <mask id="library_e" x="-1" y="-1" width="22.286" height="6.515">
       <path fill="#fff" d="M-.248-1h22.286v6.515H-.248z"/>
-      <use xlink:href="#library_a"/>
+      <use xlinkHref="#library_a"/>
     </mask>
     <path d="M2.04 9.15c0-.556.424-1.168.946-1.338 0 0 4.167-1.85 8.537.33v11.592c-4.12-1.547-8.513-.232-8.513-.232-.536.128-.97-.208-.97-.776V9.15z" id="library_b"/>
     <mask id="library_f" x="0" y="0" width="9.483" height="12.658" fill="#fff">
-      <use xlink:href="#library_b"/>
+      <use xlinkHref="#library_b"/>
     </mask>
     <path d="M19.183 7.856s-4.308-1.894-8.678.286v11.592c4.12-1.547 8.658-.2 8.658-.2.455.11.824-.172.824-.633V8.977c0-.46-.352-.968-.804-1.12z" id="library_c"/>
     <mask id="library_g" x="0" y="0" width="9.483" height="12.641" fill="#fff">
-      <use xlink:href="#library_c"/>
+      <use xlinkHref="#library_c"/>
     </mask>
     <rect id="library_d" x=".024" y="20.5" width="22" height="1" rx=".5"/>
     <mask id="library_h" x="0" y="0" width="22" height="1" fill="#fff">
-      <use xlink:href="#library_d"/>
+      <use xlinkHref="#library_d"/>
     </mask>
   </defs>
   <g fill="none" fill-rule="evenodd">
     <g transform="translate(1.976 2.5)" stroke="#fff" stroke-width="2">
-      <use mask="url(#library_e)" stroke-linecap="round" stroke-linejoin="round" xlink:href="#library_a"/>
-      <use mask="url(#library_f)" xlink:href="#library_b"/>
-      <use mask="url(#library_g)" xlink:href="#library_c"/>
-      <use mask="url(#library_h)" fill="#D8D8D8" xlink:href="#library_d"/>
+      <use mask="url(#library_e)" stroke-linecap="round" stroke-linejoin="round" xlinkHref="#library_a"/>
+      <use mask="url(#library_f)" xlinkHref="#library_b"/>
+      <use mask="url(#library_g)" xlinkHref="#library_c"/>
+      <use mask="url(#library_h)" fill="#D8D8D8" xlinkHref="#library_d"/>
     </g>
   </g>
 </svg>

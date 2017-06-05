@@ -1,13 +1,13 @@
-<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <defs>
     <path id="dashboard_a" d="M11.515 3L2 10.27V23h7v-8h5v8h7V10.446z"/>
     <mask id="dashboard_b" x="0" y="0" width="19" height="20" fill="#fff">
-      <use xlink:href="#dashboard_a"/>
+      <use xlinkHref="#dashboard_a"/>
     </mask>
   </defs>
   <g fill="none" fill-rule="evenodd">
     <g transform="translate(1 1)" stroke="#fff">
-      <use mask="url(#dashboard_b)" stroke-width="2" xlink:href="#dashboard_a"/>
+      <use mask="url(#dashboard_b)" stroke-width="2" xlinkHref="#dashboard_a"/>
       <path stroke-linecap="round" stroke-linejoin="round" d="M0 8.95L11.44 0l11.335 9.01"/>
     </g>
   </g>

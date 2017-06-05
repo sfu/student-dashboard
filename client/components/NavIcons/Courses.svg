@@ -1,33 +1,33 @@
-<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <defs>
     <rect id="courses_a" x="1" width="19" height="23" rx="1"/>
     <mask id="courses_f" x="0" y="0" width="19" height="23" fill="#fff">
-      <use xlink:href="#courses_a"/>
+      <use xlinkHref="#courses_a"/>
     </mask>
     <rect id="courses_b" y="6" width="4" height="1" rx=".5"/>
     <mask id="courses_g" x="0" y="0" width="4" height="1" fill="#fff">
-      <use xlink:href="#courses_b"/>
+      <use xlinkHref="#courses_b"/>
     </mask>
     <rect id="courses_c" y="9" width="4" height="1" rx=".5"/>
     <mask id="courses_h" x="0" y="0" width="4" height="1" fill="#fff">
-      <use xlink:href="#courses_c"/>
+      <use xlinkHref="#courses_c"/>
     </mask>
     <path d="M19 12.27c.178-.168.417-.27.68-.27h1.325c.55 0 .995.438.995.998v2.404c0 .55-.447.998-.995.998H19.68c-.263 0-.502-.1-.68-.266V12.27z" id="courses_d"/>
     <mask id="courses_i" x="0" y="0" width="3" height="4.4" fill="#fff">
-      <use xlink:href="#courses_d"/>
+      <use xlinkHref="#courses_d"/>
     </mask>
     <path d="M19 17.77c.178-.168.417-.27.68-.27h1.325c.55 0 .995.438.995.998v2.404c0 .55-.447.998-.995.998H19.68c-.263 0-.502-.1-.68-.266V17.77z" id="courses_e"/>
     <mask id="courses_j" x="0" y="0" width="3" height="4.4" fill="#fff">
-      <use xlink:href="#courses_e"/>
+      <use xlinkHref="#courses_e"/>
     </mask>
   </defs>
   <g fill="none" fill-rule="evenodd">
     <g transform="translate(1 1)">
-      <use stroke="#fff" mask="url(#courses_f)" stroke-width="2" xlink:href="#courses_a"/>
-      <use stroke="#fff" mask="url(#courses_g)" stroke-width="2" fill="#fff" xlink:href="#courses_b"/>
-      <use stroke="#fff" mask="url(#courses_h)" stroke-width="2" fill="#fff" xlink:href="#courses_c"/>
-      <use stroke="#fff" mask="url(#courses_i)" stroke-width="2" xlink:href="#courses_d"/>
-      <use stroke="#fff" mask="url(#courses_j)" stroke-width="2" xlink:href="#courses_e"/>
+      <use stroke="#fff" mask="url(#courses_f)" stroke-width="2" xlinkHref="#courses_a"/>
+      <use stroke="#fff" mask="url(#courses_g)" stroke-width="2" fill="#fff" xlinkHref="#courses_b"/>
+      <use stroke="#fff" mask="url(#courses_h)" stroke-width="2" fill="#fff" xlinkHref="#courses_c"/>
+      <use stroke="#fff" mask="url(#courses_i)" stroke-width="2" xlinkHref="#courses_d"/>
+      <use stroke="#fff" mask="url(#courses_j)" stroke-width="2" xlinkHref="#courses_e"/>
       <text font-family="Arial-BoldMT, Arial" font-size="3.3" font-weight="bold" letter-spacing=".1" fill="#fff">
         <tspan x="10.1" y="20.5">SFU</tspan>
       </text>
