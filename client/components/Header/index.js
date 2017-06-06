@@ -31,7 +31,7 @@ const Header = ({ title, showNav, toggleHeaderNav }) => {
       <header className={styles.header}>
         <img className={styles.snapLogo} alt="SFU Snap Logo" src={snapLogo} height={50} width={50} />
         <button className={menuToggleClassNames} onClick={toggleHeaderNav}><h1 className={styles.title}>{title}</h1></button>
-        <button type="button" name="Toggle Menu" className={menuToggleClassNames} onClick={toggleHeaderNav}>
+        <button type="button" aria-label="Toggle Menu" name="Toggle Menu" className={menuToggleClassNames} onClick={toggleHeaderNav}>
           <Menu />
         </button>
       </header>

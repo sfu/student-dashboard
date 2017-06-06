@@ -1,5 +1,6 @@
 import React, { PropTypes }  from 'react'
 import PagerDot from 'components/PagerDot'
+import { DAYS_OF_WEEK } from 'const'
 import styles from './PagerDots.css'
 
 const PagerDots = ({ count, activeDot, dotClickHandler, gaCategory }) => {
@@ -11,6 +12,7 @@ const PagerDots = ({ count, activeDot, dotClickHandler, gaCategory }) => {
         idx={idx}
         key={idx}
         gaCategory={gaCategory}
+        label={DAYS_OF_WEEK[idx]}
       />
     )
   })

@@ -20,13 +20,13 @@ const renderStops = (stops, isFetching) => stops.map((stop, i) => {
     })
   }
   return (
-    <Link
-      key={i}
-      className={styles.link}
-      to={`/transit/${number}`}
-      onClick={tracker}
-    >
-      <li className={styles.listItem}>
+      <li key={i}>
+        <Link
+          className={styles.link}
+          to={`/transit/${number}`}
+          onClick={tracker}
+        >
+        <div className={styles.listItem}>
         <div className={styles.container}>
           <div className={styles.stopInfo}>
             <p>{`${transformTranslinkText(onStreet)} / ${transformTranslinkText(atStreet)}`}</p>
@@ -48,8 +48,9 @@ const renderStops = (stops, isFetching) => stops.map((stop, i) => {
             <img src={CaretRight} alt={`More information for stop ${number}`} className={styles.linkCaret} />
           </div>
         </div>
+      </div>
+      </Link>
       </li>
-    </Link>
   )
 })
 
