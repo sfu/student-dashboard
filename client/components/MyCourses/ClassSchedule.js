@@ -10,7 +10,7 @@ import leftPad from 'utils/leftPad'
 import styles from './MyCourses.css'
 
 const ClassSchedule = ({ schedule, timeFormat }) => {
-  const { startTime, endTime, days, buildingCode, roomNumber } = schedule
+  const { startTime, endTime, days } = schedule
   const start = {
     hour: leftPad(startTime, 4, 0).substr(0, 2),
     minute: leftPad(startTime, 4, 0).substr(2)
@@ -24,9 +24,11 @@ const ClassSchedule = ({ schedule, timeFormat }) => {
   const endDate = dateForHoursAndMinutes(end.hour, end.minute)
 
   const location = (schedule) => {
-    const location = schedule.campus.toLowerCase() === 'burnaby' && buildingCode && roomNumber ?
+    const { buildingCode, roomNumber, campus } = schedule
+    if (!(campus && buildingCode && roomNumber)) return null
+    const location = campus.toLowerCase() === 'burnaby' && buildingCode && roomNumber ?
       <RoomFinderLink building={buildingCode} room={roomNumber} /> :
-      <span>{schedule.buildingCode} {schedule.roomNumber}</span>
+      <span>{buildingCode} {roomNumber}</span>
 
     return (
       <span className={styles.classLocation}>

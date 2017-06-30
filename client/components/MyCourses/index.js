@@ -66,6 +66,8 @@ export const _MyCourses = React.createClass({
     const listItems = courseList.map((c, i) => {
       const courseName = `${c.name} ${c.number} ${CLASS_TYPES[c.sectionCode.toLowerCase()]}`
       const notExamDays = c.schedules.filter(s => !s.isExam)
+      // handle courses that are missing a non-exam schedule
+      if (!notExamDays.length) notExamDays.push({})
       const schedule = notExamDays.map((s, i) => <ClassSchedule key={i} schedule={s} />)
       return (
         <div className={styles.classItem} key={i}>
