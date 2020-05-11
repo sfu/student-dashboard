@@ -129,6 +129,13 @@ export const createServer = (app) => {
       path.search = `?${path.query}`
       proxyReq.path = path.format()
 
+      // use http_proxy if present
+      const proxyEnv = process.env.https_proxy || process.env.http_proxy
+      if (proxyEnv) {
+        const HttpsProxyAgent = require('http-proxy-agent');
+        proxyReq.agent = new HttpsProxyAgent(proxyEnv)
+      }
+
       return proxyReq
     }
   }))
