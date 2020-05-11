@@ -4,6 +4,7 @@ import uuid from 'uuid'
 import helmet from 'helmet'
 import path from 'path'
 import fs from 'fs'
+import url from 'url'
 import * as routes from './routes'
 import webpack from 'webpack'
 import WebpackDevMiddleware from 'webpack-dev-middleware'
@@ -119,7 +120,12 @@ export const createServer = (app) => {
     changeOrigin: true,
     pathRewrite: (path, req) => {
       console.log({ path, req }) //eslint-disable-line
-      return undefined
+      const { query, pathname } = url.parse(path)
+      const qs = query ? query.split('&') : []
+      qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
+      const newpath = `/RTTIAPI/V1${pathname.replace(/^\/translink/, '')}?${qs.join('&')}`
+      console.log({ newpath }) // eslint-disable-line
+      return newpath
     }
   }))
   // app.use('/translink', proxy('api.translink.ca', {
