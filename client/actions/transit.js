@@ -138,7 +138,7 @@ export const fetchStops = (coords, radius) => {
   return (dispatch, getState) => {
     dispatch(fetchStopsStart())
     const latitude = parseFloat(coords.latitude).toFixed(5)
-    const longitude =  parseFloat(coords.longitude).toFixed(5)
+    const longitude = parseFloat(coords.longitude).toFixed(5)
     const STOPS_URL = `/translink/stops?lat=${latitude}&long=${longitude}&radius=${radius}`
     return axios.get(STOPS_URL).then((response) => {
       const nextState = uniqBy(getState().transit.stops.concat(response.data), 'StopNo')

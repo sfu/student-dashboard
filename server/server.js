@@ -11,8 +11,8 @@ import WebpackHotMiddleware from 'webpack-hot-middleware'
 import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
-import proxy from 'express-http-proxy'
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// import proxy from 'express-http-proxy'
+const { createProxyMiddleware } = require('http-proxy-middleware')
 import requestId from 'express-request-id'
 import methodOverride from 'method-override'
 import cspDirectives from './cspDirectives'
@@ -118,8 +118,8 @@ export const createServer = (app) => {
     target: 'http://api.translink.ca',
     changeOrigin: true,
     pathRewrite: (path, req) => {
-      console.log({ path, req })
-      return undefined;
+      console.log({ path, req }) //eslint-disable-line
+      return undefined
     }
   }))
   // app.use('/translink', proxy('api.translink.ca', {
