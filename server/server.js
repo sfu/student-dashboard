@@ -12,6 +12,7 @@ import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
 import proxy from 'express-http-proxy'
+const { createProxyMiddleware } = require('http-proxy-middleware');
 import requestId from 'express-request-id'
 import methodOverride from 'method-override'
 import cspDirectives from './cspDirectives'
@@ -113,32 +114,39 @@ export const createServer = (app) => {
   app.use('/auth', routes.auth)
   app.use('/api', routes.api)
   app.use('/graphql', routes.graphql)
-  app.use('/translink', proxy('api.translink.ca', {
-    https: false,
-    preserveHostHdr: true,
-    forwardPath: (req) => `/RTTIAPI/V1${req.url}`,
-    decorateRequest: (proxyReq) => {
-      // set headers
-      proxyReq.headers['accept'] = 'application/json'
-
-      // inject API Key into query string
-      const path = require('url').parse(proxyReq.path)
-      const qs = path.query ? path.query.split('&') : []
-      qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
-      path.query = qs.join('&')
-      path.search = `?${path.query}`
-      proxyReq.path = path.format()
-
-      // use http_proxy if present
-      const proxyEnv = process.env.https_proxy || process.env.http_proxy
-      if (proxyEnv) {
-        const HttpsProxyAgent = require('http-proxy-agent')
-        proxyReq.agent = new HttpsProxyAgent(proxyEnv)
-      }
-
-      return proxyReq
+  app.use('/translink', createProxyMiddleware({
+    target: 'http://api.translink.ca',
+    changeOrigin: true,
+    pathRewrite: (path, req) => {
+      console.log({ path, req })
+      return undefined;
     }
   }))
+  // app.use('/translink', proxy('api.translink.ca', {
+  //   https: false,
+  //   preserveHostHdr: true,
+  //   proxyReqOptDecorator: (proxyReq) => {
+  //     // set headers
+  //     proxyReq.headers['accept'] = 'application/json'
+
+  //     // use http_proxy if present
+  //     const proxyEnv = process.env.https_proxy || process.env.http_proxy
+  //     if (proxyEnv) {
+  //       const HttpsProxyAgent = require('http-proxy-agent')
+  //       proxyReq.agent = new HttpsProxyAgent(proxyEnv)
+  //     }
+  //     return proxyReq
+  //   },
+  //   proxyReqPathResolver: (proxyReq) => {
+  //     // inject API Key into query string
+  //     const path = require('url').parse(proxyReq.originalUrl)
+  //     const qs = proxyReq._parsedUrl.query ? proxyReq._parsedUrl.query.split('&') : []
+  //     qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
+  //     const newpath = `/RTTIAPI/V1${proxyReq._parsedUrl.pathname}?${qs.join('&')}`
+  //     console.log({ newpath })
+  //     return newpath
+  //   }
+  // }))
   app.use('/isup', (req, res) => { res.send('ok') })
   app.use('*', routes.app)
 
