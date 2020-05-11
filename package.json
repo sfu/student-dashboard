@@ -125,7 +125,7 @@
     "jsonwebtoken": "7.3.0",
     "knex": "0.12.7",
     "leaflet": "1.0.3",
-    "lodash": "4.17.4",
+    "lodash": "4.17.13",
     "method-override": "2.3.7",
     "normalize.css": "5.0.0",
     "pg": "6.1.2",
