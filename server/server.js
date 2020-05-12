@@ -122,41 +122,14 @@ export const createServer = (app) => {
     headers: {
       accept: 'application/json'
     },
-    pathRewrite: (path, req) => {
-      console.log({ path, req }) //eslint-disable-line
+    pathRewrite: (path) => {
       const { query, pathname } = url.parse(path)
       const qs = query ? query.split('&') : []
       qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
-      const newpath = `/RTTIAPI/V1${pathname.replace(/^\/translink/, '')}?${qs.join('&')}`
-      console.log({ newpath }) // eslint-disable-line
-      return newpath
+      return `/RTTIAPI/V1${pathname.replace(/^\/translink/, '')}?${qs.join('&')}`
     }
   }))
-  // app.use('/translink', proxy('api.translink.ca', {
-  //   https: false,
-  //   preserveHostHdr: true,
-  //   proxyReqOptDecorator: (proxyReq) => {
-  //     // set headers
-  //     proxyReq.headers['accept'] = 'application/json'
 
-  //     // use http_proxy if present
-  //     const proxyEnv = process.env.https_proxy || process.env.http_proxy
-  //     if (proxyEnv) {
-  //       const HttpsProxyAgent = require('http-proxy-agent')
-  //       proxyReq.agent = new HttpsProxyAgent(proxyEnv)
-  //     }
-  //     return proxyReq
-  //   },
-  //   proxyReqPathResolver: (proxyReq) => {
-  //     // inject API Key into query string
-  //     const path = require('url').parse(proxyReq.originalUrl)
-  //     const qs = proxyReq._parsedUrl.query ? proxyReq._parsedUrl.query.split('&') : []
-  //     qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
-  //     const newpath = `/RTTIAPI/V1${proxyReq._parsedUrl.pathname}?${qs.join('&')}`
-  //     console.log({ newpath })
-  //     return newpath
-  //   }
-  // }))
   app.use('/isup', (req, res) => { res.send('ok') })
   app.use('*', routes.app)
 
