@@ -12,7 +12,7 @@ import WebpackHotMiddleware from 'webpack-hot-middleware'
 import devErrorHandler from 'errorhandler'
 import ConnectRedis from 'connect-redis'
 import boom from 'express-boom'
-// import proxy from 'express-http-proxy'
+const HttpsProxyAgent = require('https-proxy-agent')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 import requestId from 'express-request-id'
 import methodOverride from 'method-override'
@@ -116,8 +116,12 @@ export const createServer = (app) => {
   app.use('/api', routes.api)
   app.use('/graphql', routes.graphql)
   app.use('/translink', createProxyMiddleware({
-    target: 'http://api.translink.ca',
+    target: 'https://api.translink.ca',
     changeOrigin: true,
+    agent: new HttpsProxyAgent(process.env.https_proxy),
+    headers: {
+      accept: 'application/json'
+    },
     pathRewrite: (path, req) => {
       console.log({ path, req }) //eslint-disable-line
       const { query, pathname } = url.parse(path)
