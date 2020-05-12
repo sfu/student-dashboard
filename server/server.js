@@ -24,6 +24,8 @@ const RedisStore = ConnectRedis(session)
 const TRANSLINK_CACHE = redis.createClient(process.env.TRANSLINK_CACHE_REDIS_URL)
 const PRODUCTION = process.env.NODE_ENV === 'production'
 
+const { https_proxy, http_proxy } = process.env
+
 const generateNonce = (req, res, next) => {
   const rhyphen = /-/g
   res.locals.nonce = uuid.v4().replace(rhyphen, ``)
@@ -84,6 +86,24 @@ const productionErrorHandler = (err, req, res, next) => {
   next(err)
 }
 
+const translinkProxyOpts = {
+  target: 'https://api.translink.ca',
+  changeOrigin: true,
+  headers: {
+    accept: 'application/json'
+  },
+  pathRewrite: (path) => {
+    const { query, pathname } = url.parse(path)
+    const qs = query ? query.split('&') : []
+    qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
+    return `/RTTIAPI/V1${pathname.replace(/^\/translink/, '')}?${qs.join('&')}`
+  }
+}
+
+if (https_proxy || http_proxy) {
+  translinkProxyOpts.agent = new HttpsProxyAgent(process.env.https_proxy)
+}
+
 export const createServer = (app) => {
   if (!PRODUCTION) {
     app = createDevServer(app)
@@ -115,20 +135,7 @@ export const createServer = (app) => {
   app.use('/auth', routes.auth)
   app.use('/api', routes.api)
   app.use('/graphql', routes.graphql)
-  app.use('/translink', createProxyMiddleware({
-    target: 'https://api.translink.ca',
-    changeOrigin: true,
-    agent: new HttpsProxyAgent(process.env.https_proxy),
-    headers: {
-      accept: 'application/json'
-    },
-    pathRewrite: (path) => {
-      const { query, pathname } = url.parse(path)
-      const qs = query ? query.split('&') : []
-      qs.push(`apikey=${process.env.TRANSLINK_API_KEY}`)
-      return `/RTTIAPI/V1${pathname.replace(/^\/translink/, '')}?${qs.join('&')}`
-    }
-  }))
+  app.use('/translink', createProxyMiddleware(translinkProxyOpts))
 
   app.use('/isup', (req, res) => { res.send('ok') })
   app.use('*', routes.app)
