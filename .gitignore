@@ -15,3 +15,5 @@ tmp/*
 html/snap.html
 *.tap
 junit*.xml
+
+docker-compose.local.yml

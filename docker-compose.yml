@@ -10,10 +10,9 @@ services:
       - .:/usr/src/app
       - node_modules:/usr/src/app/node_modules
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
       - NODE_ENV=development
-      - VIRTUAL_HOST=snap.docker
   redis:
     image: redis:latest
     ports:
@@ -22,8 +21,6 @@ services:
     image: postgres:9.6.17-alpine
     ports:
       - 5432:5432
-    environment:
-      - POSTGRES_PASSWORD=wharrrgarbl
 
 volumes:
   node_modules: {}
