@@ -1,105 +1,115 @@
-import React, { PropTypes } from 'react'
-import { Map, TileLayer, Circle } from 'react-leaflet'
-import { connect } from 'react-redux'
+import React, { PropTypes } from 'react';
+import { Map, TileLayer, Circle } from 'react-leaflet';
+import { connect } from 'react-redux';
 import {
   getPositionStart,
   getPositionSuccess,
-  getPositionError
-} from 'actions/position'
+  getPositionError,
+} from 'actions/position';
 import {
   fetchStops,
   toggleCurrentLocationOnMap,
   updateMapCenter,
   updateMapZoom,
-  toggleLocateOnMount
-} from 'actions/transit'
-import MapLocateControl from 'components/MapLocateControl'
-import BusStopMarker from 'components/BusStopMarker'
-import '!style!css!leaflet/dist/leaflet.css' // don't run leaflet.css through CSS Modules
-import './TransitMap.css'
+  toggleLocateOnMount,
+} from 'actions/transit';
+import MapLocateControl from 'components/MapLocateControl';
+import BusStopMarker from 'components/BusStopMarker';
+import '!style!css!leaflet/dist/leaflet.css'; // don't run leaflet.css through CSS Modules
+import './TransitMap.css';
 
 const mapStateToProps = (state) => {
-  const { position, transit } = state
+  const { position, transit } = state;
   return {
     position,
-    transit
-  }
-}
+    transit,
+  };
+};
 
 const markers = (stops) => {
   return stops.map((stop, i) => {
-    return <BusStopMarker stop={stop} key={i} />
-  })
-}
+    return <BusStopMarker stop={stop} key={i} />;
+  });
+};
 
 class TransitMap extends React.Component {
   componentDidMount() {
     if (this.props.transit.locateOnMount) {
-      const map = this.refs.map.leafletElement
-      this.props.dispatch(getPositionStart())
+      const map = this.refs.map.leafletElement;
+      this.props.dispatch(getPositionStart());
       map.locate({
         setView: true,
-        enableHighAccuracy: true
-      })
+        enableHighAccuracy: true,
+      });
     }
   }
 
   handleLocationFound = (e) => {
-    const { latitude, longitude, accuracy } = e
-    const calcRadius = accuracy => {
-      const DEFAULT = 600
-      if (accuracy > 2000) return 2000
-      if (accuracy > 600 && accuracy <= 2000) return accuracy
-      return DEFAULT
-    }
-    this.props.dispatch(getPositionSuccess({ latitude, longitude, accuracy }))
-    this.props.dispatch(toggleCurrentLocationOnMap(true))
-    this.props.dispatch(fetchStops({
-      latitude: parseFloat(latitude).toFixed(5),
-      longitude: parseFloat(longitude).toFixed(5)
-    }, calcRadius(accuracy)))
-  }
+    const { latitude, longitude, accuracy } = e;
+    const calcRadius = (accuracy) => {
+      const DEFAULT = 600;
+      if (accuracy > 2000) return 2000;
+      if (accuracy > 600 && accuracy <= 2000) return accuracy;
+      return DEFAULT;
+    };
+    this.props.dispatch(getPositionSuccess({ latitude, longitude, accuracy }));
+    this.props.dispatch(toggleCurrentLocationOnMap(true));
+    this.props.dispatch(
+      fetchStops(
+        {
+          latitude: parseFloat(latitude).toFixed(5),
+          longitude: parseFloat(longitude).toFixed(5),
+        },
+        calcRadius(accuracy)
+      )
+    );
+  };
 
-  handleLocationError = err => {
-    this.props.dispatch(getPositionError(err))
-  }
+  handleLocationError = (err) => {
+    this.props.dispatch(getPositionError(err));
+  };
 
   handleMapDrag = () => {
-    const map = this.refs.map.leafletElement
-    const originalCenter = this.props.transit.mapCenter
-    const { dispatch } = this.props
-    const newCenter = map.getCenter()
-    dispatch(updateMapCenter(newCenter))
-    dispatch(toggleLocateOnMount(false))
-    const distanceMoved = originalCenter.distanceTo(newCenter)
-    dispatch(toggleCurrentLocationOnMap(false))
+    const map = this.refs.map.leafletElement;
+    const originalCenter = this.props.transit.mapCenter;
+    const { dispatch } = this.props;
+    const newCenter = map.getCenter();
+    dispatch(updateMapCenter(newCenter));
+    dispatch(toggleLocateOnMount(false));
+    const distanceMoved = originalCenter.distanceTo(newCenter);
+    dispatch(toggleCurrentLocationOnMap(false));
     if (distanceMoved > 250) {
-      dispatch(fetchStops({
-        latitude: parseFloat(newCenter.lat).toFixed(5),
-        longitude: parseFloat(newCenter.lng).toFixed(5)
-      }, 600))
+      dispatch(
+        fetchStops(
+          {
+            latitude: parseFloat(newCenter.lat).toFixed(5),
+            longitude: parseFloat(newCenter.lng).toFixed(5),
+          },
+          600
+        )
+      );
     }
-  }
+  };
 
   handleMapZoom = () => {
-    const map = this.refs.map.leafletElement
-    const { dispatch } = this.props
+    const map = this.refs.map.leafletElement;
+    const { dispatch } = this.props;
     // zooming can change the center point of the map
     // so dispatch both updateMapZoom and updateMapCenter
-    dispatch(updateMapZoom(map.getZoom()))
-    dispatch(updateMapCenter(map.getCenter()))
-    dispatch(toggleLocateOnMount(false))
-  }
+    dispatch(updateMapZoom(map.getZoom()));
+    dispatch(updateMapCenter(map.getCenter()));
+    dispatch(toggleLocateOnMount(false));
+  };
 
   render() {
     const {
       stops,
       showCurrentLocationOnMap,
       mapCenter,
-      mapZoom
-    } = this.props.transit
+      mapZoom,
+    } = this.props.transit;
 
-    const { latitude, longitude, accuracy } = this.props.position
+    const { latitude, longitude, accuracy } = this.props.position;
     return (
       <div>
         <Map
@@ -112,21 +122,19 @@ class TransitMap extends React.Component {
           onDragend={this.handleMapDrag}
           onZoomEnd={this.handleMapZoom}
         >
-          <TileLayer
-            url={process.env.MAPBOX_TILES_URL}
-          />
+          <TileLayer url={process.env.MAPBOX_TILES_URL} />
           <MapLocateControl />
-          { (stops.length > 0) && (mapZoom > 13) ? markers(stops) : null }
-          { showCurrentLocationOnMap &&
+          {stops.length > 0 && mapZoom > 13 ? markers(stops) : null}
+          {showCurrentLocationOnMap && (
             <Circle
               center={[latitude, longitude]}
               radius={accuracy}
               animate={false}
             />
-          }
+          )}
         </Map>
       </div>
-    )
+    );
   }
 }
 
@@ -144,7 +152,7 @@ TransitMap.propTypes = {
     fetchSchedulesError: PropTypes.object,
     schedulesForSelectedStop: PropTypes.array.isRequired,
     mapCenter: PropTypes.object.isRequired,
-    mapZoom: PropTypes.number.isRequired
+    mapZoom: PropTypes.number.isRequired,
   }),
   position: PropTypes.shape({
     locating: PropTypes.bool.isRequired,
@@ -152,8 +160,8 @@ TransitMap.propTypes = {
     lastUpdated: PropTypes.number,
     latitude: PropTypes.number,
     longitude: PropTypes.number,
-    accuracy: PropTypes.number
-  })
-}
+    accuracy: PropTypes.number,
+  }),
+};
 
-export default connect(mapStateToProps)(TransitMap)
+export default connect(mapStateToProps)(TransitMap);

@@ -1,19 +1,21 @@
-import React, { PropTypes }  from 'react'
-import Barcode from 'react-barcode'
-import { Link } from 'react-router'
-import styles from './LibraryBarcode.css'
+import React, { PropTypes } from 'react';
+import Barcode from 'react-barcode';
+import { Link } from 'react-router';
+import styles from './LibraryBarcode.css';
 
 const LibraryBarcode = React.createClass({
   propTypes: {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
   },
 
   render() {
-    const { barcode } = this.props.location.query
+    const { barcode } = this.props.location.query;
     return (
       <div className={styles.fullHeight}>
         <nav className={styles.nav}>
-          <Link to="/library" className={styles.libraryLink}>&lt; My Library Record</Link>
+          <Link to="/library" className={styles.libraryLink}>
+            &lt; My Library Record
+          </Link>
         </nav>
         <div className={styles.barcode}>
           <Barcode
@@ -26,8 +28,8 @@ const LibraryBarcode = React.createClass({
           />
         </div>
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export { LibraryBarcode }
+export { LibraryBarcode };

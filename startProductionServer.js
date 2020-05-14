@@ -1,2 +1,2 @@
-require('./environment')
-require('./build/index')
+require('./environment');
+require('./build/index');

@@ -1,7 +1,7 @@
-import React, { PropTypes }  from 'react'
-import styles from './WeekAtAGlance.css'
+import React, { PropTypes } from 'react';
+import styles from './WeekAtAGlance.css';
 
-const ScheduleTable = ({children}) => {
+const ScheduleTable = ({ children }) => {
   return (
     <table className={styles.schedule}>
       <caption className={styles.caption}>Schedule for Today</caption>
@@ -12,15 +12,13 @@ const ScheduleTable = ({children}) => {
         </tr>
       </thead>
 
-      <tbody>
-        {children}
-      </tbody>
+      <tbody>{children}</tbody>
     </table>
-  )
-}
+  );
+};
 
 ScheduleTable.propTypes = {
-  children: PropTypes.array.isRequired
-}
+  children: PropTypes.array.isRequired,
+};
 
-export default ScheduleTable
+export default ScheduleTable;

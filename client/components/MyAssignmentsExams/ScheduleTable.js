@@ -1,7 +1,7 @@
-import React, { PropTypes }  from 'react'
-import styles from './MyAssignmentsExams.css'
+import React, { PropTypes } from 'react';
+import styles from './MyAssignmentsExams.css';
 
-const ScheduleTable = ({date, children}) => {
+const ScheduleTable = ({ date, children }) => {
   return (
     <div className={styles.scheduleTableContainer}>
       <h2 className={styles.date}>{date}</h2>
@@ -14,17 +14,15 @@ const ScheduleTable = ({date, children}) => {
           </tr>
         </thead>
 
-        <tbody>
-          {children}
-        </tbody>
+        <tbody>{children}</tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 ScheduleTable.propTypes = {
   date: PropTypes.string.isRequired,
-  children: PropTypes.array.isRequired
-}
+  children: PropTypes.array.isRequired,
+};
 
-export default ScheduleTable
+export default ScheduleTable;

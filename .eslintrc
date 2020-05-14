@@ -6,12 +6,10 @@
     }
   },
   "extends": [
-    "eslint:recommended",
+    "unobtrusive",
     "plugin:react/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
     "plugin:jsx-a11y/recommended"
-    ],
+  ],
   "globals": {
     "__DEVELOPMENT__": true,
     "dedent": true
@@ -22,18 +20,7 @@
     "node": true,
     "jest": true
   },
-  "rules": {
-    "space-before-function-paren": [ 2, "never" ],
-    "react/jsx-uses-react": 1,
-    "react/jsx-no-undef": 2,
-    "react/jsx-wrap-multilines": 2,
-    "semi": [2, "never"]
-  },
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "jest"
-  ],
+  "plugins": ["react", "jsx-a11y", "jest"],
   "settings": {
     "import/resolver": "webpack",
     "import/extensions": [".js", ".jsx"]

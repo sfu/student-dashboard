@@ -1,17 +1,17 @@
-import React, { PropTypes }  from 'react'
-import Relay from 'react-relay'
-import { Widget } from 'components/Widget'
-import { MyCourses } from 'components/MyCourses'
-import { MyAssignmentsExams } from 'components/MyAssignmentsExams'
-import calcTermForDate from 'utils/calcTermForDate'
+import React, { PropTypes } from 'react';
+import Relay from 'react-relay';
+import { Widget } from 'components/Widget';
+import { MyCourses } from 'components/MyCourses';
+import { MyAssignmentsExams } from 'components/MyAssignmentsExams';
+import calcTermForDate from 'utils/calcTermForDate';
 
 const _Courses = React.createClass({
   propTypes: {
-    viewer: PropTypes.object
+    viewer: PropTypes.object,
   },
 
   render() {
-    const {viewer} = this.props
+    const { viewer } = this.props;
     return (
       <div>
         <Widget title="My Courses">
@@ -25,17 +25,17 @@ const _Courses = React.createClass({
           <MyAssignmentsExams assignmentExamSchedule={viewer} />
         </Widget>
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
 export default Relay.createContainer(_Courses, {
   fragments: {
     viewer: () => Relay.QL`
       fragment viewer on ViewerType {
-        ${MyCourses.getFragment('courseSchedule', {term: calcTermForDate()})}
+        ${MyCourses.getFragment('courseSchedule', { term: calcTermForDate() })}
         ${MyAssignmentsExams.getFragment('assignmentExamSchedule')}
       }
-    `
-  }
-})
+    `,
+  },
+});

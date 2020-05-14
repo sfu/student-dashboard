@@ -40,9 +40,6 @@
     "url": "https://github.com/sfu/student-dashboard/issues"
   },
   "homepage": "https://github.com/sfu/student-dashboard#readme",
-  "pre-commit": [
-    "lint:changed"
-  ],
   "devDependencies": {
     "autoprefixer": "6.7.2",
     "babel-cli": "6.23.0",
@@ -64,6 +61,7 @@
     "css-loader": "0.26.1",
     "debug": "2.6.1",
     "eslint": "3.15.0",
+    "eslint-config-unobtrusive": "1.2.5",
     "eslint-import-resolver-webpack": "0.8.1",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jest": "1.0.2",
@@ -83,6 +81,7 @@
     "postcss-loader": "1.3.0",
     "postcss-modules-values": "1.2.2",
     "pre-commit": "1.2.2",
+    "prettier": "2.0.5",
     "react-hot-loader": "3.0.0-beta.2",
     "rimraf": "2.5.4",
     "sinon": "1.17.7",

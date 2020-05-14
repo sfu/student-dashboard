@@ -1,56 +1,68 @@
-import React, { PropTypes }  from 'react'
-import { connect } from 'react-redux'
-import { RoomFinderLink } from 'components/RoomFinderLink'
-import formatTimeRange from 'utils/formatTimeRange'
-import dateForHoursAndMinutes from 'utils/dateForHoursAndMinutes'
-import { REST_TO_ABBR_DAYS_MAP } from 'const'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { RoomFinderLink } from 'components/RoomFinderLink';
+import formatTimeRange from 'utils/formatTimeRange';
+import dateForHoursAndMinutes from 'utils/dateForHoursAndMinutes';
+import { REST_TO_ABBR_DAYS_MAP } from 'const';
 
-import leftPad from 'utils/leftPad'
+import leftPad from 'utils/leftPad';
 
-import styles from './MyCourses.css'
+import styles from './MyCourses.css';
 
 const ClassSchedule = ({ schedule, timeFormat }) => {
-  const { startTime, endTime, days } = schedule
+  const { startTime, endTime, days } = schedule;
   const start = {
     hour: leftPad(startTime, 4, 0).substr(0, 2),
-    minute: leftPad(startTime, 4, 0).substr(2)
-  }
+    minute: leftPad(startTime, 4, 0).substr(2),
+  };
   const end = {
     hour: leftPad(endTime, 4, 0).substr(0, 2),
-    minute: leftPad(endTime, 4, 0).substr(2)
-  }
+    minute: leftPad(endTime, 4, 0).substr(2),
+  };
 
-  const startDate = dateForHoursAndMinutes(start.hour, start.minute)
-  const endDate = dateForHoursAndMinutes(end.hour, end.minute)
+  const startDate = dateForHoursAndMinutes(start.hour, start.minute);
+  const endDate = dateForHoursAndMinutes(end.hour, end.minute);
 
   const location = (schedule) => {
-    const { buildingCode, roomNumber, campus } = schedule
-    if (!(campus && buildingCode && roomNumber)) return null
-    const location = campus.toLowerCase() === 'burnaby' && buildingCode && roomNumber ?
-      <RoomFinderLink building={buildingCode} room={roomNumber} /> :
-      <span>{buildingCode} {roomNumber}</span>
+    const { buildingCode, roomNumber, campus } = schedule;
+    if (!(campus && buildingCode && roomNumber)) return null;
+    const location =
+      campus.toLowerCase() === 'burnaby' && buildingCode && roomNumber ? (
+        <RoomFinderLink building={buildingCode} room={roomNumber} />
+      ) : (
+        <span>
+          {buildingCode} {roomNumber}
+        </span>
+      );
 
-    return (
-      <span className={styles.classLocation}>
-        {location}
-      </span>
-    )
-  }
+    return <span className={styles.classLocation}>{location}</span>;
+  };
 
-  const classDays = days ? days.split('').map(day => REST_TO_ABBR_DAYS_MAP[day]).join(', ') : 'No In-Person Meetings'
+  const classDays = days
+    ? days
+        .split('')
+        .map((day) => REST_TO_ABBR_DAYS_MAP[day])
+        .join(', ')
+    : 'No In-Person Meetings';
 
   return (
     <div className={styles.classSchedule}>
       <span className={styles.classDays}>{classDays}</span>
-      <span className={styles.classTimes}>{startTime && endTime ? formatTimeRange(startDate, endDate, timeFormat) : null}</span>
+      <span className={styles.classTimes}>
+        {startTime && endTime
+          ? formatTimeRange(startDate, endDate, timeFormat)
+          : null}
+      </span>
       {location(schedule)}
     </div>
-  )
-}
+  );
+};
 
 ClassSchedule.propTypes = {
   timeFormat: PropTypes.string.isRequired,
-  schedule: PropTypes.object.isRequired
-}
+  schedule: PropTypes.object.isRequired,
+};
 
-export default connect(state => ({ timeFormat: state.preferences.preferenceData.timeFormat }))(ClassSchedule)
+export default connect((state) => ({
+  timeFormat: state.preferences.preferenceData.timeFormat,
+}))(ClassSchedule);
