@@ -9,7 +9,7 @@
     "start:inspect": "npm run prestart && NODE_ENV=development node --inspect -r babel-register -r ./environment.js server/index.js",
     "start:production": "NODE_ENV=production node -r ./environment.js build/index.js",
     "prebuild": "rimraf build public/assets",
-    "build": "NODE_ENV=production npm run lint && npm run generate-schema && npm run build:assets && npm run build:server",
+    "build": "NODE_ENV=production && npm run generate-schema && npm run build:assets && npm run build:server",
     "build:assets": "NODE_ENV=production webpack --env.prod",
     "build:server": "babel server --out-dir build --ignore **/__test__/* --copy-files",
     "validate-webpack": "npm run validate-webpack:dev && npm run validate-webpack:prod",
