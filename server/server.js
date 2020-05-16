@@ -36,7 +36,7 @@ const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   name: process.env.SESSION_COOKIE_NAME || 'connect.sid',
   cookie: {
-    secure: true,
+    secure: PRODUCTION,
     maxAge: 2592000000,
   },
   resave: false,
