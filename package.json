@@ -12,9 +12,6 @@
     "build": "NODE_ENV=production npm run lint && npm run generate-schema && npm run build:assets && npm run build:server",
     "build:assets": "NODE_ENV=production webpack --env.prod",
     "build:server": "babel server --out-dir build --ignore **/__test__/* --copy-files",
-    "lint": "eslint -c .eslintrc --ignore-pattern=build --ignore-pattern=public  .",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:changed": "./scripts/lint-changed.sh",
     "validate-webpack": "npm run validate-webpack:dev && npm run validate-webpack:prod",
     "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
     "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
@@ -40,9 +37,6 @@
     "url": "https://github.com/sfu/student-dashboard/issues"
   },
   "homepage": "https://github.com/sfu/student-dashboard#readme",
-  "pre-commit": [
-    "lint:changed"
-  ],
   "devDependencies": {
     "autoprefixer": "6.7.2",
     "babel-cli": "6.23.0",
