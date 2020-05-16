@@ -1,20 +1,25 @@
-import React, { PropTypes }  from 'react'
-import Relay from 'react-relay'
+import React, { PropTypes } from 'react';
+import Relay from 'react-relay';
 
 const widgetStyle = {
   border: '1px solid #A6192E',
   padding: '5px',
-  marginBottom: '10px'
-}
-
+  marginBottom: '10px',
+};
 
 export const _UserBio = React.createClass({
   propTypes: {
-    userBio: PropTypes.object.isRequired
+    userBio: PropTypes.object.isRequired,
   },
 
   render() {
-    const {lastname, firstnames, commonname, username, sfuid} = this.props.userBio
+    const {
+      lastname,
+      firstnames,
+      commonname,
+      username,
+      sfuid,
+    } = this.props.userBio;
     return (
       <div style={widgetStyle}>
         <h2>User Bio</h2>
@@ -26,10 +31,9 @@ export const _UserBio = React.createClass({
           <li>SFU ID: {sfuid}</li>
         </ul>
       </div>
-    )
-
-  }
-})
+    );
+  },
+});
 
 export const UserBio = Relay.createContainer(_UserBio, {
   fragments: {
@@ -42,6 +46,6 @@ export const UserBio = Relay.createContainer(_UserBio, {
         lastname,
         sfuid,
         id
-      }`
-  }
-})
+      }`,
+  },
+});

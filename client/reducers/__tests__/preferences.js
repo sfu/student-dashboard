@@ -1,63 +1,63 @@
-import preferences, { DEFAULT } from '../preferences'
+import preferences, { DEFAULT } from '../preferences';
 
 describe('Position Reducer', () => {
   it('Default', () => {
-    const nextState = preferences(undefined, {})
-    expect(nextState).toEqual(DEFAULT)
-  })
+    const nextState = preferences(undefined, {});
+    expect(nextState).toEqual(DEFAULT);
+  });
 
   it('SYNC_PREFERENCES_START', () => {
     const nextState = preferences(DEFAULT, {
-      type: 'SYNC_PREFERENCES_START'
-    })
+      type: 'SYNC_PREFERENCES_START',
+    });
     const expected = {
       ...DEFAULT,
       syncingPreferences: true,
-      syncPreferencesError: null
-    }
-    expect(nextState).toEqual(expected)
-  })
+      syncPreferencesError: null,
+    };
+    expect(nextState).toEqual(expected);
+  });
 
   it('SYNC_PREFERENCES_SUCCESS', () => {
     const nextState = preferences(DEFAULT, {
-      type: 'SYNC_PREFERENCES_SUCCESS'
-    })
+      type: 'SYNC_PREFERENCES_SUCCESS',
+    });
     const expected = {
       ...DEFAULT,
       syncingPreferences: false,
-      syncPreferencesError: null
-    }
-    expect(nextState).toEqual(expected)
-  })
+      syncPreferencesError: null,
+    };
+    expect(nextState).toEqual(expected);
+  });
 
   it('SYNC_PREFERENCES_ERROR', () => {
     const nextState = preferences(DEFAULT, {
       type: 'SYNC_PREFERENCES_ERROR',
-      error: 'something went boom'
-    })
+      error: 'something went boom',
+    });
     const expected = {
       ...DEFAULT,
       syncingPreferences: false,
-      syncPreferencesError: 'something went boom'
-    }
-    expect(nextState).toEqual(expected)
-  })
+      syncPreferencesError: 'something went boom',
+    };
+    expect(nextState).toEqual(expected);
+  });
 
   it('SET_PREFERENCES', () => {
     const nextState = preferences(DEFAULT, {
       type: 'SET_PREFERENCES',
       preferences: {
-        somePref: 'someValue'
-      }
-    })
+        somePref: 'someValue',
+      },
+    });
     const expected = {
       ...DEFAULT,
       syncingPreferences: false,
       syncPreferencesError: null,
       preferenceData: {
-        somePref: 'someValue'
-      }
-    }
-    expect(nextState).toEqual(expected)
-  })
-})
+        somePref: 'someValue',
+      },
+    };
+    expect(nextState).toEqual(expected);
+  });
+});

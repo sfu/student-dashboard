@@ -1,6 +1,3 @@
 module.exports = {
-  plugins: [
-    require('postcss-modules-values'),
-    require('autoprefixer')
-  ]
-}
+  plugins: [require('postcss-modules-values'), require('autoprefixer')],
+};

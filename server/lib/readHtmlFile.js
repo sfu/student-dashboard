@@ -1,4 +1,4 @@
-import { readFile } from 'fs'
+import { readFile } from 'fs';
 
 export default (filename, app) => {
   return new Promise((resolve, reject) => {
@@ -6,23 +6,24 @@ export default (filename, app) => {
       // if in production, read the file from disk
       readFile(`${app.get('htmlDirectory')}/${filename}`, (err, content) => {
         if (err) {
-          reject(err)
+          reject(err);
         } else {
-          resolve(content)
+          resolve(content);
         }
-      })
-
+      });
     } else {
       // in in development, read the file from memory-fs
-      const compiler = app.get('compiler')
-      compiler.outputFileSystem.readFile(`${compiler.outputPath}/${filename}`, (err, content) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(content)
+      const compiler = app.get('compiler');
+      compiler.outputFileSystem.readFile(
+        `${compiler.outputPath}/${filename}`,
+        (err, content) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(content);
+          }
         }
-      })
+      );
     }
-
-  })
-}
+  });
+};

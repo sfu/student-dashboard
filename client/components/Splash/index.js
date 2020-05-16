@@ -1,16 +1,16 @@
-import React, { PropTypes }  from 'react'
-import logo from './sfusnap_white.png'
-import styles from './Splash.css'
+import React, { PropTypes } from 'react';
+import logo from './sfusnap_white.png';
+import styles from './Splash.css';
 
-export const Splash = ({children}) => {
+export const Splash = ({ children }) => {
   return (
     <div className={styles.splash}>
-      <img alt="SFU Snap" src={logo} className={styles.logo}/>
+      <img alt="SFU Snap" src={logo} className={styles.logo} />
       {children}
     </div>
-  )
-}
+  );
+};
 
 Splash.propTypes = {
-  children: PropTypes.array
-}
+  children: PropTypes.array,
+};

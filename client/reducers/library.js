@@ -1,8 +1,8 @@
 import {
   FETCH_LIBRARY_HOURS_START,
   FETCH_LIBRARY_HOURS_SUCCESS,
-  FETCH_LIBRARY_HOURS_ERROR
-} from '../actions/library'
+  FETCH_LIBRARY_HOURS_ERROR,
+} from '../actions/library';
 
 export const DEFAULT = {
   hours: {
@@ -10,15 +10,15 @@ export const DEFAULT = {
     fetching: false,
     error: null,
     lastUpdated: null,
-  }
-}
+  },
+};
 
 export default (state = DEFAULT, action) => {
   switch (action.type) {
     case FETCH_LIBRARY_HOURS_START: {
-      const nextState = { ...state }
-      nextState.hours.fetching = true
-      return nextState
+      const nextState = { ...state };
+      nextState.hours.fetching = true;
+      return nextState;
     }
     case FETCH_LIBRARY_HOURS_SUCCESS: {
       const nextState = {
@@ -28,10 +28,10 @@ export default (state = DEFAULT, action) => {
           fetching: false,
           error: null,
           data: action.payload.data,
-          lastUpdated: action.payload.lastUpdated || Date.now()
-        }
-       }
-      return nextState
+          lastUpdated: action.payload.lastUpdated || Date.now(),
+        },
+      };
+      return nextState;
     }
     case FETCH_LIBRARY_HOURS_ERROR:
       return {
@@ -39,10 +39,10 @@ export default (state = DEFAULT, action) => {
         hours: {
           ...state.hours,
           fetching: false,
-          error: action.payload.error
-        }
-      }
+          error: action.payload.error,
+        },
+      };
     default:
-      return state
+      return state;
   }
-}
+};

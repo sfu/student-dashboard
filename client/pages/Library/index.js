@@ -1,8 +1,8 @@
-import React from 'react'
-import { Widget } from 'components/Widget'
-import LibaryHours from 'components/LibraryHours'
-import MyLibrary from 'components/MyLibrary'
-import styles from './Library.css'
+import React from 'react';
+import { Widget } from 'components/Widget';
+import LibaryHours from 'components/LibraryHours';
+import MyLibrary from 'components/MyLibrary';
+import styles from './Library.css';
 
 const Library = () => {
   return (
@@ -14,7 +14,7 @@ const Library = () => {
         <MyLibrary />
       </Widget>
     </div>
-  )
-}
+  );
+};
 
-export default Library
+export default Library;

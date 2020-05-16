@@ -1,8 +1,8 @@
 import {
   GET_POSITION_START,
   GET_POSITION_SUCCESS,
-  GET_POSITION_ERROR
-} from '../actions/position'
+  GET_POSITION_ERROR,
+} from '../actions/position';
 
 export const DEFAULT = {
   locating: false,
@@ -10,23 +10,19 @@ export const DEFAULT = {
   lastUpdated: null,
   latitude: null,
   longitude: null,
-  accuracy: null
-}
+  accuracy: null,
+};
 
 export default (state = DEFAULT, action) => {
   switch (action.type) {
     case GET_POSITION_START:
       return {
         ...state,
-        locating: true
-      }
+        locating: true,
+      };
 
     case GET_POSITION_SUCCESS: {
-      const {
-        latitude,
-        longitude,
-        accuracy,
-      } = action.position
+      const { latitude, longitude, accuracy } = action.position;
       return {
         ...state,
         locating: false,
@@ -34,8 +30,8 @@ export default (state = DEFAULT, action) => {
         latitude,
         longitude,
         accuracy,
-        lastUpdated: action.position.timestamp
-      }
+        lastUpdated: action.position.timestamp,
+      };
     }
 
     case GET_POSITION_ERROR:
@@ -44,10 +40,10 @@ export default (state = DEFAULT, action) => {
         locating: false,
         error: action.error,
         coords: null,
-        lastUpdated: null
-      }
+        lastUpdated: null,
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};

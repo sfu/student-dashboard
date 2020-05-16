@@ -1,7 +1,7 @@
-const path = require('path')
+const path = require('path');
 
 if (!process.env.DATABASE_URL) {
-  throw new Error('Required DB options not set in .env')
+  throw new Error('Required DB options not set in .env');
 }
 
 module.exports = {
@@ -10,6 +10,6 @@ module.exports = {
   connection: process.env.DATABASE_URL,
   migrations: {
     directory: path.resolve(__dirname, './migrations'),
-    tableName: 'schema_migrations'
-  }
-}
+    tableName: 'schema_migrations',
+  },
+};

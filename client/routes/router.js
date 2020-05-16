@@ -1,8 +1,8 @@
-import React from 'react'
-import Relay from 'react-relay'
-import {Router, browserHistory, applyRouterMiddleware} from 'react-router'
-import useRelay from 'react-router-relay'
-import routes from './routes'
+import React from 'react';
+import Relay from 'react-relay';
+import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
+import useRelay from 'react-router-relay';
+import routes from './routes';
 
 const renderer = (
   <Router
@@ -11,7 +11,6 @@ const renderer = (
     environment={Relay.Store}
     routes={routes}
   />
-)
+);
 
-
-export default renderer
+export default renderer;

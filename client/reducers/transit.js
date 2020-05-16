@@ -20,13 +20,17 @@ import {
   SEARCH_FOR_STOP_START,
   SEARCH_FOR_STOP_SUCCESS,
   SEARCH_FOR_STOP_ERROR,
-  SEARCH_FOR_STOP_UPDATE_FIELD_VALUE
-} from '../actions/transit'
-import L from 'leaflet'
+  SEARCH_FOR_STOP_UPDATE_FIELD_VALUE,
+} from '../actions/transit';
+import L from 'leaflet';
 
 export const DEFAULT = {
   /* bookmarks */
-  transitBookmarks: (window && window.STATE_BOOTSTRAP && window.STATE_BOOTSTRAP.transitBookmarks) || [],
+  transitBookmarks:
+    (window &&
+      window.STATE_BOOTSTRAP &&
+      window.STATE_BOOTSTRAP.transitBookmarks) ||
+    [],
   syncingBookmarks: false,
   syncBookmarksError: null,
   transitBookmarksSchedules: {},
@@ -47,7 +51,7 @@ export const DEFAULT = {
   /* map/positioning */
   forceMapUpdate: false,
   showCurrentLocationOnMap: false,
-  mapCenter: new L.latLng(49.21490, -123.00018),
+  mapCenter: new L.latLng(49.2149, -123.00018),
   mapZoom: 10,
   locateOnMount: true,
 
@@ -56,160 +60,158 @@ export const DEFAULT = {
   fetchingSchedules: false,
   fetchSchedulesError: null,
   schedulesForSelectedStop: [],
-  schedulesFetchedAt: null
-}
-
-
+  schedulesFetchedAt: null,
+};
 
 export default (state = DEFAULT, action) => {
-  const { type } = action
+  const { type } = action;
   switch (type) {
-
     case SYNC_TRANSIT_BOOKMARK_START:
       return {
         ...state,
         syncingBookmarks: true,
-        syncBookmarksError: null
-      }
+        syncBookmarksError: null,
+      };
 
     case SYNC_TRANSIT_BOOKMARK_SUCCESS:
       return {
         ...state,
         syncingBookmarks: false,
-        syncBookmarksError: null
-      }
+        syncBookmarksError: null,
+      };
 
     case SYNC_TRANSIT_BOOKMARK_ERROR:
       return {
         ...state,
         syncingBookmarks: false,
-        syncBookmarksError: action.error
-      }
+        syncBookmarksError: action.error,
+      };
 
     case SET_TRANSIT_BOOKMARKS:
       return {
         ...state,
         syncingBookmarks: false,
         syncBookmarksError: null,
-        transitBookmarks: action.bookmarks
-      }
+        transitBookmarks: action.bookmarks,
+      };
 
     case FETCH_STOPS_START:
       return {
         ...state,
         fetchingStops: true,
         fetchStopsError: null,
-        forceMapUpdate: false
-      }
+        forceMapUpdate: false,
+      };
     case FETCH_STOPS_SUCCESS:
       return {
         ...state,
         fetchingStops: false,
         stops: action.stops,
         fetchStopsError: null,
-        forceMapUpdate: true
-      }
+        forceMapUpdate: true,
+      };
     case FETCH_STOPS_ERROR:
       return {
         ...state,
         fetchingStops: false,
         fetchStopsError: action.error,
-        forceMapUpdate: true
-      }
+        forceMapUpdate: true,
+      };
     case SHOW_CURRENT_LOCATION_ON_MAP:
       return {
         ...state,
-        showCurrentLocationOnMap: action.showCurrentLocationOnMap
-      }
+        showCurrentLocationOnMap: action.showCurrentLocationOnMap,
+      };
     case LOCATE_ON_MOUNT:
       return {
         ...state,
-        locateOnMount: action.locateOnMount
-      }
+        locateOnMount: action.locateOnMount,
+      };
     case UPDATE_MAP_CENTER:
       return {
         ...state,
-        mapCenter: action.mapCenter
-      }
+        mapCenter: action.mapCenter,
+      };
     case UPDATE_MAP_ZOOM:
       return {
         ...state,
-        mapZoom: action.mapZoom
-      }
+        mapZoom: action.mapZoom,
+      };
     case SET_SELECTED_STOP:
       return {
         ...state,
-        selectedStop: action.stop
-      }
+        selectedStop: action.stop,
+      };
     case FETCH_SCHEDULE_FOR_BUS_STOP_START:
       return {
         ...state,
         fetchingSchedules: true,
         fetchSchedulesError: null,
         schedulesForSelectedStop: [],
-        schedulesFetchedAt: null
-      }
+        schedulesFetchedAt: null,
+      };
     case FETCH_SCHEDULE_FOR_BUS_STOP_SUCCESS:
       return {
         ...state,
         fetchingSchedules: false,
         fetchSchedulesError: null,
         schedulesForSelectedStop: action.schedulesForSelectedStop,
-        schedulesFetchedAt: action.fetchedAt
-      }
+        schedulesFetchedAt: action.fetchedAt,
+      };
     case FETCH_SCHEDULE_FOR_BUS_STOP_ERROR:
       return {
         ...state,
         fetchingSchedules: false,
         fetchSchedulesError: action.error,
         schedulesForSelectedStop: [],
-        schedulesFetchedAt: null
-      }
+        schedulesFetchedAt: null,
+      };
     case FETCH_SCHEDULES_FOR_BOOKMARKS_START:
       return {
         ...state,
         fetchingSchedulesForBookmarks: true,
-        fetchSchedulesForBookmarksError: null
-      }
+        fetchSchedulesForBookmarksError: null,
+      };
     case FETCH_SCHEDULES_FOR_BOOKMARKS_ERROR:
       return {
         ...state,
         fetchingSchedulesForBookmarks: false,
-        fetchSchedulesForBookmarksError: action.error
-      }
+        fetchSchedulesForBookmarksError: action.error,
+      };
     case FETCH_SCHEDULES_FOR_BOOKMARKS_SUCCESS:
       return {
         ...state,
         fetchingSchedulesForBookmarks: false,
         fetchSchedulesForBookmarksError: null,
         transitBookmarksSchedules: action.schedules,
-        transitBookmarksSchedulesFetchedAt: action.transitBookmarksSchedulesFetchedAt
-      }
+        transitBookmarksSchedulesFetchedAt:
+          action.transitBookmarksSchedulesFetchedAt,
+      };
     case SEARCH_FOR_STOP_START:
       return {
         ...state,
         searchingForStop: true,
-        searchingForStopError: null
-      }
+        searchingForStopError: null,
+      };
     case SEARCH_FOR_STOP_SUCCESS:
       return {
         ...state,
         searchingForStop: false,
         searchingForStopError: null,
-        stops: action.stops
-      }
+        stops: action.stops,
+      };
     case SEARCH_FOR_STOP_ERROR:
       return {
         ...state,
         searchingForStop: false,
-        searchingForStopError: action.error
-      }
+        searchingForStopError: action.error,
+      };
     case SEARCH_FOR_STOP_UPDATE_FIELD_VALUE:
       return {
         ...state,
-        searchForStopFieldValue: action.value
-      }
+        searchForStopFieldValue: action.value,
+      };
     default:
-      return state
+      return state;
   }
-}
+};

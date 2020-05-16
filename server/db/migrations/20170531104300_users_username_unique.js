@@ -1,13 +1,13 @@
-const table = 'users'
+const table = 'users';
 
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema.alterTable(table, (t) => {
-    t.unique('username')
-  })
-}
+    t.unique('username');
+  });
+};
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.alterTable(table, (t) => {
-    t.dropUnique('username')
-  })
-}
+    t.dropUnique('username');
+  });
+};

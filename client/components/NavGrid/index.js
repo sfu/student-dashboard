@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react'
-import NavTile from 'components/NavTile'
+import React, { PropTypes } from 'react';
+import NavTile from 'components/NavTile';
 
-import styles from './NavGrid.css'
-import DashboardIcon from 'components/NavIcons/Dashboard.svg'
-import CoursesIcon from 'components/NavIcons/Courses.svg'
-import LibraryIcon from 'components/NavIcons/Library.svg'
-import RoomFinderIcon from 'components/NavIcons/RoomFinder.svg'
-import TransitIcon from 'components/NavIcons/Transit.svg'
-import SettingsIcon from 'components/NavIcons/Settings.svg'
+import styles from './NavGrid.css';
+import DashboardIcon from 'components/NavIcons/Dashboard.svg';
+import CoursesIcon from 'components/NavIcons/Courses.svg';
+import LibraryIcon from 'components/NavIcons/Library.svg';
+import RoomFinderIcon from 'components/NavIcons/RoomFinder.svg';
+import TransitIcon from 'components/NavIcons/Transit.svg';
+import SettingsIcon from 'components/NavIcons/Settings.svg';
 
 const NavGrid = ({ placement }) => {
   return (
@@ -55,11 +55,11 @@ const NavGrid = ({ placement }) => {
         placement={placement}
       />
     </div>
-  )
-}
+  );
+};
 
 NavGrid.propTypes = {
-  placement: PropTypes.string.isRequired
-}
+  placement: PropTypes.string.isRequired,
+};
 
-export default NavGrid
+export default NavGrid;

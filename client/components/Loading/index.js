@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
-import LoadingSpinnerIcon from 'components/LoadingSpinnerIcon'
-import styles from './Loading.css'
+import React, { PropTypes } from 'react';
+import LoadingSpinnerIcon from 'components/LoadingSpinnerIcon';
+import styles from './Loading.css';
 
 const Loading = ({ title }) => {
   return (
@@ -10,15 +10,15 @@ const Loading = ({ title }) => {
       </div>
       <h1 className={styles.title}>{title}</h1>
     </div>
-  )
-}
+  );
+};
 
 Loading.propTypes = {
-  title: PropTypes.string.isRequired
-}
+  title: PropTypes.string.isRequired,
+};
 
 Loading.defaultProps = {
-  title: 'Fetching data…'
-}
+  title: 'Fetching data…',
+};
 
-export default Loading
+export default Loading;

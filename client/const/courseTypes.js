@@ -14,5 +14,5 @@ export default {
   sem: 'seminar',
   pra: 'practicum',
   wks: 'workshop',
-  ins: 'instruction'
-}
+  ins: 'instruction',
+};

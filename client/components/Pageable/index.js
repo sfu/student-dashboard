@@ -1,7 +1,7 @@
-import React, { PropTypes }  from 'react'
-import Swipeable from 'components/Swipeable'
-import PagerHeader from 'components/PagerHeader'
-import PagerDots from 'components/PagerDots'
+import React, { PropTypes } from 'react';
+import Swipeable from 'components/Swipeable';
+import PagerHeader from 'components/PagerHeader';
+import PagerDots from 'components/PagerDots';
 
 const Pageable = React.createClass({
   propTypes: {
@@ -9,29 +9,30 @@ const Pageable = React.createClass({
     pagerTitles: PropTypes.array.isRequired,
     pageCount: PropTypes.number.isRequired,
     startAtPage: PropTypes.number.isRequired,
-    gaCategory: PropTypes.string
+    gaCategory: PropTypes.string,
   },
 
   getInitialState() {
     return {
-      currentPage: this.props.startAtPage
-    }
+      currentPage: this.props.startAtPage,
+    };
   },
 
   setPage(page) {
     this.setState({
-      currentPage: page
-    })
+      currentPage: page,
+    });
   },
 
   render() {
-    const {children, pagerTitles, pageCount, gaCategory} = this.props
-    const childrenWithProps = React.Children.map(children, (child) => React.cloneElement(child, {
+    const { children, pagerTitles, pageCount, gaCategory } = this.props;
+    const childrenWithProps = React.Children.map(children, (child) =>
+      React.cloneElement(child, {
         selectedDay: this.state.currentPage,
       })
-    )
-    const backDisabled = this.state.currentPage === 0
-    const forwardDisabled = this.state.currentPage === (this.props.pageCount - 1)
+    );
+    const backDisabled = this.state.currentPage === 0;
+    const forwardDisabled = this.state.currentPage === this.props.pageCount - 1;
     return (
       <Swipeable
         currentPage={this.state.currentPage}
@@ -48,7 +49,7 @@ const Pageable = React.createClass({
             forwardDisabled={forwardDisabled}
             buttonHandler={this.setPage}
             gaCategory={gaCategory}
-           />
+          />
           {childrenWithProps}
           <PagerDots
             count={pageCount}
@@ -58,8 +59,8 @@ const Pageable = React.createClass({
           />
         </div>
       </Swipeable>
-    )
-  }
-})
+    );
+  },
+});
 
-export default Pageable
+export default Pageable;

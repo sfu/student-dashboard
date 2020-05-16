@@ -1,24 +1,24 @@
-import React from 'react'
-import GraphiQL from 'graphiql'
-import axios from 'axios'
+import React from 'react';
+import GraphiQL from 'graphiql';
+import axios from 'axios';
 
-
-import './index.css'
-import 'graphiql/graphiql.css'
-import snapLogo from './sfusnap.png'
-
+import './index.css';
+import 'graphiql/graphiql.css';
+import snapLogo from './sfusnap.png';
 
 const fetcher = (graphQLParams) => {
   return axios({
     url: '/graphql',
     method: 'POST',
-    data: graphQLParams
-  }).then((response) => {
-    return response.data
-  }).catch((response) => {
-    return response.data
+    data: graphQLParams,
   })
-}
+    .then((response) => {
+      return response.data;
+    })
+    .catch((response) => {
+      return response.data;
+    });
+};
 
 const query = `# SFU Snap uses GraphQL (http://graphql.org) to query data.
 #
@@ -42,7 +42,7 @@ query {
     lastname
   }
 }
-`
+`;
 
 const CustomGraphiQL = React.createClass({
   getInitialState() {
@@ -51,12 +51,12 @@ const CustomGraphiQL = React.createClass({
       query,
       variables: '',
       schema: undefined,
-      currentUser: {}
-    }
+      currentUser: {},
+    };
   },
 
   propTypes: {
-    jwt: React.PropTypes.string.isRequired
+    jwt: React.PropTypes.string.isRequired,
   },
 
   componentDidMount() {
@@ -64,55 +64,68 @@ const CustomGraphiQL = React.createClass({
       url: '/api/v1/users/self',
       method: 'get',
       headers: {
-        'Authorization': `Bearer ${this.props.jwt}`
-      }
+        Authorization: `Bearer ${this.props.jwt}`,
+      },
     }).then((response) => {
-      const { data } = response
+      const { data } = response;
       this.setState({
         currentUser: data,
-        response: JSON.stringify({
-          data: {
-            viewer: {
-              username: data.username,
-              firstnames: data.firstnames,
-              commonname: data.commonname,
-              lastname: data.lastname
-            }
-          }
-        }, null, 2)
-      })
-    })
+        response: JSON.stringify(
+          {
+            data: {
+              viewer: {
+                username: data.username,
+                firstnames: data.firstnames,
+                commonname: data.commonname,
+                lastname: data.lastname,
+              },
+            },
+          },
+          null,
+          2
+        ),
+      });
+    });
   },
 
   handleLogoutButton(ev) {
-    ev.preventDefault()
-    window.location = ev.target.href
+    ev.preventDefault();
+    window.location = ev.target.href;
   },
 
   render() {
-    const { currentUser } = this.state
-    const name = `${currentUser.commonname ? currentUser.commonname : currentUser.firstnames} ${currentUser.lastname}`
+    const { currentUser } = this.state;
+    const name = `${
+      currentUser.commonname ? currentUser.commonname : currentUser.firstnames
+    } ${currentUser.lastname}`;
     return (
       <GraphiQL {...this.state}>
-
         <GraphiQL.Logo>
-          <a href="/"><img alt="SFU Snap" src={snapLogo} height={40} width={40} /></a>
+          <a href="/">
+            <img alt="SFU Snap" src={snapLogo} height={40} width={40} />
+          </a>
         </GraphiQL.Logo>
 
         <GraphiQL.Toolbar>
-          <span style={{marginLeft: '1em', marginRight: '1em'}}>Logged in as <b>{name} ({currentUser.username})</b></span>
+          <span style={{ marginLeft: '1em', marginRight: '1em' }}>
+            Logged in as{' '}
+            <b>
+              {name} ({currentUser.username})
+            </b>
+          </span>
           <a
             className="toolbar-button"
             href="/auth/logout"
             title="Log out of SFU Snap"
             onClick={this.handleLogoutButton}
             onKeyDown={this.handleLogoutButton}
-          >Logout</a>
+          >
+            Logout
+          </a>
         </GraphiQL.Toolbar>
-
       </GraphiQL>
-    )
-  }
-})
+    );
+  },
+});
 
-export default CustomGraphiQL
+export default CustomGraphiQL;
