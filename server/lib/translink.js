@@ -1,11 +1,20 @@
 const axios = require('axios');
 const qs = require('qs');
-
 const debug = require('debug')('snap:server:transit');
 
 const { TRANSLINK_API_URL, TRANSLINK_API_KEY } = process.env;
 
 const TRANSIT_CACHE_PREFIX_STOP = 'TRANSIT:::STOP:::';
+
+const proxyOpts = () => {
+  if (!process.env.https_proxy) return {};
+  const proxyUrl = new URL(process.env.https_proxy);
+  return {
+    protocol: 'http',
+    host: proxyUrl.hostname,
+    port: proxyUrl.port,
+  };
+};
 
 const getStop = async (stop, cache = null) => {
   const DEBUG_PREFIX = `getStop ${stop}`;
@@ -27,7 +36,9 @@ const getStop = async (stop, cache = null) => {
   debug(`${DEBUG_PREFIX}: fetch from API`);
   try {
     const url = `${TRANSLINK_API_URL}/stops/${stop}?apiKey=${TRANSLINK_API_KEY}`;
-    const stopInfo = await axios.get(url);
+    const stopInfo = await axios.get(url, {
+      proxy: proxyOpts(),
+    });
     if (cache) {
       debug(`${DEBUG_PREFIX}: caching stop info`);
       cache.setex([
@@ -61,6 +72,7 @@ const getEstimatesForStop = async (stop, options = {}) => {
       method: 'get',
       url,
       params,
+      proxy: proxyOpts(),
       transformRequest(data) {
         return qs.stringify(data);
       },
