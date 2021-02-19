@@ -5,12 +5,11 @@ const isEqual = require('lodash/isEqual');
 const {
   BOOKMARK_SCHEMA,
   TRANSIT_BOOKMARKS_TABLE,
-  getEstimatesForBookmarks,
   getBookmarksForUser,
   addBookmark,
   ownsBookmark,
 } = require('../../../../lib/transitBookmarks');
-
+const { getEstimatesForBookmarks } = require('../../../../lib/translink');
 const db = require('../../../../db');
 
 const UNIQUE_VIOLATION = '23505';
@@ -150,6 +149,7 @@ router.get('/estimates', async (req, res) => {
     const estimates = await getEstimatesForBookmarks(bookmarks, cache);
     res.send(estimates);
   } catch (e) {
+    console.log(e);
     debug(
       '%s - Error getting transit bookmark estimates for %s: %s',
       req.id,
