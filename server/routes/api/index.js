@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import v1 from './v1';
-import {
+const { Router } = require('express');
+const v1 = require('./v1');
+const {
   loggedInWithSession,
   loggedInWithJwt,
   redirectToLoginIfNecessary,
   getUser,
   provisionOrUpdateUser,
-} from '../../auth-middleware';
+} = require('../../auth-middleware');
 
 const router = Router({ mergeParams: true });
 
@@ -28,4 +28,4 @@ router.use(
   v1
 );
 
-export default router;
+module.exports = router;

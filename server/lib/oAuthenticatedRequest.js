@@ -1,15 +1,16 @@
-import axios from 'axios';
-import {
+const axios = require('axios');
+const {
   validateAccessToken,
   refreshAccessToken,
   getAccessToken,
-} from '../oauth';
-import cas from '../cas-client';
-import { loadUser, updateOAuthCredentialsForUser } from './index';
+} = require('../oauth');
+const cas = require('../cas-client');
+const loadUser = require('./loadUser');
+const updateOAuthCredentialsForUser = require('./updateOAuthCredentialsForUser');
 
 const debug = require('debug')('snap:server:oAuthenticatedRequest');
 
-export default async function (req, res, config) {
+module.exports = async function (req, res, config) {
   const { username } = req.session.user;
 
   // get oauth credentials for user from database
@@ -139,4 +140,4 @@ export default async function (req, res, config) {
         reject(err);
       });
   });
-}
+};

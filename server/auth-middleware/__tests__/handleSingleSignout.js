@@ -1,8 +1,8 @@
-import sinon from 'sinon';
-import { mockReq, mockRes } from 'sinon-express-mock';
+const sinon = require('sinon');
+const { mockReq, mockRes } = require('sinon-express-mock');
 
-import { handleSingleSignout } from '../index';
-import cas from '../../cas-client';
+const { handleSingleSignout } = require('../index');
+const cas = require('../../cas-client');
 
 describe('handleSingleSignout', () => {
   it('Calling `handleSingleSignout` calls the right things', () => {

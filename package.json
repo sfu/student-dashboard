@@ -5,8 +5,7 @@
   "main": "build/server/index.js",
   "scripts": {
     "prestart": "npm run prebuild && npm run generate-schema",
-    "start": "npm run prebuild && NODE_ENV=development DEBUG=knex:*,snap:* nodemon --watch server -r babel-register -r ./environment.js server/index.js",
-    "start:inspect": "npm run prestart && NODE_ENV=development node --inspect -r babel-register -r ./environment.js server/index.js",
+    "start": "npm run prebuild && NODE_ENV=development DEBUG=knex:*,snap:* nodemon --inspect=0.0.0.0:9229 --trace-warnings --watch server -r ./environment.js server/index.js",
     "start:production": "NODE_ENV=production node -r ./environment.js build/index.js",
     "prebuild": "rimraf build public/assets",
     "build": "NODE_ENV=production && npm run generate-schema && npm run build:assets && npm run build:server",
@@ -23,7 +22,7 @@
     "db:migrate": "npm run db migrate:latest",
     "db:migrate:rollback": "npm run db migrate:rollback",
     "db:migrate:make": "npm run db migrate:make",
-    "db:init": "node -r babel-register -r ./environment.js ./server/db/init.js",
+    "db:init": "node -r ./environment.js ./server/db/init.js",
     "db:init:test": "npm run db:init -- dotenv_config_path=./.env.test",
     "generate-schema": "node -r ./environment.js ./scripts/buildSchema.js"
   },
@@ -51,7 +50,6 @@
     "babel-polyfill": "6.23.0",
     "babel-preset-env": "1.5.1",
     "babel-preset-react": "6.23.0",
-    "babel-register": "6.23.0",
     "browser-env": "2.0.21",
     "chalk": "1.1.3",
     "chunk-manifest-webpack-plugin": "1.0.0",

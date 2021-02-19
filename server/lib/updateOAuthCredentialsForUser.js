@@ -1,8 +1,8 @@
-import db from '../db';
+const db = require('../db');
 
 const debug = require('debug')('snap:server:updateOAuthCredentialsForUser');
 
-export default async function updateOAuthCredentialsForUser(
+module.exports = async function updateOAuthCredentialsForUser(
   username,
   { access_token, refresh_token, valid_until }
 ) {
@@ -33,4 +33,4 @@ export default async function updateOAuthCredentialsForUser(
   } catch (e) {
     throw e;
   }
-}
+};

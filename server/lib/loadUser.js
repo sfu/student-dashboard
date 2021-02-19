@@ -1,6 +1,6 @@
-import db from '../db';
+const db = require('../db');
 
-export default async function loadUser(username, fields = '*') {
+async function loadUser(username, fields = '*') {
   try {
     const result = await db('users').select(fields).where({ username });
     return result.length ? result[0] : null;
@@ -8,3 +8,5 @@ export default async function loadUser(username, fields = '*') {
     throw e;
   }
 }
+
+module.exports = loadUser;

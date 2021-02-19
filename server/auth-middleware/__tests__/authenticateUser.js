@@ -1,7 +1,7 @@
-import sinon from 'sinon';
-import { mockReq, mockRes } from 'sinon-express-mock';
-import { authenticateCasUser } from '../index';
-import cas from '../../cas-client';
+const sinon = require('sinon');
+const { mockReq, mockRes } = require('sinon-express-mock');
+const { authenticateCasUser } = require('../index');
+const cas = require('../../cas-client');
 
 describe('authenticateUser', () => {
   it('Calling authenticateCasUser calls `cas.authenticate`', () => {

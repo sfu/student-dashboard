@@ -1,10 +1,12 @@
-import { Router } from 'express';
-import {
+const { Router } = require('express');
+const {
   loggedInWithSession,
   redirectToLoginIfNecessary,
-} from '../auth-middleware';
-import { readHtmlFile, getBookmarksForUser } from '../lib';
-import db from '../db';
+} = require('../auth-middleware');
+const readHtmlFile = require('../lib/readHtmlFile');
+const { getBookmarksForUser } = require('../lib/transitBookmarks');
+
+const db = require('../db');
 
 const debug = require('debug')('snap:server:routes:app');
 
@@ -48,4 +50,4 @@ router.get(
   }
 );
 
-export default router;
+module.exports = router;

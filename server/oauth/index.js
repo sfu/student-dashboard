@@ -1,5 +1,5 @@
-import axios from 'axios';
-import qs from 'qs';
+const axios = require('axios');
+const qs = require('qs');
 
 const debug = require('debug')('snap:server:oauth');
 
@@ -17,7 +17,7 @@ const addValidUntil = (data) => {
   }
 };
 
-export function getAccessToken(ticket) {
+function getAccessToken(ticket) {
   debug('Attempting to get OAuth credentials for ticket %s', ticket);
   return axios({
     method: 'post',
@@ -37,7 +37,7 @@ export function getAccessToken(ticket) {
   });
 }
 
-export function refreshAccessToken(refresh_token) {
+function refreshAccessToken(refresh_token) {
   debug(
     'Attempting to refresh OAuth credentials using refresh_token %s',
     refresh_token
@@ -61,7 +61,7 @@ export function refreshAccessToken(refresh_token) {
   });
 }
 
-export function validateAccessToken(token, valid_until) {
+function validateAccessToken(token, valid_until) {
   if (!token) {
     return false;
   }
@@ -89,3 +89,9 @@ export function validateAccessToken(token, valid_until) {
       });
   });
 }
+
+module.exports = {
+  getAccessToken,
+  refreshAccessToken,
+  validateAccessToken,
+};

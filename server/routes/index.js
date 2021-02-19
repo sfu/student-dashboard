@@ -1,5 +1,13 @@
-export { default as app } from './app';
-export { default as auth } from './auth';
-export { default as pgt } from './pgt';
-export { default as api } from './api';
-export { default as graphql } from './graphql';
+const app = require('./app');
+const auth = require('./auth');
+const pgt = require('./pgt');
+const api = require('./api');
+const graphql = require('./graphql');
+
+module.exports = {
+  app,
+  auth,
+  pgt,
+  api,
+  graphql,
+};

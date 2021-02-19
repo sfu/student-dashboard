@@ -1,9 +1,6 @@
-import { mockReq, mockRes } from 'sinon-express-mock';
-import sinon from 'sinon';
-import {
-  provisionOrUpdateUser,
-  __RewireAPI__ as RewireAPI, // eslint-disable-line
-} from '../index';
+const { mockReq, mockRes } = require('sinon-express-mock');
+const sinon = require('sinon');
+const { provisionOrUpdateUser, __RewireAPI__ } = require('../index');
 const tracker = require('mock-knex').getTracker();
 
 describe('provisionOrUpdateUser', () => {

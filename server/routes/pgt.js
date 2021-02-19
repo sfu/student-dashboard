@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import { RedisStore as PGTStore } from '../pgt-store';
-import redis from 'redis';
+const { Router } = require('express');
+const { RedisStore: PGTStore } = require('../pgt-store');
+const redis = require('redis');
 
 const router = Router();
 const pgtStore = new PGTStore(
@@ -32,4 +32,4 @@ router.get('/:pgtcall?', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

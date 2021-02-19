@@ -1,2 +1,7 @@
-export { default as MemoryStore } from './memory';
-export { default as RedisStore } from './redis';
+const MemoryStore = require('./memory');
+const RedisStore = require('./redis');
+
+module.exports = {
+  MemoryStore,
+  RedisStore,
+};

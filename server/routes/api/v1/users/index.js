@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import bodyParser from 'body-parser';
-import db from '../../../../db';
+const { Router } = require('express');
+const bodyParser = require('body-parser');
+const db = require('../../../../db');
 
 const debug = require('debug')('snap:server:routes:api/v1/users');
 
@@ -8,11 +8,8 @@ const router = Router();
 
 router.use(bodyParser.json());
 
-router.use(
-  '/:username/transitBookmarks',
-  require('./transitBookmarks').default
-);
-router.use('/:username/preferences', require('./preferences').default);
+router.use('/:username/transitBookmarks', require('./transitBookmarks'));
+router.use('/:username/preferences', require('./preferences'));
 
 router.get('/:username', async (req, res) => {
   let { username } = req.params;
@@ -45,4 +42,4 @@ router.get('/:username', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

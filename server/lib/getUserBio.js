@@ -1,7 +1,7 @@
-import axios from 'axios';
+const axios = require('axios');
 const debug = require('debug')('snap:server:getUserBio');
 
-export default async function getUserBio(username, token, req) {
+module.exports = async function getUserBio(username, token, req) {
   debug('Getting userBio for %s', username);
   const urlBase = token
     ? 'https://api.its.sfu.ca/aobrest/v1'
@@ -24,4 +24,4 @@ export default async function getUserBio(username, token, req) {
     debug(`Error in getUserBio: %s`, e.response.data);
     throw new Error(e.response.data);
   }
-}
+};

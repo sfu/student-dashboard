@@ -1,8 +1,8 @@
 /* eslint no-console: 0 */
-import { createServer } from './server';
-import express from 'express';
-import assert from 'assert';
-import { extendExpress } from './extendExpress';
+const { createServer } = require('./server');
+const express = require('express');
+const assert = require('assert');
+const { extendExpress } = require('./extendExpress');
 
 extendExpress();
 

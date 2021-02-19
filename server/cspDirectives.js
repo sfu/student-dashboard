@@ -17,7 +17,7 @@ function getNonce(req, res) {
   return `'nonce-${res.locals.nonce}'`;
 }
 
-export default {
+module.exports = {
   reportUri: '/api/v1/csp/report',
   defaultSrc: [SELF],
   connectSrc: [SELF, ...connect],

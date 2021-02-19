@@ -1,4 +1,4 @@
-export default class MemoryStore {
+module.exports = class MemoryStore {
   constructor() {
     this.store = new Map();
   }
@@ -22,4 +22,4 @@ export default class MemoryStore {
   clear() {
     this.store.clear();
   }
-}
+};

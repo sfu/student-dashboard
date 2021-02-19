@@ -1,4 +1,4 @@
-export default class RedisStore {
+module.exports = class RedisStore {
   constructor(
     client = undefined,
     options = {
@@ -52,4 +52,4 @@ export default class RedisStore {
       });
     });
   }
-}
+};

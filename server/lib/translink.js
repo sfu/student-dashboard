@@ -1,5 +1,5 @@
-import axios from 'axios';
-import qs from 'qs';
+const axios = require('axios');
+const qs = require('qs');
 
 const debug = require('debug')('snap:server:transit');
 
@@ -7,7 +7,7 @@ const { TRANSLINK_API_URL, TRANSLINK_API_KEY } = process.env;
 
 const TRANSIT_CACHE_PREFIX_STOP = 'TRANSIT:::STOP:::';
 
-export const getStop = async (stop, cache = null) => {
+const getStop = async (stop, cache = null) => {
   const DEBUG_PREFIX = `getStop ${stop}`;
   debug(DEBUG_PREFIX);
 
@@ -46,7 +46,7 @@ export const getStop = async (stop, cache = null) => {
   }
 };
 
-export const getEstimatesForStop = async (stop, options = {}) => {
+const getEstimatesForStop = async (stop, options = {}) => {
   const DEBUG_PREFIX = `getEstimatesForStop ${stop}`;
   debug(DEBUG_PREFIX);
   const params = {
@@ -78,7 +78,7 @@ export const getEstimatesForStop = async (stop, options = {}) => {
   }
 };
 
-export const getEstimatesForBookmark = async (bookmark, cache = null) => {
+const getEstimatesForBookmark = async (bookmark, cache = null) => {
   const DEBUG_PREFIX = `getEstimatesForBookmark ${JSON.stringify(bookmark)}`;
   debug(DEBUG_PREFIX);
   const { stop, route, destination } = bookmark;
@@ -106,7 +106,7 @@ export const getEstimatesForBookmark = async (bookmark, cache = null) => {
   }
 };
 
-export const getEstimatesForBookmarks = async (bookmarks, cache = null) => {
+const getEstimatesForBookmarks = async (bookmarks, cache = null) => {
   try {
     const estimates = await Promise.all(
       bookmarks.map((b) => getEstimatesForBookmark(b, cache))
@@ -133,4 +133,11 @@ export const getEstimatesForBookmarks = async (bookmarks, cache = null) => {
   } catch (e) {
     throw new Error(e);
   }
+};
+
+module.exports = {
+  getStop,
+  getEstimatesForStop,
+  getEstimatesForBookmark,
+  getEstimatesForBookmarks,
 };

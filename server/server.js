@@ -1,22 +1,22 @@
-import express from 'express';
-import session from 'express-session';
-import uuid from 'uuid';
-import helmet from 'helmet';
-import path from 'path';
-import fs from 'fs';
-import url from 'url';
-import * as routes from './routes';
-import webpack from 'webpack';
-import WebpackDevMiddleware from 'webpack-dev-middleware';
-import WebpackHotMiddleware from 'webpack-hot-middleware';
-import devErrorHandler from 'errorhandler';
-import ConnectRedis from 'connect-redis';
-import boom from 'express-boom';
+const express = require('express');
+const session = require('express-session');
+const uuid = require('uuid');
+const helmet = require('helmet');
+const path = require('path');
+const fs = require('fs');
+const url = require('url');
+const routes = require('./routes');
+const webpack = require('webpack');
+const WebpackDevMiddleware = require('webpack-dev-middleware');
+const WebpackHotMiddleware = require('webpack-hot-middleware');
+const devErrorHandler = require('errorhandler');
+const ConnectRedis = require('connect-redis');
+const boom = require('express-boom');
 const HttpsProxyAgent = require('https-proxy-agent');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-import requestId from 'express-request-id';
-import methodOverride from 'method-override';
-import cspDirectives from './cspDirectives';
+const requestId = require('express-request-id');
+const methodOverride = require('method-override');
+const cspDirectives = require('./cspDirectives');
 
 const redis = require('promise-redis')();
 
@@ -54,7 +54,7 @@ const sessionConfig = {
   },
 };
 
-export const createDevServer = (app) => {
+const createDevServer = (app) => {
   const webpackConfig = require('../webpack.config.js')();
   const compiler = webpack(webpackConfig);
   app.use(
@@ -88,7 +88,7 @@ const productionErrorHandler = (err, req, res, next) => {
   next(err);
 };
 
-export const createServer = (app) => {
+const createServer = (app) => {
   if (!PRODUCTION) {
     app = createDevServer(app);
   }
@@ -152,4 +152,9 @@ export const createServer = (app) => {
   // error handler
   app.use(PRODUCTION ? productionErrorHandler : devErrorHandler());
   return app;
+};
+
+module.exports = {
+  createDevServer,
+  createServer,
 };

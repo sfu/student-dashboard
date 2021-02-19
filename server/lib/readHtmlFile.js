@@ -1,6 +1,6 @@
-import { readFile } from 'fs';
+const { readFile } = require('fs');
 
-export default (filename, app) => {
+module.exports = (filename, app) => {
   return new Promise((resolve, reject) => {
     if (process.env.NODE_ENV === 'production') {
       // if in production, read the file from disk

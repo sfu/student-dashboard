@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import fs from 'fs';
+const { Router } = require('express');
+const fs = require('fs');
 
 const router = Router({ mergeParams: true });
 
@@ -12,7 +12,7 @@ const routesFiles = fs
 // for each directory in routesFile, mount its index.js file at /${dirname}
 // (e.g. users/index.js gets mounted at /users)
 routesFiles.forEach((r) => {
-  router.use(`/${r}`, require(`./${r}`).default);
+  router.use(`/${r}`, require(`./${r}`));
 });
 
-export default router;
+module.exports = router;

@@ -1,14 +1,12 @@
 const debug = require('debug')('snap:server:authMiddleware');
-import cas from '../cas-client';
-import { getAccessToken, validateAccessToken } from '../oauth';
-import db from '../db';
-import uuid from 'uuid';
-import {
-  verifyJwt,
-  loadUser,
-  getUserBio,
-  updateOAuthCredentialsForUser,
-} from '../lib/';
+const cas = require('../cas-client');
+const { getAccessToken, validateAccessToken } = require('../oauth');
+const db = require('../db');
+const uuid = require('uuid');
+const updateOAuthCredentialsForUser = require('../lib/updateOAuthCredentialsForUser');
+const getUserBio = require('../lib/getUserBio');
+const verifyJwt = require('../lib/verifyJwt');
+const loadUser = require('../lib/loadUser');
 
 // Determine if a user is logged in with a session
 // If session exists, set req.loggedIn = true for downstream middleware
@@ -432,7 +430,7 @@ function handleSingleSignout(req, res, next) {
   });
 }
 
-export {
+module.exports = {
   loggedInWithSession,
   loggedInWithJwt,
   redirectToLoginIfNecessary,

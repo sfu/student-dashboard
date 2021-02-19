@@ -1,7 +1,7 @@
-import sinon from 'sinon';
-import { mockReq, mockRes } from 'sinon-express-mock';
+const sinon = require('sinon');
+const { mockReq, mockRes } = require('sinon-express-mock');
 
-import { loggedin, __RewireAPI__ as AsyncLoggedinAPI } from '../index'; // eslint-disable-line
+const { loggedin, __RewireAPI__: AsyncLoggedinAPI } = require('../index'); // eslint-disable-line
 
 describe('loggedIn', () => {
   describe('Session tests', () => {

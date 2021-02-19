@@ -1,7 +1,7 @@
-import db from '../db';
+const db = require('../db');
 const debug = require('debug')('snap:server:lib:transitBookmarks');
 
-export const BOOKMARK_SCHEMA = {
+const BOOKMARK_SCHEMA = {
   type: 'object',
   properties: {
     stop: {
@@ -21,9 +21,9 @@ export const BOOKMARK_SCHEMA = {
   },
 };
 
-export const TRANSIT_BOOKMARKS_TABLE = 'transit_bookmarks';
+const TRANSIT_BOOKMARKS_TABLE = 'transit_bookmarks';
 
-export const getBookmarksForUser = async (
+const getBookmarksForUser = async (
   user_id,
   columns = ['id', 'stop', 'route', 'destination']
 ) => {
@@ -34,7 +34,7 @@ export const getBookmarksForUser = async (
   }
 };
 
-export const getBookmarkById = async (
+const getBookmarkById = async (
   id,
   columns = ['id', 'stop', 'route', 'destination']
 ) => {
@@ -45,7 +45,7 @@ export const getBookmarkById = async (
   }
 };
 
-export const addBookmark = async (payload) => {
+const addBookmark = async (payload) => {
   try {
     await db(TRANSIT_BOOKMARKS_TABLE).insert(payload);
   } catch (e) {
@@ -53,7 +53,7 @@ export const addBookmark = async (payload) => {
   }
 };
 
-export const ownsBookmark = async (req, res, next) => {
+const ownsBookmark = async (req, res, next) => {
   let { username } = req.params;
   let user = req.username.user || req.session.user;
   if (username === 'self') {
@@ -80,4 +80,13 @@ export const ownsBookmark = async (req, res, next) => {
     );
     res.boom.badImplementation();
   }
+};
+
+module.exports = {
+  BOOKMARK_SCHEMA,
+  TRANSIT_BOOKMARKS_TABLE,
+  getBookmarksForUser,
+  getBookmarkById,
+  addBookmark,
+  ownsBookmark,
 };

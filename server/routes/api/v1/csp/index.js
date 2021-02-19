@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import bodyParser from 'body-parser';
-import db from '../../../../db';
+const { Router } = require('express');
+const bodyParser = require('body-parser');
+const db = require('../../../../db');
 const debug = require('debug')('snap:server:routes:api/v1/csp');
 
 const router = Router();
@@ -26,4 +26,4 @@ router.post('/report', async (req, res) => {
   res.status(204).end();
 });
 
-export default router;
+module.exports = router;

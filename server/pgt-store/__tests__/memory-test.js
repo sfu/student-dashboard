@@ -1,4 +1,4 @@
-import MemoryStore from '../memory';
+const MemoryStore = require('../memory');
 
 describe('MemoryStore', () => {
   let context;

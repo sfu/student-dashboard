@@ -1,17 +1,17 @@
-import { Router } from 'express';
-import { validate } from 'express-jsonschema';
-import bodyParser from 'body-parser';
-import isEqual from 'lodash/isEqual';
-import {
+const { Router } = require('express');
+const { validate } = require('express-jsonschema');
+const bodyParser = require('body-parser');
+const isEqual = require('lodash/isEqual');
+const {
   BOOKMARK_SCHEMA,
   TRANSIT_BOOKMARKS_TABLE,
   getEstimatesForBookmarks,
   getBookmarksForUser,
   addBookmark,
   ownsBookmark,
-} from '../../../../lib';
+} = require('../../../../lib/transitBookmarks');
 
-import db from '../../../../db';
+const db = require('../../../../db');
 
 const UNIQUE_VIOLATION = '23505';
 
@@ -160,4 +160,4 @@ router.get('/estimates', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

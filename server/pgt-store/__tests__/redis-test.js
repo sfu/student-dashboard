@@ -1,5 +1,5 @@
-import RedisStore from '../redis';
-import redis from 'fakeredis';
+const RedisStore = require('../redis');
+const redis = require('fakeredis');
 
 describe('RedisStore', () => {
   let context;

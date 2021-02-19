@@ -1,5 +1,5 @@
-import CAS from 'cas';
-import fs from 'fs';
+const CAS = require('cas');
+const fs = require('fs');
 
 CAS.prototype.getProxyTicketAsync = function (pgtiou, service) {
   return new Promise((resolve, reject) => {
@@ -42,4 +42,4 @@ if (process.env.CAS_RUN_PGT_SERVER) {
   casConfig.external_pgt_url = process.env.CAS_PGT_URL;
 }
 
-export default new CAS(casConfig);
+module.exports = new CAS(casConfig);

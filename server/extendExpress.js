@@ -1,7 +1,7 @@
-import express from 'express';
+const express = require('express');
 
 // add methods to the Express `response` object
-export function extendResponse() {
+function extendResponse() {
   // redirect user to login page OR send a 401 as JSON, as appropriate
   express.response.redirectToLogin =
     express.response.redirectToLogin ||
@@ -16,10 +16,16 @@ export function extendResponse() {
 }
 
 // add methods to the Express `response` object
-export function extendRequest() {}
+function extendRequest() {}
 
 // convenience method to extend both response and request in one fell swoop
-export function extendExpress() {
+function extendExpress() {
   extendRequest();
   extendResponse();
 }
+
+module.exports = {
+  extendResponse,
+  extendRequest,
+  extendExpress,
+};

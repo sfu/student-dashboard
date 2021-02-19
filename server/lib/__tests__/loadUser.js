@@ -1,4 +1,4 @@
-import loadUser from '../loadUser';
+const loadUser = require('../loadUser');
 const tracker = require('mock-knex').getTracker();
 
 describe('loadUser', () => {

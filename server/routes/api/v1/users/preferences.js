@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import bodyParser from 'body-parser';
-import db from '../../../../db';
+const { Router } = require('express');
+const bodyParser = require('body-parser');
+const db = require('../../../../db');
 
 const debug = require('debug')('snap:server:routes:api/v1/users/preferences');
 
@@ -114,4 +114,4 @@ router.delete('/:preference', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

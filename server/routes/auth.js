@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import bodyParser from 'body-parser';
+const { Router } = require('express');
+const bodyParser = require('body-parser');
 
-import {
+const {
   authenticateCasUser,
   handleSingleSignout,
   getUser,
   getProxyTicket,
   provisionOrUpdateUser,
-} from '../auth-middleware';
+} = require('../auth-middleware');
 
 const router = Router();
 
@@ -35,4 +35,4 @@ router.get('/logout', (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;

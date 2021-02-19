@@ -1,5 +1,5 @@
-import { mockReq, mockRes } from 'sinon-express-mock';
-import { getUser } from '../index';
+const { mockReq, mockRes } = require('sinon-express-mock');
+const { getUser } = require('../index');
 const tracker = require('mock-knex').getTracker();
 
 describe('getUser', () => {

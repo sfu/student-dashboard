@@ -1,11 +1,12 @@
-import { Router } from 'express';
-import {
+const { Router } = require('express');
+const {
   loggedInWithSession,
   redirectToLoginIfNecessary,
-} from '../auth-middleware';
-import bodyParser from 'body-parser';
-import { oAuthenticatedRequest, readHtmlFile } from '../lib';
-import { sign } from 'jsonwebtoken';
+} = require('../auth-middleware');
+const bodyParser = require('body-parser');
+const oAuthenticatedRequest = require('../lib/oAuthenticatedRequest');
+const readHtmlFile = require('../lib/readHtmlFile');
+const { sign } = require('jsonwebtoken');
 
 const debug = require('debug')('snap:server:routes:graphql');
 
@@ -84,4 +85,4 @@ router.get('/graphiql', (req, res) => {
   res.redirect('/graphql');
 });
 
-export default router;
+module.exports = router;

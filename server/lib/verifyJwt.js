@@ -1,6 +1,6 @@
-import { verify, decode } from 'jsonwebtoken';
+const { verify, decode } = require('jsonwebtoken');
 
-export default function verifyJwt(token, key) {
+module.exports = function verifyJwt(token, key) {
   if (process.env.JWT_MODE === 'decode') {
     return decode(token);
   }
@@ -14,4 +14,4 @@ export default function verifyJwt(token, key) {
       }
     });
   });
-}
+};
