@@ -1,4 +1,4 @@
-exports.up = (knex, Promise) => {
+exports.up = (knex) => {
   return knex
     .select(['id', 'transit_bookmarks_text'])
     .from('users')
