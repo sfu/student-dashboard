@@ -5,5 +5,4 @@
 
 const resolve = require('path').resolve;
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const path = resolve(__dirname, `.env.${NODE_ENV}`);
-const dotenv = require('dotenv').load({ silent: true, path }); // eslint-disable-line no-unused-vars
+const dotenv = require('dotenv').config();
