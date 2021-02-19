@@ -17,3 +17,5 @@ html/snap.html
 junit*.xml
 
 docker-compose.local.yml
+
+.vscode
